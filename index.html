@@ -80,7 +80,8 @@ body{min-height:100vh;display:flex;flex-direction:column}
 @keyframes edge-flow{from{stroke-dashoffset:0}to{stroke-dashoffset:-48}}
 
 /* canonical published artifact — frozen final post */
-.canonical-artifact{border:2px solid var(--ink);background:#fffbe6;padding:14px 18px;margin:14px 28px 24px;font-family:var(--mono)}
+.canonical-artifact{border:2px solid var(--ink);background:#fff;padding:14px 18px;margin:14px 28px 24px;font-family:var(--mono);position:relative}
+.canonical-artifact::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:#c43838}
 .canonical-artifact .ca-rail{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 .canonical-artifact .ca-badge{font-size:9px;letter-spacing:0.20em;text-transform:uppercase;background:var(--ink);color:#fff;padding:3px 9px;font-weight:600}
 .canonical-artifact .ca-title{font-size:15px;font-weight:600;letter-spacing:0.04em;color:var(--ink)}
@@ -197,6 +198,24 @@ body{min-height:100vh;display:flex;flex-direction:column}
 .stack-table td code{font-family:var(--mono);background:#f4f4f4;padding:1px 5px;font-size:11px}
 .stack-table td .st-muted{color:var(--muted);font-size:10.5px;letter-spacing:0.04em}
 @media (max-width:780px){.stack-table th{width:auto;display:block;padding-bottom:0}.stack-table td{display:block;padding-top:4px}}
+
+/* artifact library — grid of 3:1 plashki codex generated */
+.artifact-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.art-card{display:flex;flex-direction:column;gap:0;border:1px solid var(--soft);text-decoration:none;color:var(--ink);background:#fff;transition:all .15s ease;overflow:hidden}
+.art-card:hover{border-color:var(--ink);transform:translateY(-2px);box-shadow:3px 3px 0 var(--ink)}
+.art-card img{width:100%;height:auto;display:block;aspect-ratio:3/1;object-fit:cover;background:#000}
+.art-card .art-meta{font-family:var(--mono);font-size:9.5px;letter-spacing:0.08em;color:var(--muted);padding:8px 10px;border-top:1px solid var(--soft);line-height:1.4}
+.art-card .art-meta b{color:var(--ink);font-weight:600;letter-spacing:0.10em}
+
+/* article body — collapsible · secondary after graph */
+.ab-expand-all{font-family:var(--mono);font-size:10px;letter-spacing:0.14em;border:1px solid var(--ink);background:#fff;color:var(--ink);padding:4px 10px;cursor:pointer;margin-right:10px}
+.ab-expand-all:hover{background:var(--ink);color:#fff}
+.article-paragraph details{cursor:pointer}
+.article-paragraph details summary{list-style:none;cursor:pointer;font-family:var(--mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);padding:4px 0;outline:none}
+.article-paragraph details summary::-webkit-details-marker{display:none}
+.article-paragraph details summary::before{content:"▸ ";color:var(--ink);font-weight:600;margin-right:4px}
+.article-paragraph details[open] summary::before{content:"▾ "}
+.article-paragraph details summary .ap-preview{font-family:Georgia,serif;font-size:13px;line-height:1.55;color:var(--ink);letter-spacing:-0.005em;text-transform:none;font-weight:400;letter-spacing:normal;display:block;margin-top:8px}
 
 /* article body — full flowing text · bi-directionally linked to timeline */
 .article-body{padding:22px 28px;border-right:1px solid var(--soft);min-height:540px;background:#fff}
@@ -425,19 +444,8 @@ footer .actions a.primary{background:var(--ink);color:#fff}
     <article class="ca-body" id="ca-body" hidden></article>
   </section>
 
-  <!-- ── ARTICLE BODY (left main) — full flowing text · each block hover-linked to timeline ── -->
-  <section class="article-body">
-    <div class="fig-head">
-      <div class="fig-num"><b>ARTICLE</b> · two voices · <span id="ab-count">0</span> blocks · hover a block → linked timeline step lights up</div>
-      <div class="fig-meta" id="ab-meta">— waiting for paragraphs —</div>
-    </div>
-    <div id="article-paragraphs" class="article-paragraphs">
-      <div class="article-empty">— ждёт первого paragraph'a из mesh —</div>
-    </div>
-  </section>
-
-  <!-- legacy stat cards + animated comm graph fully hidden per alex 14:19+ (kept in DOM so legacy JS doesn't NPE — to be deleted entirely next pass) -->
-  <section class="graph-wrap-removed" hidden>
+  <!-- ── COMMUNICATION GRAPH (restored per alex 15:31 — key mechanic of the project) ── -->
+  <section class="fig-section full">
     <div class="fig-head">
       <div class="fig-num"><b>FIG.MESH.2</b> · COMMUNICATION GRAPH · ANIMATED · DOTS = MESSAGES IN FLIGHT</div>
     </div>
@@ -513,6 +521,78 @@ footer .actions a.primary{background:var(--ink);color:#fff}
     <div class="comm-legend">
       <span>● dot · message in flight through murmur</span>
       <span class="cl-right">edge thickness · total messages this pair</span>
+    </div>
+  </section>
+
+  <!-- ── ARTIFACT LIBRARY · 3:1 covers codex generated · click to open ── -->
+  <section class="fig-section full">
+    <div class="fig-head">
+      <div class="fig-num"><b>ARTIFACT LIBRARY</b> · 3:1 plashki codex generated · click to open full-size</div>
+      <div class="fig-meta">12 artifacts · sales covers + mesh-avatar series + robot series + event poster</div>
+    </div>
+    <div class="artifact-grid">
+      <a class="art-card" href="assets/deep-self-dev-ai-selling-cover-3x1.png" target="_blank">
+        <img src="assets/deep-self-dev-ai-selling-cover-3x1.png" alt="deep self-dev sales cover" loading="lazy">
+        <div class="art-meta"><b>★ SELLING COVER</b> · deep-self-dev-ai · post #1</div>
+      </a>
+      <a class="art-card" href="assets/ai-mindset-post-cover-3x1.png" target="_blank">
+        <img src="assets/ai-mindset-post-cover-3x1.png" alt="ai mindset post cover" loading="lazy">
+        <div class="art-meta"><b>POST COVER</b> · ai-mindset · post #2</div>
+      </a>
+      <a class="art-card" href="assets/poster-founder-os-32.jpg" target="_blank">
+        <img src="assets/poster-founder-os-32.jpg" alt="founder os #32 poster" loading="lazy">
+        <div class="art-meta"><b>EVENT POSTER</b> · founder os #32 · 21 may</div>
+      </a>
+      <a class="art-card" href="assets/mesh-avatar-format-01-communication-graph-3x1.png" target="_blank">
+        <img src="assets/mesh-avatar-format-01-communication-graph-3x1.png" alt="mesh-avatar fig.01 communication graph" loading="lazy">
+        <div class="art-meta"><b>MESH FIG.01</b> · communication graph · 3:1</div>
+      </a>
+      <a class="art-card" href="assets/mesh-avatar-format-02-revision-line-3x1.png" target="_blank">
+        <img src="assets/mesh-avatar-format-02-revision-line-3x1.png" alt="mesh-avatar fig.02 revision line" loading="lazy">
+        <div class="art-meta"><b>MESH FIG.02</b> · revision line · 3:1</div>
+      </a>
+      <a class="art-card" href="assets/mesh-avatar-format-03-data-stack-3x1.png" target="_blank">
+        <img src="assets/mesh-avatar-format-03-data-stack-3x1.png" alt="mesh-avatar fig.03 data stack" loading="lazy">
+        <div class="art-meta"><b>MESH FIG.03</b> · data stack · 3:1</div>
+      </a>
+      <a class="art-card" href="assets/mesh-avatar-format-04-sidecar-review-3x1.png" target="_blank">
+        <img src="assets/mesh-avatar-format-04-sidecar-review-3x1.png" alt="mesh-avatar fig.04 sidecar review" loading="lazy">
+        <div class="art-meta"><b>MESH FIG.04</b> · sidecar review · 3:1</div>
+      </a>
+      <a class="art-card" href="assets/mesh-avatar-format-05-live-telemetry-3x1.png" target="_blank">
+        <img src="assets/mesh-avatar-format-05-live-telemetry-3x1.png" alt="mesh-avatar fig.05 live telemetry" loading="lazy">
+        <div class="art-meta"><b>MESH FIG.05</b> · live telemetry · 3:1</div>
+      </a>
+      <a class="art-card" href="assets/robot-format-01-event-signal-3x1.png" target="_blank">
+        <img src="assets/robot-format-01-event-signal-3x1.png" alt="robot fig.01 event signal" loading="lazy">
+        <div class="art-meta"><b>ROBOT FIG.01</b> · event signal · 3:1</div>
+      </a>
+      <a class="art-card" href="assets/robot-format-02-sprint-architecture-3x1.png" target="_blank">
+        <img src="assets/robot-format-02-sprint-architecture-3x1.png" alt="robot fig.02 sprint architecture" loading="lazy">
+        <div class="art-meta"><b>ROBOT FIG.02</b> · sprint architecture · 3:1</div>
+      </a>
+      <a class="art-card" href="assets/robot-format-03-memory-trace-3x1.png" target="_blank">
+        <img src="assets/robot-format-03-memory-trace-3x1.png" alt="robot fig.03 memory trace" loading="lazy">
+        <div class="art-meta"><b>ROBOT FIG.03</b> · memory trace · 3:1</div>
+      </a>
+      <a class="art-card" href="assets/robot-format-04-mesh-process-3x1.png" target="_blank">
+        <img src="assets/robot-format-04-mesh-process-3x1.png" alt="robot fig.04 mesh process" loading="lazy">
+        <div class="art-meta"><b>ROBOT FIG.04</b> · mesh process · 3:1</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ── ARTICLE BODY · collapsible · secondary after graph (per alex 15:31) ── -->
+  <section class="article-body">
+    <div class="fig-head">
+      <div class="fig-num"><b>ARTICLE BODY</b> · two voices · <span id="ab-count">0</span> blocks · collapsed by default · click each to expand</div>
+      <div class="fig-meta">
+        <button type="button" class="ab-expand-all" id="ab-expand-all">expand all ▾</button>
+        <span id="ab-meta">— waiting for paragraphs —</span>
+      </div>
+    </div>
+    <div id="article-paragraphs" class="article-paragraphs">
+      <div class="article-empty">— ждёт первого paragraph'a из mesh —</div>
     </div>
   </section>
 

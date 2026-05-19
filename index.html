@@ -74,10 +74,8 @@ body{min-height:100vh;display:flex;flex-direction:column}
 .sim-doc-row .counts{font-size:10px;letter-spacing:0.04em;color:var(--muted);text-align:right;line-height:1.4}
 .sim-doc-row .counts b{color:var(--ink);font-size:14px;font-weight:600;display:block}
 
-.avatar-sigil{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(4,1fr);
-  gap:1px;border:1px solid var(--ink);padding:2px;background:#fff;width:48px;height:48px}
-.avatar-sigil i{display:block;background:transparent}
-.avatar-sigil i.on{background:var(--ink)}
+.avatar-sigil{width:48px;height:48px;border-radius:50%;overflow:hidden;border:1px solid var(--ink);background:#fff;display:block}
+.avatar-sigil img{width:100%;height:100%;object-fit:cover;display:block}
 
 /* dashboard view = iframe to dashboard.html (no header chrome inside) */
 #view-dashboard{grid-template-columns:1fr;padding:24px 28px}
@@ -172,37 +170,23 @@ footer .actions a.primary{background:var(--ink);color:#fff}
         <line x1="330" y1="380" x2="430" y2="380" stroke-dasharray="2 3" opacity="0.3"/>
       </g>
 
-      <!-- SHAPER avatar -->
-      <g transform="translate(118,198)">
-        <rect width="104" height="104" fill="#fff" stroke="#000" stroke-width="2"/>
-        <g fill="#000">
-          <rect x="6" y="6" width="22" height="22"/>
-          <rect x="56" y="6" width="22" height="22"/>
-          <rect x="31" y="31" width="22" height="22"/>
-          <rect x="81" y="31" width="22" height="22"/>
-          <rect x="6" y="56" width="22" height="22"/>
-          <rect x="56" y="56" width="22" height="22"/>
-          <rect x="31" y="81" width="22" height="22"/>
-          <rect x="81" y="81" width="22" height="22"/>
-        </g>
-        <text x="52" y="124" text-anchor="middle" class="node-label" font-weight="600">shaper</text>
-        <text x="52" y="138" text-anchor="middle" class="node-sub">alex · channel voice</text>
+      <!-- SHAPER avatar — AIM logo silhouette -->
+      <defs>
+        <clipPath id="clip-shaper"><circle cx="170" cy="250" r="52"/></clipPath>
+        <clipPath id="clip-ivanov"><circle cx="590" cy="250" r="52"/></clipPath>
+      </defs>
+      <g>
+        <circle cx="170" cy="250" r="54" fill="#fff" stroke="#000" stroke-width="2"/>
+        <image href="aim-logo.png" x="118" y="198" width="104" height="104" clip-path="url(#clip-shaper)" preserveAspectRatio="xMidYMid slice"/>
+        <text x="170" y="322" text-anchor="middle" class="node-label" font-weight="600">shaper</text>
+        <text x="170" y="336" text-anchor="middle" class="node-sub">alex · channel voice</text>
       </g>
 
-      <g transform="translate(538,198)">
-        <rect width="104" height="104" fill="#fff" stroke="#000" stroke-width="2"/>
-        <g fill="#000">
-          <rect x="31" y="6" width="22" height="22"/>
-          <rect x="81" y="6" width="22" height="22"/>
-          <rect x="6" y="31" width="22" height="22"/>
-          <rect x="56" y="31" width="22" height="22"/>
-          <rect x="31" y="56" width="22" height="22"/>
-          <rect x="81" y="56" width="22" height="22"/>
-          <rect x="6" y="81" width="22" height="22"/>
-          <rect x="56" y="81" width="22" height="22"/>
-        </g>
-        <text x="52" y="124" text-anchor="middle" class="node-label" font-weight="600">ivanov-research</text>
-        <text x="52" y="138" text-anchor="middle" class="node-sub">alexey ivanov · ifs coach</text>
+      <g>
+        <circle cx="590" cy="250" r="54" fill="#fff" stroke="#000" stroke-width="2"/>
+        <image href="ivanov-avatar.jpg" x="538" y="198" width="104" height="104" clip-path="url(#clip-ivanov)" preserveAspectRatio="xMidYMid slice"/>
+        <text x="590" y="322" text-anchor="middle" class="node-label" font-weight="600">ivanov-research</text>
+        <text x="590" y="336" text-anchor="middle" class="node-sub">alexey ivanov · ifs coach</text>
       </g>
 
       <g>
@@ -266,12 +250,7 @@ footer .actions a.primary{background:var(--ink);color:#fff}
       <div class="kicker">performers · documents</div>
       <div class="sim-docs-list">
         <div class="sim-doc-row">
-          <div class="avatar-sigil" aria-hidden="true">
-            <i class="on"></i><i></i><i class="on"></i><i></i>
-            <i></i><i class="on"></i><i></i><i class="on"></i>
-            <i class="on"></i><i></i><i class="on"></i><i></i>
-            <i></i><i class="on"></i><i></i><i class="on"></i>
-          </div>
+          <div class="avatar-sigil"><img src="aim-logo.png" alt="shaper"></div>
           <div>
             <div class="who">shaper</div>
             <div class="role">alex · ai mindset channel voice</div>
@@ -282,12 +261,7 @@ footer .actions a.primary{background:var(--ink);color:#fff}
         </div>
 
         <div class="sim-doc-row">
-          <div class="avatar-sigil" aria-hidden="true">
-            <i></i><i class="on"></i><i></i><i class="on"></i>
-            <i class="on"></i><i></i><i class="on"></i><i></i>
-            <i></i><i class="on"></i><i></i><i class="on"></i>
-            <i class="on"></i><i></i><i class="on"></i><i></i>
-          </div>
+          <div class="avatar-sigil"><img src="ivanov-avatar.jpg" alt="ivanov-research"></div>
           <div>
             <div class="who">ivanov-research</div>
             <div class="role">alexey ivanov · ifs executive coach</div>

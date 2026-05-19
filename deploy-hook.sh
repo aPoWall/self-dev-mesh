@@ -58,7 +58,68 @@ for item in harvest_repo("shaper") + harvest_repo("ivanov-research"):
 for item in harvest("$SHAPER_HIST", "shaper") + harvest("$CODEX_HIST", "ivanov-research"):
     items[(item["author"], item["cycle"], item["regime"])] = item
 
+# Merge sidecar .meta.json — real cross-voice reactions (margin comments, revisions, inline-edit hints)
+for key, item in items.items():
+    author = item["author"].lower()
+    meta_path = PARAGRAPHS / author / f"cycle-{int(item['cycle']):02d}-{item['regime']}.meta.json"
+    if meta_path.exists():
+        try:
+            meta = json.loads(meta_path.read_text())
+            item["manual_comments"] = meta.get("comments", [])
+            item["manual_revisions"] = meta.get("revisions", [])
+            if meta.get("body_with_marks"):
+                item["body_with_marks"] = meta["body_with_marks"]
+        except Exception as e:
+            print(f"meta parse failed for {meta_path.name}: {e}")
+
 paragraphs = sorted(items.values(), key=lambda p: (p["cycle"], p["author"]))
+
+def excerpt(text, limit=118):
+    flat = re.sub(r"\s+", " ", text or "").strip()
+    if len(flat) <= limit:
+        return flat
+    return flat[:limit].rstrip(" ,.;:") + "…"
+
+def regime_ru(regime):
+    return {"v1": "рациональный", "v2": "гонзо", "v3": "меланхоличный"}.get(regime, regime or "v?")
+
+for i, item in enumerate(paragraphs):
+    prev = paragraphs[i - 1] if i else None
+    nxt = paragraphs[i + 1] if i + 1 < len(paragraphs) else None
+    item.setdefault("comments", [])
+    item.setdefault("revisions", [])
+    # Inject manual cross-voice reactions FIRST (so they appear at top of margin)
+    for mc in item.pop("manual_comments", []) or []:
+        item["comments"].append({**mc, "kind": mc.get("kind", "manual-reaction")})
+    for mr in item.pop("manual_revisions", []) or []:
+        item["revisions"].append(mr)
+    if prev:
+        item["reaction_to"] = {
+            "author": prev["author"],
+            "cycle": prev["cycle"],
+            "regime": prev["regime"],
+            "excerpt": excerpt(prev["body"], 110),
+        }
+        item["comments"].append({
+            "by": item["author"],
+            "kind": "reply-context",
+            "target": f"{prev['author']} · cycle {prev['cycle']} · {prev['regime']}",
+            "body": f"прочитал предыдущий ход: «{excerpt(prev['body'], 92)}». отвечаю не отдельным постом, а реакцией в {regime_ru(item['regime'])} регистре.",
+        })
+    if nxt:
+        item["revisions"].append({
+            "by": nxt["author"],
+            "ts": nxt["time"],
+            "cycle": nxt["cycle"],
+            "regime": nxt["regime"],
+        })
+        item["comments"].append({
+            "by": nxt["author"],
+            "kind": "peer-reaction",
+            "target": f"{item['author']} · cycle {item['cycle']} · {item['regime']}",
+            "body": f"реакция следующего хода: «{excerpt(nxt['body'], 124)}»",
+        })
+
 latest = paragraphs[-1] if paragraphs else None
 next_author = None
 next_regime = None

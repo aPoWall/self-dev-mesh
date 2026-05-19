@@ -119,6 +119,10 @@ body{min-height:100vh;display:flex;flex-direction:column}
 .pc-body p:last-child{margin-bottom:0}
 .pc-body ins{background:#dff5d4;text-decoration:none;padding:0 2px}
 .pc-body del{background:#f9d4d4;text-decoration:line-through;opacity:0.7;padding:0 2px}
+.pc-reply-context{border:1px solid var(--ink);background:#fafafa;padding:10px 12px;display:grid;grid-template-columns:auto 1fr;gap:8px 12px;align-items:start}
+.pc-reply-context .pc-reply-mark{font-size:16px;line-height:1;color:var(--ink)}
+.pc-reply-context .pc-reply-label{font-family:var(--mono);font-size:9.5px;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
+.pc-reply-context .pc-reply-text{font-family:Georgia,"Times New Roman",serif;font-size:13.5px;line-height:1.45;color:var(--ink)}
 .pc-text{border:1px dashed var(--soft);padding:9px 11px}
 .pc-text summary{cursor:pointer;font-family:var(--mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted)}
 .pc-text[open] summary{margin-bottom:10px;color:var(--ink)}
@@ -131,7 +135,10 @@ body{min-height:100vh;display:flex;flex-direction:column}
 .pc-comment{background:#fffbe6;border:1px solid #f0e6a0;padding:10px 13px;font-size:12px;line-height:1.5;position:relative;border-radius:0}
 .pc-comment.ivanov{background:#000;color:#fff;border-color:#000}
 .pc-comment.shaper{background:#fffbe6}
+.pc-comment.reply-context{border-left:4px solid #000}
+.pc-comment.peer-reaction{box-shadow:3px 3px 0 currentColor}
 .pc-comment .pc-c-author{font-size:9.5px;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:4px;opacity:0.7;font-weight:600}
+.pc-comment .pc-c-kind{font-size:8.5px;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:6px;opacity:0.55}
 .pc-comment .pc-c-body{font-family:Georgia,serif;font-size:13px;line-height:1.45}
 .pc-comment .pc-c-target{font-size:9.5px;letter-spacing:0.06em;color:#888;font-style:italic;margin-top:4px;border-top:1px dashed currentColor;padding-top:4px;opacity:0.6}
 .pc-comments-empty{font-size:10px;color:var(--muted);font-style:italic;padding:8px 0}
@@ -428,17 +435,25 @@ function renderParagraphs(data){
   renderRevisionFlow(data);
   if(!data.paragraphs||!data.paragraphs.length){grid.innerHTML='<div class="paragraphs-empty">— ждёт первого paragraph\'а из mesh —</div>';return;}
   const sorted=sortedParagraphs(data);
-  grid.innerHTML='<div class="paragraphs-toolbar"><span class="badge">observer mode</span><span>'+sorted.length+' paragraphs · agents read each other · raw text collapsed</span></div>'+
+  grid.innerHTML='<div class="paragraphs-toolbar"><span class="badge">reaction mode</span><span>'+sorted.length+' paragraphs · each turn is a comment reaction · raw text collapsed</span></div>'+
     sorted.map(p=>{
       const cls=(p.author||'').toLowerCase().includes('ivanov')?'ivanov':'shaper';
       const revs=(p.revisions||[]).map(r=>`<span class="pc-rev-row ${(r.by||'').toLowerCase().includes('ivanov')?'ivanov':'shaper'}"><span class="pc-rev-dot"></span>revised by ${escHtml(r.by)} · ${escHtml(r.ts||'')}</span>`).join('');
-      const comments=(p.comments||[]).map(c=>`<div class="pc-comment ${(c.by||'').toLowerCase().includes('ivanov')?'ivanov':'shaper'}"><div class="pc-c-author">${escHtml(c.by||'?')}</div><div class="pc-c-body">${escHtml(c.body||'')}</div>${c.target?'<div class="pc-c-target">→ '+escHtml(c.target)+'</div>':''}</div>`).join('');
+      const comments=(p.comments||[]).map(c=>`<div class="pc-comment ${(c.by||'').toLowerCase().includes('ivanov')?'ivanov':'shaper'} ${escHtml(c.kind||'')}"><div class="pc-c-author">${escHtml(c.by||'?')}</div><div class="pc-c-kind">${escHtml((c.kind||'comment').replace(/-/g,' · '))}</div><div class="pc-c-body">${escHtml(c.body||'')}</div>${c.target?'<div class="pc-c-target">→ '+escHtml(c.target)+'</div>':''}</div>`).join('');
+      const reaction=p.reaction_to?`<div class="pc-reply-context">
+        <div class="pc-reply-mark">↳</div>
+        <div>
+          <div class="pc-reply-label">reacting to ${escHtml(p.reaction_to.author)} · cycle ${escHtml(p.reaction_to.cycle)} · ${escHtml(p.reaction_to.regime)}</div>
+          <div class="pc-reply-text">${escHtml(p.reaction_to.excerpt||'')}</div>
+        </div>
+      </div>`:'';
       return `<article class="paragraph-card">
         <div class="pc-main">
           <div class="pc-head">
 	            <span class="pc-author"><img src="${authorAvatar(p.author)}" alt=""><b>${escHtml(p.author||'?')}</b></span>
 	            <span><span class="pc-cycle">cycle ${p.cycle||'?'}</span> <span class="pc-regime">· ${escHtml(p.regime||'?')}</span> · <span class="pc-time">${escHtml(p.time||'')}</span> · ${(p.body||'').length}c</span>
 	          </div>
+	          ${reaction}
 	          <details class="pc-text">
 	            <summary>raw paragraph · hidden from observer flow</summary>
 	            <div class="pc-body"><p>${bodyHtml(p.body||'')}</p></div>

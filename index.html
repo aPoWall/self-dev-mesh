@@ -217,6 +217,36 @@ body{min-height:100vh;display:flex;flex-direction:column}
 .article-paragraph details[open] summary::before{content:"▾ "}
 .article-paragraph details summary .ap-preview{font-family:Georgia,serif;font-size:13px;line-height:1.55;color:var(--ink);letter-spacing:-0.005em;text-transform:none;font-weight:400;letter-spacing:normal;display:block;margin-top:8px}
 
+/* version picker row + prev/next nav (single-paragraph viewer) */
+.version-picker-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid var(--soft)}
+.vp-btn{font-family:var(--mono);font-size:10px;letter-spacing:0.06em;border:1px solid var(--soft);background:#fff;color:var(--ink);padding:6px 10px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;min-width:48px;transition:all .12s}
+.vp-btn:hover{border-color:var(--ink)}
+.vp-btn.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+.vp-btn .vp-cycle{font-weight:600;font-size:11px}
+.vp-btn .vp-regime{font-size:8.5px;letter-spacing:0.14em;text-transform:uppercase;opacity:0.75}
+.vp-btn .vp-author{font-size:8.5px;letter-spacing:0.14em;opacity:0.6}
+.ap-nav{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:18px;padding-top:14px;border-top:1px solid var(--soft);font-family:var(--mono);font-size:10.5px}
+.ap-nav-btn{font-family:var(--mono);font-size:10.5px;letter-spacing:0.06em;border:1px solid var(--ink);background:#fff;color:var(--ink);padding:7px 12px;cursor:pointer;transition:all .12s}
+.ap-nav-btn:hover{background:var(--ink);color:#fff}
+.ap-nav-pos{color:var(--muted);letter-spacing:0.14em}
+.article-paragraph.selected{border:1px solid var(--ink);background:#fff;padding:20px 24px}
+.ap-comments-head{font-family:var(--mono);font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.ap-no-comments{font-family:var(--mono);font-size:10px;color:var(--muted);font-style:italic;padding:14px;border:1px dashed var(--soft);text-align:center;margin-top:14px}
+
+/* Final TG-post mock — closing artifact */
+.tg-mock{max-width:540px;margin:24px auto 0;border:1px solid var(--soft);background:#fff;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.tg-mock-head{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--soft);background:#fafafa}
+.tg-mock-head img{width:36px;height:36px;border-radius:50%;border:1px solid var(--ink)}
+.tg-mock-head .tg-channel{font-size:14px;font-weight:600;color:var(--ink);letter-spacing:0}
+.tg-mock-head .tg-sub{font-size:11px;color:var(--muted)}
+.tg-mock-cover img{width:100%;display:block}
+.tg-mock-body{padding:14px 16px;font-size:14.5px;line-height:1.5;color:var(--ink);white-space:pre-wrap}
+.tg-mock-body strong{font-weight:600}
+.tg-mock-body em{font-style:italic;color:#555}
+.tg-mock-body a{color:#3a8bbd;text-decoration:none}
+.tg-mock-body a:hover{text-decoration:underline}
+.tg-mock-meta{display:flex;justify-content:space-between;padding:8px 16px 12px;font-size:11px;color:var(--muted)}
+
 /* article body — full flowing text · bi-directionally linked to timeline */
 .article-body{padding:22px 28px;border-right:1px solid var(--soft);min-height:540px;background:#fff}
 .article-body .fig-head{margin-bottom:16px}
@@ -802,6 +832,53 @@ footer .actions a.primary{background:var(--ink);color:#fff}
     </table>
   </section>
 
+  <!-- ── FINAL TG POST MOCK · the closing artifact · what gets posted to @ai_mind_set ── -->
+  <section class="fig-section full">
+    <div class="fig-head">
+      <div class="fig-num"><b>FINAL</b> · TELEGRAM POST MOCK · what alex copies into @ai_mind_set</div>
+      <div class="fig-meta">cover · robot fig.01 event-signal · post #1 selling · ready-to-publish</div>
+    </div>
+    <div class="tg-mock">
+      <div class="tg-mock-head">
+        <img src="aim-logo.png" alt="AI Mindset">
+        <div>
+          <div class="tg-channel">AI Mindset</div>
+          <div class="tg-sub">@ai_mind_set · 19 may at 17:00</div>
+        </div>
+      </div>
+      <div class="tg-mock-cover">
+        <a href="assets/robot-format-01-event-signal-3x1.png" target="_blank">
+          <img src="assets/robot-format-01-event-signal-3x1.png" alt="deep self-development × ai · final cover">
+        </a>
+      </div>
+      <div class="tg-mock-body"><strong>Deep Self-development.</strong>
+
+тут такая история.
+
+мы с алексеем ивановым давно хотели собраться и сделать что-то вместе. лёша – executive-коуч, в последний год пишет в <a href="https://t.me/ponchiknews">@ponchiknews</a> про новую жизнь ai в коучинге и саморазвитии. я весь год собираю инструменты с противоположной стороны – со стороны архитектуры, личного контекста, инфраструктуры вокруг человека.
+
+в какой-то момент стало понятно, что мы оба заходим к одному и тому же – с разных сторон. <em>встретились ровно посередине, на том самом тонком слое, который удерживает разговор после того, как разговор закончился.</em>
+
+<strong>четверг, 21 мая, 15:00 berlin / 16:00 msk. founder os #32.</strong> живой zoom, бесплатно. без воркшоп-формата – двое говорят, остальные смотрят и пишут вопросы.
+
+<a href="https://luma.com/ai-5wx5">https://luma.com/ai-5wx5</a>
+
+а 1–14 июня мы продолжаем уже вглубь. <strong>deep self-development × ai sprint</strong> – четырнадцать дней внутри среды, в которой эта же архитектура разворачивается у каждого участника на своём материале.
+
+<a href="https://selfdev.aimindset.org/">https://selfdev.aimindset.org/</a>
+
+ps. сам этот пост мы тоже сделали вместе – но в очень странном формате. расскажу в следующем посте, когда будет уместно.
+
+@ai_mind_set × @ponchiknews
+
+alex p</div>
+      <div class="tg-mock-meta">
+        <span>📨 → <a href="AI-MINDSET-POST-1-SELLING.md" target="_blank" style="color:#3a8bbd">post source</a></span>
+        <span>♥ 96 · 👁 3.2k · 🔗</span>
+      </div>
+    </div>
+  </section>
+
   <!-- FIG.MESH.4 (4-phase evo grid) removed per alex 14:24+ — horizontal evo-timeline at top of view replaces it -->
 
 </section>
@@ -1144,9 +1221,11 @@ function renderEvolution(data){
       SELECTED_STEP = SELECTED_STEP === stepKey ? null : stepKey;
       renderEvolution(data);
       renderEvoDetail(data);
-      // scroll-to + flash article paragraph if this step maps to a cycle
+      // step → set SELECTED_CYCLE and re-render text viewer
       const targetCycle = STEP_KEY_TO_CYCLE[stepKey];
       if(targetCycle){
+        SELECTED_CYCLE = targetCycle;
+        renderArticleBody(data);
         const para = document.querySelector(`.article-paragraph[data-cycle="${targetCycle}"]`);
         if(para){
           para.scrollIntoView({behavior:'smooth', block:'center'});
@@ -1181,71 +1260,51 @@ function renderArticleBody(data){
     container.innerHTML = '<div class="article-empty">— ждёт первого paragraph\'a из mesh —</div>';
     return;
   }
+  // default selection = latest
+  if(SELECTED_CYCLE == null) SELECTED_CYCLE = all[all.length-1].cycle;
+  const selected = all.find(p => p.cycle === SELECTED_CYCLE) || all[all.length-1];
   if(meta){
-    const latest = all[all.length-1];
-    meta.textContent = `latest: cycle ${latest.cycle} · ${escHtml(latest.regime||'?')} · ${escHtml(latest.author||'?')} · ${escHtml(latest.time||'')}`;
+    meta.innerHTML = `viewing: <b>cycle ${selected.cycle}</b> · ${escHtml(selected.regime||'?')} · ${escHtml(selected.author||'?')} · ${escHtml(selected.time||'')} <span style="color:#c43838;margin-left:8px">● selected</span>`;
   }
 
-  // featured selling-post card removed — Codex's canonical-artifact card above already covers this
-  const featured = '';
+  const p = selected;
+  const bodyMarked = p.body_with_marks || p.body || '';
+  const comments = (p.comments||[]).filter(c => c.kind !== 'reply-context');
+  const prev = all.find(x => x.cycle === p.cycle - 1);
+  const next = all.find(x => x.cycle === p.cycle + 1);
 
-  const paragraphsHtml = all.map(p => {
-    const cls = authorKey(p.author);
-    const bodyMarked = p.body_with_marks || p.body || '';
-    const comments = (p.comments||[]).filter(c => c.kind !== 'reply-context'); // skip synthetic ones
-    const preview = (p.body||'').replace(/\[ins\]|\[\/ins\]|\[del\]|\[\/del\]/g,'').replace(/\s+/g,' ').trim().slice(0,140) + '…';
-    return `<article class="article-paragraph" data-cycle="${p.cycle}" data-key="cycle-${p.cycle}">
-      <div class="ap-head">
-        <span class="ap-author"><img src="${authorAvatar(p.author)}" alt=""><b>${escHtml(p.author||'?')}</b></span>
-        <span><span class="ap-cycle">cycle ${p.cycle||'?'}</span> <span class="ap-regime">· ${escHtml(p.regime||'?')}</span> · <span class="ap-time">${escHtml(p.time||'')}</span> · ${(p.body||'').length}c</span>
-      </div>
-      <details>
-        <summary>
-          cycle ${p.cycle||'?'} · ${escHtml(p.regime||'?')} · ${(p.body||'').length}c · click to expand
-          <span class="ap-preview">${escHtml(preview)}</span>
-        </summary>
-        <div class="ap-body" style="margin-top:12px"><p>${bodyHtml(bodyMarked)}</p></div>
-        ${comments.length ? '<div class="ap-comments">'+comments.map(c=>`<div class="ap-comment ${(c.by||'').toLowerCase().includes('ivanov')?'ivanov':'shaper'}"><div class="ap-comment-meta">${escHtml(c.by||'?')} · ${escHtml((c.kind||'').replace(/-/g,' · '))}${c.target?' → '+escHtml(c.target):''}</div>${escHtml(c.body||'')}</div>`).join('')+'</div>' : ''}
-      </details>
-      ${CYCLE_TO_STEP_KEY[p.cycle] ? `<div class="ap-link-step">linked timeline step: <b data-jump-step="${CYCLE_TO_STEP_KEY[p.cycle]}">${escHtml(CYCLE_TO_STEP_KEY[p.cycle])}</b></div>` : ''}
-    </article>`;
-  }).join('');
+  // prev/next nav + version picker row
+  const versionPickerRow = `<div class="version-picker-row">
+    ${all.map(v => `<button type="button" class="vp-btn${v.cycle===p.cycle?' active':''}" data-cycle="${v.cycle}" title="${escHtml(v.author||'')} · ${escHtml(v.regime||'')} · ${escHtml(v.time||'')}">
+      <span class="vp-cycle">c${v.cycle}</span>
+      <span class="vp-regime">${escHtml(v.regime||'?')}</span>
+      <span class="vp-author">${authorKey(v.author)==='ivanov-research'?'IVA':'SHA'}</span>
+    </button>`).join('')}
+  </div>`;
 
-  container.innerHTML = featured + paragraphsHtml;
+  const single = `<article class="article-paragraph selected" data-cycle="${p.cycle}" data-key="cycle-${p.cycle}">
+    <div class="ap-head">
+      <span class="ap-author"><img src="${authorAvatar(p.author)}" alt=""><b>${escHtml(p.author||'?')}</b></span>
+      <span><span class="ap-cycle">cycle ${p.cycle||'?'}</span> <span class="ap-regime">· ${escHtml(p.regime||'?')}</span> · <span class="ap-time">${escHtml(p.time||'')}</span> · ${(p.body||'').length}c</span>
+    </div>
+    <div class="ap-body" style="margin-top:14px"><p>${bodyHtml(bodyMarked)}</p></div>
+    ${comments.length ? '<div class="ap-comments"><div class="ap-comments-head">margin comments for this version only</div>'+comments.map(c=>`<div class="ap-comment ${(c.by||'').toLowerCase().includes('ivanov')?'ivanov':'shaper'}"><div class="ap-comment-meta">${escHtml(c.by||'?')} · ${escHtml((c.kind||'').replace(/-/g,' · '))}${c.target?' → '+escHtml(c.target):''}</div>${escHtml(c.body||'')}</div>`).join('')+'</div>' : '<div class="ap-no-comments">no margin comments on this version</div>'}
+    <div class="ap-nav">
+      ${prev ? `<button type="button" class="ap-nav-btn" data-cycle="${prev.cycle}">← cycle ${prev.cycle} · ${escHtml(prev.regime||'')}</button>` : '<span></span>'}
+      <span class="ap-nav-pos">${all.indexOf(p)+1} / ${all.length}</span>
+      ${next ? `<button type="button" class="ap-nav-btn" data-cycle="${next.cycle}">cycle ${next.cycle} · ${escHtml(next.regime||'')} →</button>` : '<span></span>'}
+    </div>
+  </article>`;
 
-  // bidirectional hover: paragraph → timeline step highlight
-  container.querySelectorAll('.article-paragraph[data-cycle]').forEach(ap => {
-    const cyc = ap.dataset.cycle;
-    const stepKey = CYCLE_TO_STEP_KEY[cyc];
-    if(!stepKey) return;
-    ap.addEventListener('mouseenter', () => {
-      document.querySelectorAll(`.evo-step[data-key="${stepKey}"]`).forEach(s => s.classList.add('linked-from-paragraph'));
-    });
-    ap.addEventListener('mouseleave', () => {
-      document.querySelectorAll('.evo-step.linked-from-paragraph').forEach(s => s.classList.remove('linked-from-paragraph'));
-    });
-  });
-  // click on inline "linked timeline step" badge → scroll timeline + select step
-  container.querySelectorAll('[data-jump-step]').forEach(el => {
-    el.addEventListener('click', () => {
-      const stepKey = el.dataset.jumpStep;
-      const step = document.querySelector(`.evo-step[data-key="${stepKey}"]`);
-      if(step){
-        step.scrollIntoView({behavior:'smooth', block:'nearest', inline:'center'});
-        step.click();
-      }
+  container.innerHTML = versionPickerRow + single;
+
+  // version picker buttons → select cycle
+  container.querySelectorAll('.vp-btn[data-cycle], .ap-nav-btn[data-cycle]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      SELECTED_CYCLE = parseInt(btn.dataset.cycle, 10);
+      renderArticleBody(data);
     });
   });
-  // expand-all toggle
-  const expandBtn = document.getElementById('ab-expand-all');
-  if(expandBtn){
-    expandBtn.onclick = () => {
-      const details = container.querySelectorAll('.article-paragraph details');
-      const allOpen = [...details].every(d => d.open);
-      details.forEach(d => { d.open = !allOpen; });
-      expandBtn.textContent = allOpen ? 'expand all ▾' : 'collapse all ▴';
-    };
-  }
 }
 
 function renderEvoDetail(data){

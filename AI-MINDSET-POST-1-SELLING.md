@@ -4,10 +4,10 @@ post_number: 1 of 2
 title: "Deep Self-development"
 channel: "@ai_mind_set"
 audience: founders / operators / ai-curious / люди в теме саморазвития
-companion: AI-MINDSET-CHANNEL-POST.md (post #2 · мета про live mesh) + Лёшин pinned в @ppprompt
+companion: AI-MINDSET-POST-2-MESH.md (post #2 · мета про live mesh) + Лёшин pinned в @ppprompt
 event: FOS #32 — 21 мая 2026 · 15:00 berlin / 16:00 msk · luma.com/ai-5wx5
 sprint: 1–14 июня 2026 · selfdev.aimindset.org
-visual: 3:1 плашка — robot poster founder os #32
+visual: assets/deep-self-dev-ai-selling-cover-3x1.png — sales/event 3:1 cover
 length_chars: ~1900
 voice: AIM channel · alex p · warm-personal · «заход с двух сторон»
 angle: реакция на Лёшин pinned · акцент на коллаборации Alex (architect) × Лёша (coach) · БЕЗ глубокой техники mesh · лёгкий нод на post-2

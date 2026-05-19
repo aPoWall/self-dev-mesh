@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="600" viewBox="0 0 1800 600">
+  <defs>
+    <pattern id="paperGrid" width="36" height="36" patternUnits="userSpaceOnUse">
+      <path d="M36 0H0V36" fill="none" stroke="#eeeeee" stroke-width="1"/>
+    </pattern>
+    <clipPath id="posterClip">
+      <rect x="1118" y="42" width="588" height="516"/>
+    </clipPath>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="10" dy="10" stdDeviation="0" flood-color="#000000" flood-opacity="0.12"/>
+    </filter>
+    <linearGradient id="fadeLeft" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset="0.64" stop-color="#ffffff" stop-opacity="0.42"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0.94"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1800" height="600" fill="#ffffff"/>
+  <rect width="1800" height="600" fill="url(#paperGrid)" opacity="0.75"/>
+  <rect x="28" y="28" width="1744" height="544" fill="none" stroke="#000" stroke-width="2"/>
+
+  <g font-family="JetBrains Mono, SFMono-Regular, Menlo, Consolas, monospace">
+    <text x="74" y="82" font-size="20" letter-spacing="10" fill="#000">AI MINDSET × PONCHIKNEWS</text>
+    <text x="74" y="132" font-size="19" letter-spacing="8" fill="#c43838">FOUNDER OS #32</text>
+  </g>
+
+  <g font-family="Arial Black, Arial, Helvetica, sans-serif" fill="#050505">
+    <text x="74" y="236" font-size="92" font-weight="900">deep</text>
+    <text x="74" y="332" font-size="92" font-weight="900">self-development</text>
+    <text x="74" y="428" font-size="92" font-weight="900">× ai</text>
+  </g>
+
+  <g font-family="Georgia, 'Times New Roman', serif" fill="#000">
+    <text x="77" y="480" font-size="31">как не терять нить внутренней работы</text>
+  </g>
+
+  <g font-family="JetBrains Mono, SFMono-Regular, Menlo, Consolas, monospace">
+    <rect x="74" y="512" width="640" height="46" fill="#000"/>
+    <text x="98" y="542" font-size="18" letter-spacing="3.2" fill="#fff">21 MAY · 15:00 BER / 16:00 MSK · LIVE ZOOM</text>
+    <text x="756" y="541" font-size="19" letter-spacing="4" fill="#000">LUMA.COM/AI-5WX5</text>
+  </g>
+
+  <g filter="url(#softShadow)">
+    <rect x="1098" y="22" width="628" height="556" fill="#fff" stroke="#000" stroke-width="2"/>
+    <image href="poster-founder-os-32.jpg" x="1054" y="-54" width="700" height="700" preserveAspectRatio="xMidYMid slice" clip-path="url(#posterClip)" opacity="0.96"/>
+    <rect x="1098" y="22" width="628" height="556" fill="url(#fadeLeft)"/>
+    <rect x="1118" y="42" width="588" height="516" fill="none" stroke="#000" stroke-width="1.5"/>
+  </g>
+
+  <g font-family="JetBrains Mono, SFMono-Regular, Menlo, Consolas, monospace" fill="#000">
+    <text x="1190" y="92" font-size="14" letter-spacing="5">ALEX P × ALEXEY IVANOV</text>
+    <line x1="1190" y1="112" x2="1642" y2="112" stroke="#000" stroke-width="1"/>
+    <rect x="1118" y="516" width="588" height="42" fill="#000"/>
+    <text x="1142" y="543" font-size="14" letter-spacing="3.3" fill="#fff">SPRINT · 1–14 JUNE · SELFDEV.AIMINDSET.ORG</text>
+  </g>
+
+  <g>
+    <circle cx="1044" cy="300" r="43" fill="#c43838"/>
+    <circle cx="1044" cy="300" r="72" fill="none" stroke="#c43838" stroke-width="3" stroke-dasharray="12 14"/>
+    <path d="M1006 300H754" stroke="#c43838" stroke-width="3" stroke-dasharray="14 13"/>
+  </g>
+</svg>

@@ -1,0 +1,42 @@
+{
+  "comments": [
+    {
+      "by": "CODEX-REVIEW",
+      "kind": "manual-reaction",
+      "target": "channel post hook",
+      "body": "оставил старт близко к уже опубликованной/прикреплённой интонации: «в этот четверг днем делаю одну теплую штуку». это сохраняет каналовый жест, но убирает опечатки и делает связку с эфиром яснее."
+    },
+    {
+      "by": "IVANOV-RESEARCH",
+      "kind": "manual-reaction",
+      "target": "selling angle",
+      "body": "продающий слой держится не на обещании личной трансформации, а на точной боли: инсайт распадается между сессиями. это честнее для аудитории коучей и helping professionals."
+    },
+    {
+      "by": "SHAPER",
+      "kind": "manual-reaction",
+      "target": "visual + CTA",
+      "body": "визуал с роботом работает как лёгкий контраст к философской теме. CTA разведен на два шага: сначала бесплатный эфир на Luma, потом sprint 1–14 июня."
+    },
+    {
+      "by": "CODEX-REVIEW",
+      "kind": "manual-reaction",
+      "target": "date/time",
+      "body": "Luma verified: 21 May 2026, 15:00 Europe/Berlin / 16:00 MSK, free Zoom registration, 96 registered at check time. В тексте лучше писать Berlin, не CET, потому что в мае это CEST."
+    },
+    {
+      "by": "CODEX-REVIEW",
+      "kind": "visual-note",
+      "target": "next graphic discussion",
+      "body": "если делаем следующую графическую итерацию, я бы проверял три направления: оставить square robot как pinned-cover, сделать review-карточку с цитатой «AI как суфлёр», или вывести на сайт отдельный visual trace блок с постом + картинкой + ссылками."
+    }
+  ],
+  "revisions": [
+    {
+      "by": "CODEX-REVIEW",
+      "ts": "13:41 UTC",
+      "kind": "channel-post-review",
+      "note": "added ready-for-review @ponchiknews post and connected it to cycle 5 as external trace"
+    }
+  ]
+}

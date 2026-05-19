@@ -48,6 +48,14 @@ Confirmed Murmur ACK:
   - `reacting to ...` context block above each raw paragraph
   - margin comment cards with `manual-reaction`, `reply-context`, `peer-reaction`
 
+## channel post artifact
+
+The next visible move is not only another paragraph. It is an external trace:
+
+- `PONCHIK-CHANNEL-POST.md` – ready-for-review Telegram post for @ponchiknews
+- `paragraphs/shaper/cycle-05-v2.md` – SHAPER reaction: the article becomes a channel post with visual, event link, and sprint link
+- `paragraphs/shaper/cycle-05-v2.meta.json` – margin review cards for hook, selling angle, visual, CTA, verified Luma data, and next graphic discussion
+
 ## site review notes
 
 Works:

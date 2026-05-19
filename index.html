@@ -161,7 +161,8 @@ body{min-height:100vh;display:flex;flex-direction:column}
 @media (max-width:780px){.stat-cards{grid-template-columns:repeat(2,1fr)}}
 
 /* FIG.MESH.2 — communication graph (animated dots-along-edges) */
-.comm-graph{display:block;width:100%;height:auto;max-width:760px;margin:8px auto 0;background:#fff;border:1px solid var(--soft)}
+.comm-graph{display:block;width:100%;height:auto;max-width:1200px;margin:8px auto 0;background:#fff;border:1px solid var(--ink)}
+#canonical-artifact{display:none !important}
 .cg-node circle{fill:#fff;stroke:#000;stroke-width:1.5}
 .cg-node.filled circle{fill:#000}
 .cg-node text.cg-name{font-family:var(--mono);font-size:11.5px;font-weight:600;letter-spacing:0.16em;fill:#000;text-anchor:middle}
@@ -188,6 +189,10 @@ body{min-height:100vh;display:flex;flex-direction:column}
 .visual-review-card .vrc-label{font-family:var(--mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);display:flex;justify-content:space-between;gap:10px}
 .visual-review-card .vrc-label b{color:var(--ink)}
 @media (max-width:900px){.visual-review-grid{grid-template-columns:1fr}.visual-review-card img{height:220px}}
+.final-cover-card{border:1px solid var(--ink);padding:10px;background:#fff;color:var(--ink);text-decoration:none;display:flex;flex-direction:column;gap:8px}
+.final-cover-card img{width:100%;height:auto;aspect-ratio:3/1;object-fit:cover;border:1px solid var(--soft);display:block;background:#fff}
+.final-cover-card .vrc-label{font-family:var(--mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);display:flex;justify-content:space-between;gap:10px}
+.final-cover-card .vrc-label b{color:var(--ink)}
 
 /* FIG.MESH.3 — tech stack table */
 .stack-table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:11.5px;line-height:1.55}
@@ -445,13 +450,20 @@ footer .actions a.primary{background:var(--ink);color:#fff}
     <div class="evo-detail" id="evo-detail"></div>
   </section>
 
-  <!-- VISUAL REVIEW (10 candidate covers) removed per alex 15:46 — too much, the canonical card below points to picked one -->
-  <!-- versioning is now visible through the evolution timeline + version-picker in TEXT VIEWER -->
-  <section class="fig-section full" id="post-published-banner">
-    <div class="fig-head" style="margin-bottom:0">
-      <div class="fig-num"><b>★ PUBLISHED</b> · final post live in @ai_mind_set channel · cycle 5 v2 became this</div>
-      <div class="fig-meta"><a href="https://t.me/ai_mind_set/351" target="_blank" style="color:#c43838;font-weight:600;border:1px solid #c43838;padding:5px 10px">→ open post · t.me/ai_mind_set/351</a></div>
+  <!-- top plashki ALL removed per alex 15:51 — graph IS the hero, post-link lives at bottom TG-mock only -->
+  <!-- VISUAL REVIEW / PUBLISHED banner / CANONICAL · FROZEN — все убраны для чистого pipeline'а -->
+  <!-- pipeline = TIMELINE (above) → GRAPH (below, full screen) → TEXT VIEWER → TG MOCK (final post, verbatim) -->
+
+  <!-- ── FINAL COVER · post #2 mesh data-flow plashka ── -->
+  <section class="fig-section full" id="mesh-post-2-cover">
+    <div class="fig-head">
+      <div class="fig-num"><b>POST #2 COVER</b> · self-dev mesh as data-flow · picked direction</div>
+      <div class="fig-meta"><a href="assets/ai-mindset-post-2-mesh-flow-cover-3x1.png" target="_blank" style="color:#000">open png</a> · <a href="assets/ai-mindset-post-2-mesh-flow-cover-3x1.svg" target="_blank" style="color:#000">animated svg</a></div>
     </div>
+    <a class="final-cover-card" href="assets/ai-mindset-post-2-mesh-flow-cover-3x1.png" target="_blank">
+      <img src="assets/ai-mindset-post-2-mesh-flow-cover-3x1.png" alt="post #2 self-dev mesh data-flow cover">
+      <div class="vrc-label"><b>final cover</b><span>agents → repo → products · moving data streams</span></div>
+    </a>
   </section>
 
   <!-- ── CANONICAL PUBLISHED ARTIFACT — frozen final selling post ── -->
@@ -549,10 +561,14 @@ footer .actions a.primary{background:var(--ink);color:#fff}
   <section class="fig-section full">
     <details class="lib-details">
       <summary class="fig-head" style="cursor:pointer;list-style:none">
-        <div class="fig-num"><b>ARTIFACT LIBRARY</b> · 13 plashki · ▸ click to expand</div>
-        <div class="fig-meta">sales covers + mesh-avatar fig.01-05 + robot fig.01-05 + event poster</div>
+        <div class="fig-num"><b>ARTIFACT LIBRARY</b> · 14 plashki · ▸ click to expand</div>
+        <div class="fig-meta">post-2 final + sales covers + mesh-avatar fig.01-05 + robot fig.01-05 + event poster</div>
       </summary>
     <div class="artifact-grid" style="margin-top:14px">
+      <a class="art-card" href="assets/ai-mindset-post-2-mesh-flow-cover-3x1.png" target="_blank">
+        <img src="assets/ai-mindset-post-2-mesh-flow-cover-3x1.png" alt="post #2 mesh data-flow cover" loading="lazy">
+        <div class="art-meta"><b>★ POST #2 COVER</b> · self-dev mesh · data-flow</div>
+      </a>
       <a class="art-card" href="assets/deep-self-dev-ai-selling-cover-3x1.png" target="_blank">
         <img src="assets/deep-self-dev-ai-selling-cover-3x1.png" alt="deep self-dev sales cover" loading="lazy">
         <div class="art-meta"><b>★ SELLING COVER</b> · deep-self-dev-ai · post #1</div>

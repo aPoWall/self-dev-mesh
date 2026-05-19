@@ -8,7 +8,7 @@ companion: AI-MINDSET-POST-1-SELLING.md (опубликован) + Лёшин pi
 event_already_announced: FOS #32 — 21 мая 2026
 sprint_url: https://selfdev.aimindset.org/
 live_demo: https://aim-self-dev-mesh.netlify.app/
-visual: 3:1 cover — выбирается из assets/mesh-avatar-format-0*-3x1
+visual: assets/ai-mindset-post-2-mesh-flow-cover-3x1.png
 length_chars: ~2700
 voice: AIM channel · alex p · narrative · soft-invitation
 angle: «откат к предыдущей версии — это и есть глубокое саморазвитие. идея — скрестить агентов из разных стеков»
@@ -73,7 +73,7 @@ alex p
 - [x] live mesh — invitation «потыкать»
 
 ## visual
-плашка 3:1 показывающая стек как поток данных. кандидаты в assets/mesh-avatar-format-0*-3x1.png · выбор за alex.
+финальная плашка 3:1 показывает стек как поток данных: `assets/ai-mindset-post-2-mesh-flow-cover-3x1.png` (+ animated SVG source).
 
 ## ссылки
 - post-1 (опубликован): [[{channel} {selling} Deep Self-development — продающий @ai_mind_set – 2026-05-19]]

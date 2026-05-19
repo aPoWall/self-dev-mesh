@@ -58,8 +58,8 @@
     <rect x="314" y="400" width="222" height="104" fill="#000" stroke="#000" stroke-width="2"/>
     <circle cx="402" cy="456" r="54" fill="#fff" stroke="#000" stroke-width="2"/>
     <image href="mesh-ivanov-avatar.jpg" x="352" y="406" width="100" height="100" clip-path="url(#clipIvanov)" preserveAspectRatio="xMidYMid slice"/>
-    <text x="402" y="530" class="mono" font-size="17" font-weight="800" letter-spacing="4" text-anchor="middle" fill="#fff">IVANOV</text>
-    <text x="402" y="552" class="mono tiny" text-anchor="middle" fill="#bfbfbf">codex cli</text>
+    <text x="402" y="530" class="mono" font-size="17" font-weight="800" letter-spacing="4" text-anchor="middle" fill="#000">IVANOV</text>
+    <text x="402" y="552" class="mono tiny" text-anchor="middle" fill="#888">codex cli</text>
   </g>
 
   <g>

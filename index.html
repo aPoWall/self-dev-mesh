@@ -850,31 +850,24 @@ function renderFinalArticle(data){
   }).join('');
 }
 
-// patch renderParagraphs to apply filter + render final
-const _origLoad = loadParagraphs;
+// patch existing loadParagraphs to (a) apply graph filter to history-grid, (b) render final article
+const _prevLoad = loadParagraphs;
 loadParagraphs = async function(){
+  await _prevLoad();
   try{
     const r = await fetch('paragraphs/index.json?ts='+Date.now(),{cache:'no-cache'});
     if(!r.ok) return;
     const data = await r.json();
-    // apply filter if any
+    // re-render history grid with filter (if any) without disturbing other panels
     const filt = window.__historyFilter;
-    const filtered = filt ? {
-      ...data,
-      paragraphs: (data.paragraphs||[]).filter(p=>
+    if(filt){
+      const filtered = {...data, paragraphs: (data.paragraphs||[]).filter(p=>
         (!filt.author || (p.author||'').toLowerCase()===filt.author.toLowerCase()) &&
-        (!filt.regime || p.regime===filt.regime))
-    } : data;
-    renderParagraphs(filtered);
-    updateCounters(data);
-    if(typeof updateProtocol === 'function') updateProtocol(data);
-    if(typeof updateMurmurStatus === 'function') updateMurmurStatus(data);
-    if(typeof renderEvolution === 'function') renderEvolution(data);
-    if(typeof renderEdgesAndStacks === 'function') renderEdgesAndStacks(data);
+        (!filt.regime || p.regime===filt.regime))};
+      renderParagraphs(filtered);
+    }
     renderFinalArticle(data);
-    const lu = document.getElementById('last-update');
-    if(lu) lu.textContent = 'last update ' + new Date().toISOString().slice(11,19) + ' utc';
-  }catch(e){console.warn('load failed',e);}
+  }catch(e){console.warn('extras failed',e);}
 };
 
 loadParagraphs();

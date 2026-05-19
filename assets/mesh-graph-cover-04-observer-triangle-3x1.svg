@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="600" viewBox="0 0 1800 600">
+  <defs>
+    <pattern id="grid" width="36" height="36" patternUnits="userSpaceOnUse"><path d="M36 0H0V36" fill="none" stroke="#eeeeee" stroke-width="1"/></pattern>
+    <clipPath id="clip-shaper"><circle cx="0" cy="0" r="1"/></clipPath>
+    <style>
+      .mono{font-family:JetBrains Mono,SFMono-Regular,Menlo,Consolas,monospace}
+      .label{font-size:12px;letter-spacing:4px;text-transform:uppercase;fill:#8a8a8a}
+      .tiny{font-size:10px;letter-spacing:2.4px;text-transform:uppercase;fill:#8a8a8a}
+      .name{font-size:18px;font-weight:800;letter-spacing:5px;fill:#000}
+      .edge{fill:none;stroke:#000;stroke-width:5;stroke-linecap:round}
+      .edge-soft{fill:none;stroke:#aaa;stroke-width:2;stroke-dasharray:10 12;stroke-linecap:round}
+      .edge-red{fill:none;stroke:#c43838;stroke-width:3;stroke-dasharray:12 10;stroke-linecap:round}
+      .dot{fill:#000;stroke:#fff;stroke-width:3}
+      .dot-red{fill:#c43838;stroke:#fff;stroke-width:3}
+      @keyframes pulse{0%,100%{opacity:.3;transform:scale(.9)}50%{opacity:1;transform:scale(1.15)}}
+      @keyframes dash{from{stroke-dashoffset:0}to{stroke-dashoffset:-44}}
+      .moving{animation:dash 2.4s linear infinite}
+      .pulse{transform-box:fill-box;transform-origin:center;animation:pulse 1.8s ease-in-out infinite}
+    </style>
+  </defs>
+  <rect width="1800" height="600" fill="#fff"/>
+  <rect width="1800" height="600" fill="url(#grid)" opacity=".22"/>
+  <rect x="28" y="28" width="1744" height="544" fill="none" stroke="#000" stroke-width="2"/>
+  <text x="62" y="72" class="mono label" fill="#000">fig.mesh.cover.04 · observer triangle</text>
+  <text x="1738" y="72" class="mono tiny" text-anchor="end">human watches · agents revise</text>
+
+  <g>
+    <circle cx="900" cy="122" r="54" fill="#fff" stroke="#000" stroke-width="3"/>
+    <text x="900" y="129" class="mono" font-size="18" font-weight="800" letter-spacing="5" text-anchor="middle">HUMAN</text>
+    <text x="900" y="210" class="mono tiny" text-anchor="middle">not approving editor</text>
+  </g><path d="M858 170 L 566 358" class="edge-soft"/><path d="M942 170 L 1234 358" class="edge-soft"/><path d="M566 358 C 760 270,1040 270,1234 358" class="edge-red moving"/><path d="M1234 388 C 1040 486,760 486,566 388" class="edge-soft moving"/>
+  <defs><clipPath id="clip-shaper-500-382"><circle cx="500" cy="382" r="74"/></clipPath></defs>
+  <g>
+    <circle cx="500" cy="382" r="80" fill="#fff" stroke="#000" stroke-width="3"/>
+    <image href="mesh-alex-avatar.png" x="426" y="308" width="148" height="148" clip-path="url(#clip-shaper-500-382)" preserveAspectRatio="xMidYMid slice"/>
+    <line x1="500" y1="308" x2="500" y2="456" stroke="#c43838" stroke-width="3"/><circle cx="478" cy="382" r="12" fill="#c43838"/><rect x="504" y="371" width="58" height="22" fill="#c43838" opacity=".9"/>
+    <text x="500" y="498" class="mono name" text-anchor="middle" fill="#000">SHAPER</text>
+    <text x="500" y="524" class="mono tiny" text-anchor="middle" fill="#8a8a8a">leaves trace</text>
+  </g>
+  <defs><clipPath id="clip-ivanov-1300-382"><circle cx="1300" cy="382" r="74"/></clipPath></defs>
+  <g>
+    <circle cx="1300" cy="382" r="80" fill="#000" stroke="#000" stroke-width="3"/>
+    <image href="mesh-ivanov-avatar.jpg" x="1226" y="308" width="148" height="148" clip-path="url(#clip-ivanov-1300-382)" preserveAspectRatio="xMidYMid slice"/>
+    
+    <text x="1300" y="498" class="mono name" text-anchor="middle" fill="#fff">CODEX</text>
+    <text x="1300" y="524" class="mono tiny" text-anchor="middle" fill="#bfbfbf">reads trace</text>
+  </g><circle cx="700" cy="306" r="9" class="dot-red pulse"/><circle cx="900" cy="286" r="9" class="dot"/><circle cx="1100" cy="306" r="9" class="dot-red pulse"/><circle cx="900" cy="470" r="9" class="dot"/><text x="900" y="344" class="mono" font-size="22" font-weight="800" letter-spacing="3" text-anchor="middle">agent-to-agent</text><g><rect x="729.0" y="386" width="342" height="48" fill="#c43838"/><text x="900" y="417" class="mono" font-size="16" font-weight="800" letter-spacing="3" text-anchor="middle" fill="#fff">HUMAN WATCHES STATUS</text></g><text x="900" y="552" class="mono tiny" text-anchor="middle">the edit happens between agents · the person watches state</text></svg>

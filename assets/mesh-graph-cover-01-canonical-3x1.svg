@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="600" viewBox="0 0 1800 600">
+  <defs>
+    <pattern id="grid" width="36" height="36" patternUnits="userSpaceOnUse"><path d="M36 0H0V36" fill="none" stroke="#eeeeee" stroke-width="1"/></pattern>
+    <clipPath id="clip-shaper"><circle cx="0" cy="0" r="1"/></clipPath>
+    <style>
+      .mono{font-family:JetBrains Mono,SFMono-Regular,Menlo,Consolas,monospace}
+      .label{font-size:12px;letter-spacing:4px;text-transform:uppercase;fill:#8a8a8a}
+      .tiny{font-size:10px;letter-spacing:2.4px;text-transform:uppercase;fill:#8a8a8a}
+      .name{font-size:18px;font-weight:800;letter-spacing:5px;fill:#000}
+      .edge{fill:none;stroke:#000;stroke-width:5;stroke-linecap:round}
+      .edge-soft{fill:none;stroke:#aaa;stroke-width:2;stroke-dasharray:10 12;stroke-linecap:round}
+      .edge-red{fill:none;stroke:#c43838;stroke-width:3;stroke-dasharray:12 10;stroke-linecap:round}
+      .dot{fill:#000;stroke:#fff;stroke-width:3}
+      .dot-red{fill:#c43838;stroke:#fff;stroke-width:3}
+      @keyframes pulse{0%,100%{opacity:.3;transform:scale(.9)}50%{opacity:1;transform:scale(1.15)}}
+      @keyframes dash{from{stroke-dashoffset:0}to{stroke-dashoffset:-44}}
+      .moving{animation:dash 2.4s linear infinite}
+      .pulse{transform-box:fill-box;transform-origin:center;animation:pulse 1.8s ease-in-out infinite}
+    </style>
+  </defs>
+  <rect width="1800" height="600" fill="#fff"/>
+  <rect width="1800" height="600" fill="url(#grid)" opacity=".22"/>
+  <rect x="28" y="28" width="1744" height="544" fill="none" stroke="#000" stroke-width="2"/>
+  <text x="62" y="72" class="mono label" fill="#000">fig.mesh.cover.01 · canonical communication graph</text>
+  <text x="1738" y="72" class="mono tiny" text-anchor="end">dots = messages in flight</text>
+
+  <g>
+    <circle cx="900" cy="142" r="52" fill="#fff" stroke="#000" stroke-width="3"/>
+    <text x="900" y="149" class="mono" font-size="18" font-weight="800" letter-spacing="5" text-anchor="middle">HUMAN</text>
+    <text x="900" y="228" class="mono tiny" text-anchor="middle">alex · observer</text>
+  </g><path d="M858 190 L 648 342" class="edge-soft"/><path d="M942 190 L 1152 342" class="edge-soft"/><text x="708" y="276" class="mono label" text-anchor="middle">observes</text><text x="1092" y="276" class="mono label" text-anchor="middle">observes</text>
+  <defs><clipPath id="clip-shaper-610-390"><circle cx="610" cy="390" r="72"/></clipPath></defs>
+  <g>
+    <circle cx="610" cy="390" r="78" fill="#fff" stroke="#000" stroke-width="3"/>
+    <image href="mesh-alex-avatar.png" x="538" y="318" width="144" height="144" clip-path="url(#clip-shaper-610-390)" preserveAspectRatio="xMidYMid slice"/>
+    <line x1="610" y1="318" x2="610" y2="462" stroke="#c43838" stroke-width="3"/><circle cx="588" cy="390" r="12" fill="#c43838"/><rect x="614" y="379" width="58" height="22" fill="#c43838" opacity=".9"/>
+    <text x="610" y="504" class="mono name" text-anchor="middle" fill="#000">SHAPER</text>
+    <text x="610" y="530" class="mono tiny" text-anchor="middle" fill="#8a8a8a">claude code · channel voice</text>
+  </g>
+  <defs><clipPath id="clip-ivanov-1190-390"><circle cx="1190" cy="390" r="72"/></clipPath></defs>
+  <g>
+    <circle cx="1190" cy="390" r="78" fill="#000" stroke="#000" stroke-width="3"/>
+    <image href="mesh-ivanov-avatar.jpg" x="1118" y="318" width="144" height="144" clip-path="url(#clip-ivanov-1190-390)" preserveAspectRatio="xMidYMid slice"/>
+    
+    <text x="1190" y="504" class="mono name" text-anchor="middle" fill="#fff">CODEX</text>
+    <text x="1190" y="530" class="mono tiny" text-anchor="middle" fill="#bfbfbf">codex cli · ivanov-research</text>
+  </g><line x1="692" y1="390" x2="1108" y2="390" class="edge"/>
+<circle cx="744.0" cy="390.0" r="9" class="dot-red pulse"/>
+<circle cx="796.0" cy="390.0" r="9" class="dot"/>
+<circle cx="848.0" cy="390.0" r="9" class="dot-red pulse"/>
+<circle cx="900.0" cy="390.0" r="9" class="dot"/>
+<circle cx="952.0" cy="390.0" r="9" class="dot"/>
+<circle cx="1004.0" cy="390.0" r="9" class="dot"/>
+<circle cx="1056.0" cy="390.0" r="9" class="dot"/>
+<text x="900.0" y="368" class="mono" font-size="18" font-weight="700" letter-spacing="2" text-anchor="middle">12 paragraphs · 6 rounds</text><g><rect x="759.0" y="438" width="282" height="48" fill="#c43838"/><text x="900" y="469" class="mono" font-size="16" font-weight="800" letter-spacing="3" text-anchor="middle" fill="#fff">NEXT: ivanov c13 · v1</text></g><text x="900" y="552" class="mono tiny" text-anchor="middle">murmur transport · sidecar review · git history</text></svg>

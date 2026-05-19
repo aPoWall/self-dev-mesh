@@ -77,6 +77,14 @@ body{min-height:100vh;display:flex;flex-direction:column}
 .avatar-sigil{width:48px;height:48px;border-radius:50%;overflow:hidden;border:1px solid var(--ink);background:#fff;display:block}
 .avatar-sigil img{width:100%;height:100%;object-fit:cover;display:block}
 
+.protocol-board{display:grid;grid-template-columns:1fr;gap:7px}
+.protocol-row{display:grid;grid-template-columns:96px 1fr;gap:12px;align-items:baseline;border:1px solid var(--soft);background:#fff;padding:8px 10px}
+.protocol-row .label{font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted)}
+.protocol-row .value{font-size:11px;line-height:1.45;color:var(--ink)}
+.protocol-row .value b{font-weight:600}
+.checking-note{border:1px dashed var(--ink);padding:10px 12px;font-size:10.5px;line-height:1.5;color:var(--muted);background:#fff}
+.checking-note b{color:var(--ink);font-weight:600}
+
 /* dashboard view = iframe to dashboard.html (no header chrome inside) */
 #view-dashboard{grid-template-columns:1fr;padding:24px 28px}
 #view-dashboard iframe{width:100%;height:1500px;border:1px solid var(--soft);display:block}
@@ -86,6 +94,15 @@ body{min-height:100vh;display:flex;flex-direction:column}
 
 /* paragraphs view · markdown-editor style w/ inline diff + margin comments */
 #view-paragraphs{grid-template-columns:1fr;padding:24px 28px;max-width:1200px;margin:0 auto;width:100%}
+.revision-flow{display:flex;gap:10px;align-items:stretch;overflow-x:auto;padding:14px 0 18px;border-bottom:1px solid var(--soft);margin-bottom:14px}
+.revision-node{flex:0 0 218px;border:1px solid var(--ink);background:#fff;color:#000;padding:12px 12px;min-height:112px;display:flex;flex-direction:column;gap:8px}
+.revision-node.ivanov{background:#000;color:#fff}
+.revision-node.next{border-style:dashed;background:#fafafa;color:#000}
+.revision-node .rv-head{display:flex;justify-content:space-between;gap:10px;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;border-bottom:1px solid currentColor;padding-bottom:6px}
+.revision-node .rv-head b{font-weight:600}
+.revision-node .rv-line{font-size:10.5px;line-height:1.45;color:inherit;opacity:0.72}
+.revision-node .rv-line strong{font-weight:600;opacity:1}
+.revision-arrow{flex:0 0 24px;display:grid;place-items:center;color:var(--muted);font-size:18px}
 .paragraphs-grid{display:flex;flex-direction:column;gap:28px;margin-top:14px}
 .paragraph-card{display:grid;grid-template-columns:1fr 280px;gap:24px;border-top:1px solid var(--ink);padding-top:24px;background:#fff}
 .paragraph-card:first-child{border-top:0;padding-top:0}
@@ -102,6 +119,9 @@ body{min-height:100vh;display:flex;flex-direction:column}
 .pc-body p:last-child{margin-bottom:0}
 .pc-body ins{background:#dff5d4;text-decoration:none;padding:0 2px}
 .pc-body del{background:#f9d4d4;text-decoration:line-through;opacity:0.7;padding:0 2px}
+.pc-text{border:1px dashed var(--soft);padding:9px 11px}
+.pc-text summary{cursor:pointer;font-family:var(--mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted)}
+.pc-text[open] summary{margin-bottom:10px;color:var(--ink)}
 .pc-revisions{display:flex;flex-direction:column;gap:6px;margin-top:8px;font-size:11px;letter-spacing:0.08em;color:var(--muted)}
 .pc-rev-row{display:inline-flex;align-items:center;gap:8px;text-transform:uppercase;font-size:10px;letter-spacing:0.14em}
 .pc-rev-row .pc-rev-dot{width:7px;height:7px;border-radius:50%;background:var(--ink);display:inline-block}
@@ -142,7 +162,7 @@ footer .actions a.primary{background:var(--ink);color:#fff}
   <img src="aim-logo.png" alt="ai mindset" class="logo">
   <div class="brand">
     <div class="brand-name">self-dev mesh</div>
-    <div class="brand-sub">ai mindset · two-voice writing simulator · model before commit</div>
+    <div class="brand-sub">ai mindset · agent-to-agent revision loop · human watches status</div>
   </div>
   <nav class="tabs" role="tablist">
     <button class="active" data-view="mesh">mesh</button>
@@ -154,16 +174,16 @@ footer .actions a.primary{background:var(--ink);color:#fff}
     <span style="color:#ccc"> · </span>
     <b id="paragraphs-count">0</b><span style="font-size:10px"> paragraphs</span>
     <span style="color:#ccc"> · </span>
-    <b id="status-label">idle</b><span style="font-size:10px"> · протокол</span>
+    <b id="status-label">idle</b><span style="font-size:10px"> · checking</span>
   </div>
 </header>
 
 <section class="phases">
-  <span class="step active" id="phase-context">◐ context</span><span class="sep">→</span>
+  <span class="step active" id="phase-context">◐ read peer</span><span class="sep">→</span>
   <span class="step" id="phase-compose">◑ compose</span><span class="sep">→</span>
-  <span class="step" id="phase-handoff">◒ handoff</span><span class="sep">→</span>
-  <span class="step" id="phase-review">◓ review</span><span class="sep">→</span>
-  <span class="step" id="phase-publish">● publish</span>
+  <span class="step" id="phase-handoff">◒ murmur</span><span class="sep">→</span>
+  <span class="step" id="phase-review">◓ revise</span><span class="sep">→</span>
+  <span class="step" id="phase-publish">● publish/check</span>
   <span class="timer" id="last-update">last update —</span>
 </section>
 
@@ -298,6 +318,27 @@ footer .actions a.primary{background:var(--ink);color:#fff}
     </section>
 
     <section>
+      <div class="kicker">protocol · agent-to-agent</div>
+      <div class="protocol-board" id="protocol-board">
+        <div class="protocol-row">
+          <div class="label">mode</div>
+          <div class="value"><b>agent-to-agent</b> · человек не approving editor, а observer</div>
+        </div>
+        <div class="protocol-row">
+          <div class="label">latest</div>
+          <div class="value" id="protocol-latest">— waiting —</div>
+        </div>
+        <div class="protocol-row">
+          <div class="label">next</div>
+          <div class="value" id="protocol-next">— waiting —</div>
+        </div>
+      </div>
+      <div class="checking-note" style="margin-top:8px">
+        <b>june checking:</b> daily status pass watches cycles, deploy freshness and who should write next.
+      </div>
+    </section>
+
+    <section>
       <div class="kicker">topic · target</div>
       <p style="font-size:11.5px;line-height:1.55;margin:0;color:var(--ink)">
         продающий пост для канала <a href="https://t.me/ai_mind_set" target="_blank" style="color:#000">@ai_mind_set</a> и финальная статья про
@@ -314,7 +355,10 @@ footer .actions a.primary{background:var(--ink);color:#fff}
 
 <!-- ━━ PARAGRAPHS VIEW ━━ -->
 <section id="view-paragraphs" class="view">
-  <div class="kicker">paragraphs · all versions · newest first</div>
+  <div class="kicker">paragraphs · revision chain · text hidden by default</div>
+  <div id="revision-flow" class="revision-flow">
+    <div class="paragraphs-empty">— waiting for revision chain —</div>
+  </div>
   <div id="paragraphs-grid" class="paragraphs-grid">
     <div class="paragraphs-empty">— ждёт первого paragraph'а из murmur loop —</div>
   </div>
@@ -368,11 +412,17 @@ async function loadParagraphs(){
 function escHtml(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 function bodyHtml(b){return escHtml(b).replace(/\[ins\](.*?)\[\/ins\]/gs,'<ins>$1</ins>').replace(/\[del\](.*?)\[\/del\]/gs,'<del>$1</del>').replace(/\n\n/g,'</p><p>').replace(/\n/g,'<br>');}
 function authorAvatar(a){return (a||'').toLowerCase().includes('ivanov')?'ivanov-avatar.jpg':'alex-avatar.png';}
+function authorKey(a){return (a||'').toLowerCase().includes('ivanov')?'ivanov-research':'shaper';}
+function authorLabel(a){return authorKey(a)==='ivanov-research'?'IVANOV':'SHAPER';}
+function nextRegime(regime){return regime==='v1'?'v2':regime==='v2'?'v3':'v1';}
+function sortedParagraphs(data){return [...(data.paragraphs||[])].sort((a,b)=>(a.cycle||0)-(b.cycle||0)||String(a.author||'').localeCompare(String(b.author||'')));}
+
 function renderParagraphs(data){
   const grid=document.getElementById('paragraphs-grid');
+  renderRevisionFlow(data);
   if(!data.paragraphs||!data.paragraphs.length){grid.innerHTML='<div class="paragraphs-empty">— ждёт первого paragraph\'а из mesh —</div>';return;}
-  const sorted=[...data.paragraphs].sort((a,b)=>(a.cycle||0)-(b.cycle||0));
-  grid.innerHTML='<div class="paragraphs-toolbar"><span class="badge">document</span><span>'+sorted.length+' paragraphs · 2 voices · inline edits + margin comments</span></div>'+
+  const sorted=sortedParagraphs(data);
+  grid.innerHTML='<div class="paragraphs-toolbar"><span class="badge">observer mode</span><span>'+sorted.length+' paragraphs · agents read each other · raw text collapsed</span></div>'+
     sorted.map(p=>{
       const cls=(p.author||'').toLowerCase().includes('ivanov')?'ivanov':'shaper';
       const revs=(p.revisions||[]).map(r=>`<span class="pc-rev-row ${(r.by||'').toLowerCase().includes('ivanov')?'ivanov':'shaper'}"><span class="pc-rev-dot"></span>revised by ${escHtml(r.by)} · ${escHtml(r.ts||'')}</span>`).join('');
@@ -380,17 +430,46 @@ function renderParagraphs(data){
       return `<article class="paragraph-card">
         <div class="pc-main">
           <div class="pc-head">
-            <span class="pc-author"><img src="${authorAvatar(p.author)}" alt=""><b>${escHtml(p.author||'?')}</b></span>
-            <span><span class="pc-cycle">cycle ${p.cycle||'?'}</span> <span class="pc-regime">· ${escHtml(p.regime||'?')}</span> · <span class="pc-time">${escHtml(p.time||'')}</span> · ${(p.body||'').length}c</span>
-          </div>
-          <div class="pc-body"><p>${bodyHtml(p.body||'')}</p></div>
-          ${revs?'<div class="pc-revisions">'+revs+'</div>':''}
-        </div>
-        <aside class="pc-comments">
+	            <span class="pc-author"><img src="${authorAvatar(p.author)}" alt=""><b>${escHtml(p.author||'?')}</b></span>
+	            <span><span class="pc-cycle">cycle ${p.cycle||'?'}</span> <span class="pc-regime">· ${escHtml(p.regime||'?')}</span> · <span class="pc-time">${escHtml(p.time||'')}</span> · ${(p.body||'').length}c</span>
+	          </div>
+	          <details class="pc-text">
+	            <summary>raw paragraph · hidden from observer flow</summary>
+	            <div class="pc-body"><p>${bodyHtml(p.body||'')}</p></div>
+	          </details>
+	          ${revs?'<div class="pc-revisions">'+revs+'</div>':''}
+	        </div>
+	        <aside class="pc-comments">
           ${comments||'<div class="pc-comments-empty">no comments yet · waiting for cross-voice review</div>'}
         </aside>
       </article>`;
-    }).join('');
+	    }).join('');
+}
+
+function renderRevisionFlow(data){
+  const flow=document.getElementById('revision-flow');
+  if(!flow) return;
+  const sorted=sortedParagraphs(data);
+  if(!sorted.length){flow.innerHTML='<div class="paragraphs-empty">— waiting for revision chain —</div>';return;}
+  const latest=sorted[sorted.length-1];
+  const nextAuthor=authorKey(latest.author)==='shaper'?'ivanov-research':'shaper';
+  const nextCycle=(latest.cycle||0)+1;
+  const nextV=nextRegime(latest.regime);
+  const nodes=sorted.map((p,i)=>{
+    const prev=sorted[i-1];
+    const cls=authorKey(p.author)==='ivanov-research'?'ivanov':'shaper';
+    const reads=prev?`reads ${authorLabel(prev.author)} · cycle ${prev.cycle} · ${prev.regime}`:'seed paragraph · starts loop';
+    return `<article class="revision-node ${cls}">
+      <div class="rv-head"><b>${authorLabel(p.author)}</b><span>c${p.cycle} · ${escHtml(p.regime||'?')}</span></div>
+      <div class="rv-line"><strong>reads:</strong> ${escHtml(reads)}</div>
+      <div class="rv-line"><strong>writes:</strong> ${authorLabel(p.author)} version · ${escHtml(p.time||'')}</div>
+    </article>${i<sorted.length-1?'<div class="revision-arrow">→</div>':''}`;
+  }).join('');
+  flow.innerHTML=nodes+`<div class="revision-arrow">→</div><article class="revision-node next">
+    <div class="rv-head"><b>next</b><span>c${nextCycle} · ${nextV}</span></div>
+    <div class="rv-line"><strong>${nextAuthor==='ivanov-research'?'IVANOV':'SHAPER'}</strong> reads latest peer text via Murmur/history.</div>
+    <div class="rv-line">human sees status, not drafts.</div>
+  </article>`;
 }
 
 function updateCounters(data){
@@ -402,13 +481,27 @@ function updateCounters(data){
   document.getElementById('shaper-count').textContent = shaperN;
   document.getElementById('ivanov-count').textContent = ivanovN;
   document.getElementById('stat-total').textContent = total;
-  document.getElementById('status-label').textContent = total > 0 ? 'live' : 'idle';
+  document.getElementById('status-label').textContent = total > 0 ? 'agent loop' : 'idle';
+  const sorted = sortedParagraphs(data);
+  const latest = sorted[sorted.length-1];
+  if(latest){
+    const nextAuthor = authorKey(latest.author)==='shaper'?'ivanov-research':'shaper';
+    const nextCycle = (latest.cycle||0)+1;
+    const nextV = nextRegime(latest.regime);
+    document.getElementById('phase-name').textContent = 'checking';
+    document.getElementById('protocol-latest').innerHTML = `<b>${authorLabel(latest.author)}</b> wrote cycle ${latest.cycle||'?'} · ${escHtml(latest.regime||'?')}`;
+    document.getElementById('protocol-next').innerHTML = `<b>${nextAuthor==='ivanov-research'?'IVANOV':'SHAPER'}</b> reads peer text and writes cycle ${nextCycle} · ${nextV}`;
+  }
 
   // populate timeline
   const evList = document.getElementById('events-list');
   if(total > 0){
-    const recent = [...data.paragraphs].sort((a,b)=> (b.cycle||0)-(a.cycle||0)).slice(0,8);
-    evList.innerHTML = recent.map(p=>`<li><span class="ev-time">${p.time||'—'}</span><span class="ev-phase">${p.regime||'v?'}</span>${p.author||'?'} · cycle ${p.cycle||'?'} · ${(p.body||'').slice(0,60)}…</li>`).join('');
+    const recent = sortedParagraphs(data).reverse().slice(0,8);
+    evList.innerHTML = recent.map((p,i)=>{
+      const prev = sortedParagraphs(data).find(x=>(x.cycle||0)===(p.cycle||0)-1);
+      const readLine = prev ? `read ${authorLabel(prev.author)} c${prev.cycle}` : 'seed';
+      return `<li><span class="ev-time">${escHtml(p.time||'—')}</span><span class="ev-phase">${escHtml(p.regime||'v?')}</span>${authorLabel(p.author)} · cycle ${p.cycle||'?'} · ${readLine}</li>`;
+    }).join('');
   }
 }
 

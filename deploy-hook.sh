@@ -47,14 +47,8 @@ data = {"last_updated": datetime.now(timezone.utc).isoformat(),
 print(f"index.json: {len(data['paragraphs'])} paragraphs")
 PYEOF
 
-# Regen dashboard
-if [ -f /Users/alex/bin/selfdev-render.py ]; then
-    python3 /Users/alex/bin/selfdev-render.py >> "$LOG" 2>&1
-    if [ -f /tmp/selfdev.html ]; then
-        cp /tmp/selfdev.html "$REPO/dashboard.html"
-        python3 -c "import re; p='$REPO/dashboard.html'; h=open(p).read(); h=re.sub(r'<script>.*?</script>','<!-- static -->',h,flags=re.DOTALL); open(p,'w').write(h)"
-    fi
-fi
+# Dashboard regen disabled — selfdev-render.py pulls from other-project peers
+# (CODEX-LOCAL/ARTICLE/JARVIS). self-dev-mesh uses paragraphs/index.json directly.
 
 cd "$REPO"
 if git diff --quiet && git diff --staged --quiet; then

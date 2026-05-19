@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>self-dev mesh · two voices, one article · ai mindset</title>
+<meta name="description" content="живая симуляция двухголосого написания статьи · alex × алексей иванов · encrypted murmur · deep self development × ai sprint">
+<meta property="og:title" content="self-dev mesh · ai mindset">
+<meta property="og:description" content="two voices, one article · encrypted murmur · live dashboard">
+<meta property="og:image" content="aim-logo.png">
+<link rel="icon" href="aim-logo.png">
+<link rel="apple-touch-icon" href="aim-logo.png">
+<style>
+:root{--bg:#fff;--ink:#000;--muted:#8a8a8a;--soft:#ececec;--hair:#f4f4f4;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--ink);font-family:var(--mono);font-size:13px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+body{min-height:100vh;display:flex;flex-direction:column}
+
+#mesh-header{display:grid;grid-template-columns:auto 1fr auto auto;gap:24px;align-items:center;
+  border-bottom:1px solid var(--ink);padding:16px 28px;text-transform:lowercase;letter-spacing:0.04em;position:sticky;top:0;background:#fff;z-index:10}
+#mesh-header img.logo{width:38px;height:38px;display:block}
+#mesh-header .brand{display:flex;flex-direction:column;gap:2px}
+.brand-name{font-size:18px;font-weight:600;letter-spacing:0.18em}
+.brand-sub{font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted)}
+.tabs{display:flex;gap:6px}
+.tabs button{font-family:inherit;font-size:11px;letter-spacing:0.14em;text-transform:lowercase;
+  border:1px solid var(--ink);background:#fff;color:var(--ink);padding:6px 16px;cursor:pointer}
+.tabs button.active{background:var(--ink);color:#fff}
+.tabs button[disabled]{color:#bbb;border-color:#ddd;cursor:not-allowed}
+.hd-meta{font-size:11px;letter-spacing:0.04em;color:var(--muted)}
+.hd-meta b{color:var(--ink);font-weight:500}
+
+.phases{display:flex;gap:0;align-items:center;border-bottom:1px solid var(--soft);padding:14px 28px;
+  font-size:11px;letter-spacing:0.16em;text-transform:lowercase}
+.phases .step{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;color:var(--muted)}
+.phases .step.active{color:var(--ink);font-weight:600;border:1px solid var(--ink)}
+.phases .sep{color:#ccc;margin:0 3px}
+.phases .timer{margin-left:auto;color:var(--muted);font-size:11px;letter-spacing:0.08em}
+
+.view{flex:1;display:none}
+.view.active{display:grid}
+
+/* mesh view */
+#view-mesh{grid-template-columns:1fr 380px}
+.graph-wrap{padding:24px 28px;border-right:1px solid var(--soft);min-height:540px}
+.aside-narration{padding:24px 28px;display:flex;flex-direction:column;gap:24px;background:#fafafa;min-height:540px}
+
+.kicker{font-size:10px;letter-spacing:0.20em;text-transform:uppercase;color:var(--muted);font-weight:500;margin:0 0 8px}
+.legend{display:flex;gap:18px;align-items:center;font-size:10px;letter-spacing:0.10em;text-transform:uppercase;color:var(--muted);margin:8px 0 14px}
+.legend i{display:inline-block;width:11px;height:11px;border:1px solid var(--ink);margin-right:6px;vertical-align:-2px}
+.legend .lg-person{background:var(--ink)}
+.legend .lg-module{background:var(--ink);border-radius:50%}
+.legend .lg-doc{background:#fff;position:relative}
+.legend .lg-doc::after{content:"×";position:absolute;inset:0;display:grid;place-items:center;font-size:9px;color:var(--ink);font-weight:700}
+.legend .lg-stat{background:#fff;border-radius:50%}
+
+.mesh-graph{display:block;width:100%;height:auto;max-width:760px;margin:0 auto}
+.node-label{font-family:var(--mono);font-size:11px;letter-spacing:0.04em;fill:var(--ink)}
+.node-sub{font-family:var(--mono);font-size:9.5px;letter-spacing:0.06em;fill:var(--muted);text-transform:uppercase}
+
+.sim-events-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;font-size:11px;max-height:300px;overflow-y:auto}
+.sim-events-list li{border:1px solid var(--soft);padding:6px 10px;background:#fff;line-height:1.45}
+.sim-events-list .ev-time{color:var(--muted);letter-spacing:0.06em;margin-right:8px}
+.sim-events-list .ev-phase{display:inline-block;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;background:var(--ink);color:#fff;padding:1px 6px;margin-right:8px;vertical-align:1px}
+.sim-events-list .empty{color:var(--muted);font-style:italic;text-align:center;padding:18px 0;border:1px dashed #ddd;background:transparent}
+
+.sim-docs-list{display:flex;flex-direction:column;gap:8px}
+.sim-doc-row{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:14px;
+  border:1px solid var(--soft);background:#fff;padding:10px 12px}
+.sim-doc-row .who{font-size:11.5px;font-weight:600;letter-spacing:0.04em}
+.sim-doc-row .role{font-size:9.5px;color:var(--muted);letter-spacing:0.04em;text-transform:uppercase}
+.sim-doc-row .counts{font-size:10px;letter-spacing:0.04em;color:var(--muted);text-align:right;line-height:1.4}
+.sim-doc-row .counts b{color:var(--ink);font-size:14px;font-weight:600;display:block}
+
+.avatar-sigil{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(4,1fr);
+  gap:1px;border:1px solid var(--ink);padding:2px;background:#fff;width:48px;height:48px}
+.avatar-sigil i{display:block;background:transparent}
+.avatar-sigil i.on{background:var(--ink)}
+
+/* dashboard view = iframe to dashboard.html (no header chrome inside) */
+#view-dashboard{grid-template-columns:1fr;padding:24px 28px}
+#view-dashboard iframe{width:100%;height:1500px;border:1px solid var(--soft);display:block}
+#view-dashboard .dashboard-toolbar{display:flex;gap:10px;align-items:center;margin-bottom:14px;font-size:11px;color:var(--muted);letter-spacing:0.06em}
+#view-dashboard .dashboard-toolbar a{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+#view-dashboard .dashboard-toolbar .reload{font-family:inherit;border:1px solid var(--ink);background:#fff;color:var(--ink);padding:4px 12px;cursor:pointer;font-size:10px;letter-spacing:0.14em;text-transform:lowercase}
+
+/* paragraphs view = real-time list of generated paragraph files */
+#view-paragraphs{grid-template-columns:1fr;padding:24px 28px}
+.paragraphs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:14px;margin-top:14px}
+.paragraph-card{border:1px solid var(--ink);padding:18px 22px;background:#fff;display:flex;flex-direction:column;gap:8px;min-height:180px}
+.paragraph-card.shaper{background:#fff}
+.paragraph-card.ivanov{background:#000;color:#fff}
+.paragraph-card .pc-head{display:flex;justify-content:space-between;align-items:baseline;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;padding-bottom:6px;border-bottom:1px solid currentColor}
+.paragraph-card .pc-cycle{font-weight:600}
+.paragraph-card .pc-regime{opacity:0.65}
+.paragraph-card .pc-time{opacity:0.5;font-size:9.5px}
+.paragraph-card .pc-body{font-size:13px;line-height:1.6;letter-spacing:-0.005em;flex:1}
+.paragraph-card .pc-meta{display:flex;gap:14px;font-size:9.5px;letter-spacing:0.06em;opacity:0.6;border-top:1px dashed currentColor;padding-top:6px}
+.paragraphs-empty{color:var(--muted);font-style:italic;text-align:center;padding:60px 0;border:1px dashed #ddd}
+
+footer{display:grid;grid-template-columns:auto 1fr auto;gap:24px;align-items:center;
+  border-top:1px solid var(--ink);padding:16px 28px;color:var(--muted);font-size:11px;letter-spacing:0.04em}
+footer a{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+footer .actions{display:flex;gap:8px}
+footer .actions a{display:inline-block;border:1px solid var(--ink);padding:8px 18px;text-decoration:none;
+  font-size:10px;letter-spacing:0.16em;text-transform:lowercase;font-weight:600;background:#fff}
+footer .actions a.primary{background:var(--ink);color:#fff}
+
+@media (max-width:900px){
+  #view-mesh{grid-template-columns:1fr}
+  .graph-wrap{border-right:0;border-bottom:1px solid var(--soft)}
+}
+</style>
+</head>
+<body>
+
+<header id="mesh-header">
+  <img src="aim-logo.png" alt="ai mindset" class="logo">
+  <div class="brand">
+    <div class="brand-name">self-dev mesh</div>
+    <div class="brand-sub">ai mindset · two-voice writing simulator · model before commit</div>
+  </div>
+  <nav class="tabs" role="tablist">
+    <button class="active" data-view="mesh">mesh</button>
+    <button data-view="paragraphs">paragraphs</button>
+    <button data-view="dashboard">dashboard</button>
+  </nav>
+  <div class="hd-meta">
+    <b id="phase-name">context</b>
+    <span style="color:#ccc"> · </span>
+    <b id="paragraphs-count">0</b><span style="font-size:10px"> paragraphs</span>
+    <span style="color:#ccc"> · </span>
+    <b id="status-label">idle</b><span style="font-size:10px"> · протокол</span>
+  </div>
+</header>
+
+<section class="phases">
+  <span class="step active" id="phase-context">◐ context</span><span class="sep">→</span>
+  <span class="step" id="phase-compose">◑ compose</span><span class="sep">→</span>
+  <span class="step" id="phase-handoff">◒ handoff</span><span class="sep">→</span>
+  <span class="step" id="phase-review">◓ review</span><span class="sep">→</span>
+  <span class="step" id="phase-publish">● publish</span>
+  <span class="timer" id="last-update">last update —</span>
+</section>
+
+<!-- ━━ MESH VIEW ━━ -->
+<section id="view-mesh" class="view active">
+
+  <section class="graph-wrap">
+    <div class="kicker">02 · constellation · two-voice mesh</div>
+    <div class="legend">
+      <span><i class="lg-person"></i>person</span>
+      <span><i class="lg-module"></i>module · branch</span>
+      <span><i class="lg-doc"></i>document · paragraph</span>
+      <span><i class="lg-stat"></i>stat</span>
+    </div>
+
+    <svg class="mesh-graph" viewBox="0 0 760 500" xmlns="http://www.w3.org/2000/svg">
+      <rect width="760" height="500" fill="#fff"/>
+
+      <g stroke="#000" stroke-width="1" opacity="0.4">
+        <line x1="170" y1="250" x2="330" y2="120" stroke-dasharray="3 4"/>
+        <line x1="170" y1="250" x2="330" y2="250" stroke-dasharray="3 4"/>
+        <line x1="170" y1="250" x2="330" y2="380" stroke-dasharray="3 4"/>
+        <line x1="590" y1="250" x2="430" y2="120" stroke-dasharray="3 4"/>
+        <line x1="590" y1="250" x2="430" y2="250" stroke-dasharray="3 4"/>
+        <line x1="590" y1="250" x2="430" y2="380" stroke-dasharray="3 4"/>
+        <line x1="330" y1="120" x2="430" y2="120" stroke-dasharray="2 3" opacity="0.3"/>
+        <line x1="330" y1="250" x2="430" y2="250" stroke-dasharray="2 3" opacity="0.3"/>
+        <line x1="330" y1="380" x2="430" y2="380" stroke-dasharray="2 3" opacity="0.3"/>
+      </g>
+
+      <!-- SHAPER avatar -->
+      <g transform="translate(118,198)">
+        <rect width="104" height="104" fill="#fff" stroke="#000" stroke-width="2"/>
+        <g fill="#000">
+          <rect x="6" y="6" width="22" height="22"/>
+          <rect x="56" y="6" width="22" height="22"/>
+          <rect x="31" y="31" width="22" height="22"/>
+          <rect x="81" y="31" width="22" height="22"/>
+          <rect x="6" y="56" width="22" height="22"/>
+          <rect x="56" y="56" width="22" height="22"/>
+          <rect x="31" y="81" width="22" height="22"/>
+          <rect x="81" y="81" width="22" height="22"/>
+        </g>
+        <text x="52" y="124" text-anchor="middle" class="node-label" font-weight="600">shaper</text>
+        <text x="52" y="138" text-anchor="middle" class="node-sub">alex · channel voice</text>
+      </g>
+
+      <g transform="translate(538,198)">
+        <rect width="104" height="104" fill="#fff" stroke="#000" stroke-width="2"/>
+        <g fill="#000">
+          <rect x="31" y="6" width="22" height="22"/>
+          <rect x="81" y="6" width="22" height="22"/>
+          <rect x="6" y="31" width="22" height="22"/>
+          <rect x="56" y="31" width="22" height="22"/>
+          <rect x="31" y="56" width="22" height="22"/>
+          <rect x="81" y="56" width="22" height="22"/>
+          <rect x="6" y="81" width="22" height="22"/>
+          <rect x="56" y="81" width="22" height="22"/>
+        </g>
+        <text x="52" y="124" text-anchor="middle" class="node-label" font-weight="600">ivanov-research</text>
+        <text x="52" y="138" text-anchor="middle" class="node-sub">alexey ivanov · ifs coach</text>
+      </g>
+
+      <g>
+        <circle cx="330" cy="120" r="22" fill="#000"/>
+        <text x="330" y="124" text-anchor="middle" class="node-label" fill="#fff" font-weight="600">v1</text>
+        <text x="330" y="92" text-anchor="middle" class="node-sub">branch · rational</text>
+
+        <circle cx="330" cy="250" r="22" fill="#000"/>
+        <text x="330" y="254" text-anchor="middle" class="node-label" fill="#fff" font-weight="600">v2</text>
+        <text x="330" y="222" text-anchor="middle" class="node-sub">branch · gonzo</text>
+
+        <circle cx="330" cy="380" r="22" fill="#000"/>
+        <text x="330" y="384" text-anchor="middle" class="node-label" fill="#fff" font-weight="600">v3</text>
+        <text x="330" y="352" text-anchor="middle" class="node-sub">branch · melancholic</text>
+      </g>
+
+      <g id="doc-nodes">
+        <g transform="translate(414,104)">
+          <rect width="32" height="32" fill="#fff" stroke="#000" stroke-width="1.5"/>
+          <line x1="0" y1="0" x2="32" y2="32" stroke="#000" stroke-width="1.5"/>
+          <line x1="32" y1="0" x2="0" y2="32" stroke="#000" stroke-width="1.5"/>
+        </g>
+        <text x="430" y="92" text-anchor="middle" class="node-sub">paragraph · v1</text>
+
+        <g transform="translate(414,234)">
+          <rect width="32" height="32" fill="#fff" stroke="#000" stroke-width="1.5"/>
+          <line x1="0" y1="0" x2="32" y2="32" stroke="#000" stroke-width="1.5"/>
+          <line x1="32" y1="0" x2="0" y2="32" stroke="#000" stroke-width="1.5"/>
+        </g>
+        <text x="430" y="222" text-anchor="middle" class="node-sub">paragraph · v2</text>
+
+        <g transform="translate(414,364)">
+          <rect width="32" height="32" fill="#fff" stroke="#000" stroke-width="1.5"/>
+          <line x1="0" y1="0" x2="32" y2="32" stroke="#000" stroke-width="1.5"/>
+          <line x1="32" y1="0" x2="0" y2="32" stroke="#000" stroke-width="1.5"/>
+        </g>
+        <text x="430" y="352" text-anchor="middle" class="node-sub">paragraph · v3</text>
+      </g>
+
+      <g>
+        <circle cx="380" cy="430" r="14" fill="#fff" stroke="#000" stroke-width="1.5"/>
+        <text id="stat-total" x="380" y="434" text-anchor="middle" font-size="11" font-family="JetBrains Mono" font-weight="600">0</text>
+        <text x="380" y="464" text-anchor="middle" class="node-sub">paragraphs · produced</text>
+      </g>
+    </svg>
+
+    <div style="margin-top:24px;font-size:12px;color:var(--muted);text-align:center;font-style:italic">
+      live mesh · paragraphs пушатся через git каждый цикл · netlify auto-deploy · refresh каждые 60 сек
+    </div>
+  </section>
+
+  <aside class="aside-narration">
+    <section>
+      <div class="kicker">timeline · latest events</div>
+      <ol id="events-list" class="sim-events-list">
+        <li class="empty">— waiting for first paragraph —</li>
+      </ol>
+    </section>
+
+    <section>
+      <div class="kicker">performers · documents</div>
+      <div class="sim-docs-list">
+        <div class="sim-doc-row">
+          <div class="avatar-sigil" aria-hidden="true">
+            <i class="on"></i><i></i><i class="on"></i><i></i>
+            <i></i><i class="on"></i><i></i><i class="on"></i>
+            <i class="on"></i><i></i><i class="on"></i><i></i>
+            <i></i><i class="on"></i><i></i><i class="on"></i>
+          </div>
+          <div>
+            <div class="who">shaper</div>
+            <div class="role">alex · ai mindset channel voice</div>
+          </div>
+          <div class="counts">
+            <b id="shaper-count">0</b><span>paragraphs</span>
+          </div>
+        </div>
+
+        <div class="sim-doc-row">
+          <div class="avatar-sigil" aria-hidden="true">
+            <i></i><i class="on"></i><i></i><i class="on"></i>
+            <i class="on"></i><i></i><i class="on"></i><i></i>
+            <i></i><i class="on"></i><i></i><i class="on"></i>
+            <i class="on"></i><i></i><i class="on"></i><i></i>
+          </div>
+          <div>
+            <div class="who">ivanov-research</div>
+            <div class="role">alexey ivanov · ifs executive coach</div>
+          </div>
+          <div class="counts">
+            <b id="ivanov-count">0</b><span>paragraphs</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="kicker">topic · target</div>
+      <p style="font-size:11.5px;line-height:1.55;margin:0;color:var(--ink)">
+        продающий пост для канала <a href="https://t.me/ai_mind_set" target="_blank" style="color:#000">@ai_mind_set</a> и финальная статья про
+        <em>как ai становится частью внутренней работы</em>.
+        две разных позиции, два разных мира.
+      </p>
+      <p style="font-size:10.5px;line-height:1.5;margin:10px 0 0;color:var(--muted);letter-spacing:0.04em">
+        sprint <b><a href="https://selfdev.aimindset.org/" target="_blank" style="color:#000">deep self development × ai</a></b><br>
+        1–14 июня 2026 · alex × алексей иванов
+      </p>
+    </section>
+  </aside>
+</section>
+
+<!-- ━━ PARAGRAPHS VIEW ━━ -->
+<section id="view-paragraphs" class="view">
+  <div class="kicker">paragraphs · all versions · newest first</div>
+  <div id="paragraphs-grid" class="paragraphs-grid">
+    <div class="paragraphs-empty">— ждёт первого paragraph'а из murmur loop —</div>
+  </div>
+</section>
+
+<!-- ━━ DASHBOARD VIEW ━━ -->
+<section id="view-dashboard" class="view">
+  <div class="dashboard-toolbar">
+    <span class="kicker" style="margin:0">live walkie-talkie snapshot</span>
+    <span style="color:#ccc">|</span>
+    <a href="dashboard.html" target="_blank">→ open standalone</a>
+    <button class="reload" onclick="document.getElementById('dash-frame').src=document.getElementById('dash-frame').src">reload</button>
+  </div>
+  <iframe id="dash-frame" src="dashboard.html" title="self-dev mesh · live dashboard"></iframe>
+</section>
+
+<footer>
+  <div>self-dev mesh · alex p × alexey ivanov · live</div>
+  <div></div>
+  <div class="actions">
+    <a href="https://github.com/aPoWall/self-dev-mesh" target="_blank">source</a>
+    <a href="https://selfdev.aimindset.org/" target="_blank">sprint</a>
+    <a href="https://aimindset.org" target="_blank" class="primary">ai mindset</a>
+  </div>
+</footer>
+
+<script>
+// tab switching
+document.querySelectorAll('#mesh-header .tabs button').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    if(btn.disabled) return;
+    document.querySelectorAll('#mesh-header .tabs button').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('view-'+btn.dataset.view).classList.add('active');
+  });
+});
+
+// real-time paragraph loader · polls paragraphs/index.json every 60s
+async function loadParagraphs(){
+  try{
+    const r = await fetch('paragraphs/index.json?ts='+Date.now(),{cache:'no-cache'});
+    if(!r.ok) return;
+    const data = await r.json();
+    renderParagraphs(data);
+    updateCounters(data);
+    document.getElementById('last-update').textContent = 'last update ' + new Date().toISOString().slice(11,19) + ' utc';
+  }catch(e){console.warn('paragraphs not available yet',e);}
+}
+
+function renderParagraphs(data){
+  const grid = document.getElementById('paragraphs-grid');
+  if(!data.paragraphs || !data.paragraphs.length){
+    grid.innerHTML = '<div class="paragraphs-empty">— ждёт первого paragraph\'а из murmur loop —</div>';
+    return;
+  }
+  const sorted = [...data.paragraphs].sort((a,b)=> (b.cycle||0) - (a.cycle||0));
+  grid.innerHTML = sorted.map(p=>{
+    const cls = (p.author||'').toLowerCase().includes('ivanov') ? 'ivanov' : 'shaper';
+    return `<article class="paragraph-card ${cls}">
+      <div class="pc-head">
+        <span><span class="pc-cycle">cycle ${p.cycle||'?'}</span> <span class="pc-regime">· ${p.regime||'?'}</span></span>
+        <span class="pc-time">${p.time||''}</span>
+      </div>
+      <div class="pc-body">${(p.body||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n\n/g,'</p><p>').replace(/\n/g,'<br>')}</div>
+      <div class="pc-meta">
+        <span>${p.author||'?'}</span>
+        <span>· ${(p.body||'').length} chars</span>
+      </div>
+    </article>`;
+  }).join('');
+}
+
+function updateCounters(data){
+  if(!data.paragraphs) return;
+  const total = data.paragraphs.length;
+  const shaperN = data.paragraphs.filter(p=>(p.author||'').toLowerCase()==='shaper').length;
+  const ivanovN = data.paragraphs.filter(p=>(p.author||'').toLowerCase().includes('ivanov')).length;
+  document.getElementById('paragraphs-count').textContent = total;
+  document.getElementById('shaper-count').textContent = shaperN;
+  document.getElementById('ivanov-count').textContent = ivanovN;
+  document.getElementById('stat-total').textContent = total;
+  document.getElementById('status-label').textContent = total > 0 ? 'live' : 'idle';
+
+  // populate timeline
+  const evList = document.getElementById('events-list');
+  if(total > 0){
+    const recent = [...data.paragraphs].sort((a,b)=> (b.cycle||0)-(a.cycle||0)).slice(0,8);
+    evList.innerHTML = recent.map(p=>`<li><span class="ev-time">${p.time||'—'}</span><span class="ev-phase">${p.regime||'v?'}</span>${p.author||'?'} · cycle ${p.cycle||'?'} · ${(p.body||'').slice(0,60)}…</li>`).join('');
+  }
+}
+
+loadParagraphs();
+setInterval(loadParagraphs, 60000); // 60s poll
+</script>
+</body>
+</html>

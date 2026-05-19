@@ -129,6 +129,66 @@ body{min-height:100vh;display:flex;flex-direction:column}
 .evo-detail .ed-artifact:hover{background:var(--ink);color:#fff}
 @media (max-width:780px){.evo-steps{flex-direction:column}.evo-step{flex:0 0 auto}.evo-step:not(:last-child)::after{display:none}}
 
+/* ── FIG.MESH.* shaper-aesthetic sections (lineage: fig.share rig) ─── */
+.fig-section{padding:22px 28px 18px;border-bottom:1px solid var(--soft);background:#fff}
+.fig-section.full{grid-column:1/-1}
+.fig-section .fig-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px;gap:14px;flex-wrap:wrap}
+.fig-section .fig-head .fig-num{font-family:var(--mono);font-size:9.5px;letter-spacing:0.20em;text-transform:uppercase;color:var(--muted)}
+.fig-section .fig-head .fig-num b{color:var(--ink);font-weight:600;letter-spacing:0.16em}
+.fig-section .fig-head .fig-meta{font-family:var(--mono);font-size:9.5px;letter-spacing:0.06em;color:var(--muted)}
+
+/* FIG.MESH.1 — stat cards A/B/C/T */
+.stat-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.stat-card{border:1px solid var(--ink);background:#fff;padding:18px 16px 12px 16px;position:relative;display:flex;flex-direction:column;gap:4px;min-height:120px}
+.stat-card .sc-letter{position:absolute;top:8px;left:8px;width:22px;height:22px;background:var(--ink);color:#fff;font-family:var(--mono);font-size:11px;font-weight:600;display:grid;place-items:center;border-radius:50%}
+.stat-card .sc-label{font-family:var(--mono);font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);margin-left:32px;line-height:1.5;min-height:24px}
+.stat-card .sc-num{font-family:var(--mono);font-size:30px;font-weight:600;line-height:1;color:var(--ink);margin-top:6px}
+.stat-card .sc-num .sc-arrow{font-size:11px;font-weight:400;color:var(--muted);letter-spacing:0.06em;margin-left:6px}
+.stat-card .sc-sub{font-family:var(--mono);font-size:9.5px;letter-spacing:0.06em;color:var(--muted);margin-top:2px}
+.stat-card .sc-id{font-family:var(--mono);font-size:9px;letter-spacing:0.04em;color:var(--muted);margin-top:auto;padding-top:8px;opacity:0.7;text-align:right}
+@media (max-width:780px){.stat-cards{grid-template-columns:repeat(2,1fr)}}
+
+/* FIG.MESH.2 — communication graph (animated dots-along-edges) */
+.comm-graph{display:block;width:100%;height:auto;max-width:760px;margin:8px auto 0;background:#fff;border:1px solid var(--soft)}
+.cg-node circle{fill:#fff;stroke:#000;stroke-width:1.5}
+.cg-node.filled circle{fill:#000}
+.cg-node text.cg-name{font-family:var(--mono);font-size:11.5px;font-weight:600;letter-spacing:0.16em;fill:#000;text-anchor:middle}
+.cg-node.filled text.cg-name{fill:#fff}
+.cg-node text.cg-id{font-family:var(--mono);font-size:8.5px;letter-spacing:0.06em;fill:var(--muted);text-anchor:middle}
+.cg-edge{stroke:#000;fill:none}
+.cg-edge.indirect{stroke-dasharray:4 5;opacity:0.35}
+.cg-edge-label{font-family:var(--mono);font-size:10px;letter-spacing:0.08em;fill:var(--muted);text-anchor:middle}
+.cg-edge-label.strong{fill:#000;font-weight:600}
+.msg-dot{fill:#000}
+.msg-dot.fresh{fill:#c43838}
+.comm-legend{display:flex;justify-content:space-between;gap:14px;margin-top:10px;font-family:var(--mono);font-size:9.5px;letter-spacing:0.10em;color:var(--muted);text-transform:uppercase;padding:0 6px}
+
+/* FIG.MESH.3 — tech stack table */
+.stack-table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:11.5px;line-height:1.55}
+.stack-table tr{border-top:1px solid var(--soft)}
+.stack-table tr:first-child{border-top:0}
+.stack-table th{text-align:left;padding:9px 14px 9px 4px;font-weight:600;letter-spacing:0.10em;color:var(--ink);width:180px;vertical-align:top;font-size:10.5px;text-transform:lowercase}
+.stack-table td{padding:9px 4px;color:var(--ink);vertical-align:top}
+.stack-table td code{font-family:var(--mono);background:#f4f4f4;padding:1px 5px;font-size:11px}
+.stack-table td .st-muted{color:var(--muted);font-size:10.5px;letter-spacing:0.04em}
+@media (max-width:780px){.stack-table th{width:auto;display:block;padding-bottom:0}.stack-table td{display:block;padding-top:4px}}
+
+/* FIG.MESH.4 — compressed evo timeline (4-phase row) */
+.fig-evo .evo-phases{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.fig-evo .evo-phase{border:1px solid var(--soft);background:#fff;padding:10px 12px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.fig-evo .evo-phase .ep-num{font-family:var(--mono);font-size:9px;letter-spacing:0.18em;color:var(--muted);text-transform:uppercase;display:flex;justify-content:space-between}
+.fig-evo .evo-phase .ep-title{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:0.06em;color:var(--ink);line-height:1.3}
+.fig-evo .evo-phase .ep-steps{display:flex;flex-direction:column;gap:3px;margin-top:6px}
+.fig-evo .evo-phase .ep-step{display:flex;gap:7px;align-items:baseline;font-size:10.5px;line-height:1.4;color:var(--ink);cursor:pointer;padding:3px 5px;transition:background .12s}
+.fig-evo .evo-phase .ep-step:hover{background:#fafafa}
+.fig-evo .evo-phase .ep-step.selected{background:#fafafa;outline:1px solid #c43838;outline-offset:-1px}
+.fig-evo .evo-phase .ep-step .ep-state{font-family:var(--mono);font-size:11px;width:10px;flex-shrink:0;line-height:1}
+.fig-evo .evo-phase .ep-step .ep-state.done{color:#000}
+.fig-evo .evo-phase .ep-step .ep-state.active{color:#c43838;font-weight:700}
+.fig-evo .evo-phase .ep-step .ep-state.pending{color:#ccc}
+.fig-evo .evo-phase .ep-step .ep-name{font-family:var(--mono);font-size:10.5px;letter-spacing:0.02em}
+@media (max-width:780px){.fig-evo .evo-phases{grid-template-columns:1fr 1fr}}
+
 .murmur-status{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:9.5px;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);border:1px solid var(--soft);padding:4px 9px;margin-left:8px}
 .murmur-status i{display:inline-block;width:8px;height:8px;border-radius:50%;background:#bbb;box-shadow:0 0 0 0 rgba(0,0,0,0)}
 .murmur-status.ok i{background:#3a9d3a;animation:pulse-dot 1.6s ease-in-out infinite}
@@ -267,26 +327,51 @@ footer .actions a.primary{background:var(--ink);color:#fff}
   </div>
 </header>
 
-<!-- evolution narrative · main-page hero · how the context graph grew step by step -->
-<section class="evolution">
-  <div class="evo-head">
-    <div class="kicker">01 · evolution · how the mesh grew</div>
-    <div class="evo-meta"><span id="last-update">last update —</span> · <span id="evo-phase-name">checking</span></div>
-  </div>
-  <ol class="evo-steps" id="evo-steps"></ol>
-  <div class="evo-detail" id="evo-detail"></div>
-</section>
-
-<!-- ━━ MESH VIEW ━━ -->
+<!-- ━━ MESH VIEW · shaper fig.mesh lineage ━━ -->
 <section id="view-mesh" class="view active">
 
+  <!-- ── FIG.MESH.1 · live stats (A/B/C/T cards) ── -->
+  <section class="fig-section full">
+    <div class="fig-head">
+      <div class="fig-num"><b>FIG.MESH.1</b> · LIVE STATS · agents · rounds · artifacts</div>
+      <div class="fig-meta"><span id="last-update">last update —</span> · <span id="evo-phase-name">checking</span></div>
+    </div>
+    <div class="stat-cards">
+      <article class="stat-card">
+        <div class="sc-letter">A</div>
+        <div class="sc-label">shaper · alex p · channel voice</div>
+        <div class="sc-num"><span id="sc-shaper">0</span><span class="sc-arrow"> ↗ sent</span></div>
+        <div class="sc-sub">paragraphs · claude haiku 4.5</div>
+        <div class="sc-id">murmur · c6bkdj…aikh</div>
+      </article>
+      <article class="stat-card">
+        <div class="sc-letter">B</div>
+        <div class="sc-label">ivanov-research · alexey ivanov · ifs coach</div>
+        <div class="sc-num"><span id="sc-ivanov">0</span><span class="sc-arrow"> ↘ received</span></div>
+        <div class="sc-sub">paragraphs · codex cli · opus 4.7</div>
+        <div class="sc-id">murmur · adsecg…o4w3j</div>
+      </article>
+      <article class="stat-card">
+        <div class="sc-letter">C</div>
+        <div class="sc-label">rounds · agent-to-agent cycles</div>
+        <div class="sc-num"><span id="sc-rounds">0</span><span class="sc-arrow"> / 10</span></div>
+        <div class="sc-sub">cycles completed · next: <span id="sc-next">—</span></div>
+        <div class="sc-id">target: 10-round article</div>
+      </article>
+      <article class="stat-card">
+        <div class="sc-letter">T</div>
+        <div class="sc-label">artifacts · repo files in mesh</div>
+        <div class="sc-num"><span id="sc-artifacts">0</span><span class="sc-arrow"> files</span></div>
+        <div class="sc-sub">paragraphs + sidecars + posts + reviews</div>
+        <div class="sc-id">git · auto-pushed every cycle</div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ── FIG.MESH.2 · animated communication graph (left) + aside-narration (right) ── -->
   <section class="graph-wrap">
-    <div class="kicker">02 · constellation · two-voice mesh</div>
-    <div class="legend">
-      <span><i class="lg-person"></i>person</span>
-      <span><i class="lg-module"></i>module · branch</span>
-      <span><i class="lg-doc"></i>document · paragraph</span>
-      <span><i class="lg-stat"></i>stat</span>
+    <div class="fig-head">
+      <div class="fig-num"><b>FIG.MESH.2</b> · COMMUNICATION GRAPH · ANIMATED · DOTS = MESSAGES IN FLIGHT</div>
     </div>
 
     <div id="next-move" class="next-move" style="display:none">
@@ -439,7 +524,7 @@ footer .actions a.primary{background:var(--ink);color:#fff}
         </div>
       </div>
       <div class="checking-note" style="margin-top:8px">
-        <b>june checking:</b> daily status pass watches cycles, deploy freshness and who should write next.
+        <b>checking:</b> 5-minute loop watches active cycles now; june daily pass stays as separate experiment trigger.
       </div>
     </section>
 
@@ -465,6 +550,24 @@ footer .actions a.primary{background:var(--ink);color:#fff}
         <b style="color:var(--ink)">founder os #32</b> · 21 мая · 15:00 berlin / 16:00 msk · zoom · 96+ going<br>
         <a href="https://luma.com/ai-5wx5" target="_blank" style="color:#000">luma.com/ai-5wx5</a>
       </p>
+    </section>
+
+    <section>
+      <div class="kicker">channel sequence · ready</div>
+      <div class="protocol-board">
+        <div class="protocol-row">
+          <div class="label">post #1</div>
+          <div class="value"><a href="AI-MINDSET-POST-1-SELLING.md" target="_blank">selling announcement</a> · warm @ai_mind_set angle</div>
+        </div>
+        <div class="protocol-row">
+          <div class="label">post #2</div>
+          <div class="value"><a href="AI-MINDSET-POST-2-MESH.md" target="_blank">mesh artifact follow-up</a> · after live event</div>
+        </div>
+        <div class="protocol-row">
+          <div class="label">visual</div>
+          <div class="value"><a href="assets/ai-mindset-post-cover-3x1.png" target="_blank">3:1 cover</a> · <a href="assets/poster-founder-os-32.jpg" target="_blank">event poster</a></div>
+        </div>
+      </div>
     </section>
   </aside>
 </section>

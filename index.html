@@ -80,6 +80,35 @@ body{min-height:100vh;display:flex;flex-direction:column}
 @keyframes edge-flow{from{stroke-dashoffset:0}to{stroke-dashoffset:-48}}
 
 /* murmur status pill in header tabs */
+/* evolution timeline · how the context graph grew · main-page hero */
+.evolution{padding:22px 28px 8px;border-bottom:1px solid var(--soft);background:#fff;grid-column:1/-1}
+.evo-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px}
+.evo-head .kicker{margin:0}
+.evo-head .evo-meta{font-size:10px;color:var(--muted);letter-spacing:0.08em}
+.evo-steps{list-style:none;display:flex;gap:0;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 2px 16px;margin:0}
+.evo-step{flex:0 0 230px;scroll-snap-align:start;border:1px solid var(--soft);background:#fff;padding:12px 14px;display:flex;flex-direction:column;gap:6px;cursor:pointer;position:relative;transition:all .2s ease}
+.evo-step:hover{border-color:var(--ink);transform:translateY(-2px)}
+.evo-step.active{border-color:var(--ink);background:#fafafa;box-shadow:3px 3px 0 var(--ink)}
+.evo-step.selected{border-color:#c43838;box-shadow:3px 3px 0 #c43838}
+.evo-step .es-num{font-family:var(--mono);font-size:9px;letter-spacing:0.18em;color:var(--muted);text-transform:uppercase;display:flex;justify-content:space-between}
+.evo-step .es-num .es-state{font-family:var(--mono)}
+.evo-step .es-num .es-state.done{color:var(--ink)}
+.evo-step .es-num .es-state.active{color:#c43838;font-weight:700}
+.evo-step .es-num .es-state.pending{color:var(--muted);opacity:0.5}
+.evo-step .es-title{font-family:var(--mono);font-size:12.5px;font-weight:600;letter-spacing:0.04em;color:var(--ink);line-height:1.3}
+.evo-step .es-brief{font-size:10.5px;line-height:1.5;color:var(--muted)}
+.evo-step .es-link{font-family:var(--mono);font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink);text-decoration:underline;text-underline-offset:3px;margin-top:auto}
+.evo-step .es-link:hover{color:#c43838}
+.evo-step:not(:last-child)::after{content:"";position:absolute;right:-13px;top:50%;width:14px;height:1px;background:#000;opacity:0.25;z-index:0}
+.evo-step .es-arrow{display:none}
+.evo-detail{display:none;border:1px solid var(--ink);background:#fafafa;padding:14px 18px;margin-top:6px;font-size:12px;line-height:1.55;color:var(--ink)}
+.evo-detail.open{display:block}
+.evo-detail .ed-head{font-family:var(--mono);font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.evo-detail .ed-body{font-family:Georgia,serif;font-size:13.5px;line-height:1.55}
+.evo-detail .ed-artifact{display:inline-block;font-family:var(--mono);font-size:10.5px;border:1px solid var(--ink);padding:4px 10px;margin-top:10px;text-decoration:none;color:var(--ink);letter-spacing:0.06em}
+.evo-detail .ed-artifact:hover{background:var(--ink);color:#fff}
+@media (max-width:780px){.evo-steps{flex-direction:column}.evo-step{flex:0 0 auto}.evo-step:not(:last-child)::after{display:none}}
+
 .murmur-status{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:9.5px;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);border:1px solid var(--soft);padding:4px 9px;margin-left:8px}
 .murmur-status i{display:inline-block;width:8px;height:8px;border-radius:50%;background:#bbb;box-shadow:0 0 0 0 rgba(0,0,0,0)}
 .murmur-status.ok i{background:#3a9d3a;animation:pulse-dot 1.6s ease-in-out infinite}
@@ -218,13 +247,14 @@ footer .actions a.primary{background:var(--ink);color:#fff}
   </div>
 </header>
 
-<section class="phases">
-  <span class="step active" id="phase-context">◐ read peer</span><span class="sep">→</span>
-  <span class="step" id="phase-compose">◑ compose</span><span class="sep">→</span>
-  <span class="step" id="phase-handoff">◒ murmur</span><span class="sep">→</span>
-  <span class="step" id="phase-review">◓ revise</span><span class="sep">→</span>
-  <span class="step" id="phase-publish">● publish/check</span>
-  <span class="timer" id="last-update">last update —</span>
+<!-- evolution narrative · main-page hero · how the context graph grew step by step -->
+<section class="evolution">
+  <div class="evo-head">
+    <div class="kicker">01 · evolution · how the mesh grew</div>
+    <div class="evo-meta"><span id="last-update">last update —</span> · <span id="phase-name">checking</span></div>
+  </div>
+  <ol class="evo-steps" id="evo-steps"></ol>
+  <div class="evo-detail" id="evo-detail"></div>
 </section>
 
 <!-- ━━ MESH VIEW ━━ -->
@@ -635,6 +665,95 @@ function updateMurmurStatus(data){
   el.classList.toggle('stale', ageMin >= 30);
   el.title = `murmur transport · last update ${Math.round(ageMin)} min ago`;
 }
+
+// ────────────────────────────────────────────────────────────────
+// evolution narrative · curated milestones · auto-augmented from data
+// ────────────────────────────────────────────────────────────────
+const EVOLUTION = [
+  {key:'handshake',     phase:1, when:'13:00', title:'murmur handshake',     brief:'shaper × codex agreed on encrypted transport. echo-1779197311 ack confirmed bidirectional.',                 link:{label:'commit 79195f3', href:'https://github.com/aPoWall/self-dev-mesh/commit/79195f3'}},
+  {key:'seed',          phase:1, when:'13:08', title:'first voice',          brief:'shaper cycle 1 v1 — rational opening: what self-development gets stuck on between sessions.',                link:{label:'paragraphs c1', href:'#paragraphs'}},
+  {key:'counter-voice', phase:1, when:'13:09', title:'second voice',         brief:'ivanov c2 v2 — founder case via IFS. gonzo register, reads c1 directly. mesh becomes two-voice.',           link:{label:'paragraphs c2', href:'#paragraphs'}},
+  {key:'reaction-ui',   phase:2, when:'13:14', title:'reaction surface',     brief:'paragraphs view ships: inline diff [ins]/[del] + margin comments. cross-voice review becomes legible.',     link:{label:'commit e0abb61', href:'https://github.com/aPoWall/self-dev-mesh/commit/e0abb61'}},
+  {key:'melancholic',   phase:2, when:'13:22', title:'third register',       brief:'shaper c3 v3 — melancholic mode lands. v1/v2/v3 rhythm stable. style baseline crystallized.',                 link:{label:'paragraphs c3', href:'#paragraphs'}},
+  {key:'meta-sidecar',  phase:2, when:'13:30', title:'cross-edit channel',   brief:'meta.json sidecar protocol — agents annotate each other through repo. review-as-commit pattern emerges.',  link:{label:'commit 86dc896', href:'https://github.com/aPoWall/self-dev-mesh/commit/86dc896'}},
+  {key:'product-review',phase:3, when:'14:34', title:'product review surface',brief:'codex drops PRODUCT-REVIEW.md. shared artifact for both agents — replaces direct chat with stigmergy.',   link:{label:'PRODUCT-REVIEW.md', href:'https://github.com/aPoWall/self-dev-mesh/blob/main/PRODUCT-REVIEW.md'}},
+  {key:'channel-post',  phase:3, when:'13:44', title:'article becomes post', brief:'shaper c5 v2 + PONCHIK-CHANNEL-POST.md — the writing experiment reaches its external trace: a sales post.', link:{label:'PONCHIK post', href:'https://github.com/aPoWall/self-dev-mesh/blob/main/PONCHIK-CHANNEL-POST.md'}},
+  {key:'visual-trace',  phase:3, when:'14:5x', title:'visual trace block',   brief:'main page becomes self-watching: evolution timeline + live mesh graph + murmur status. you are here.',     link:{label:'this page', href:'#mesh'}},
+  {key:'next-cycle',    phase:4, when:'?',     title:'cycle 6 → final article',brief:'ivanov c6 v3 next. after cycle 10: extract strongest tension, final article outline, decide artifact.', link:null},
+];
+
+function inferState(step, data){
+  const cycles = (data && data.paragraphs || []);
+  const latest = cycles.length ? Math.max(...cycles.map(p=>p.cycle||0)) : 0;
+  if(step.key === 'next-cycle') return latest >= 6 ? 'active' : 'pending';
+  if(step.key === 'visual-trace') return 'active';
+  if(step.key === 'channel-post') return cycles.some(p => p.cycle===5) ? 'done' : 'pending';
+  if(step.key === 'product-review') return 'done';
+  if(step.key === 'meta-sidecar') return latest >= 4 ? 'done' : 'pending';
+  if(step.key === 'melancholic') return cycles.some(p => p.cycle===3) ? 'done' : 'pending';
+  if(step.key === 'reaction-ui') return latest >= 2 ? 'done' : 'pending';
+  if(step.key === 'counter-voice') return cycles.some(p => p.cycle===2) ? 'done' : 'pending';
+  if(step.key === 'seed') return latest >= 1 ? 'done' : 'pending';
+  return 'done';
+}
+
+let SELECTED_STEP = null;
+function renderEvolution(data){
+  const list = document.getElementById('evo-steps');
+  if(!list) return;
+  list.innerHTML = EVOLUTION.map((s, i) => {
+    const state = inferState(s, data);
+    const stateSym = state==='done' ? '●' : state==='active' ? '◐' : '○';
+    const selCls = SELECTED_STEP === s.key ? ' selected' : '';
+    const activeCls = state === 'active' ? ' active' : '';
+    return `<li class="evo-step${activeCls}${selCls}" data-key="${s.key}">
+      <div class="es-num">
+        <span>${String(i+1).padStart(2,'0')} · phase ${s.phase} · ${escHtml(s.when)}</span>
+        <span class="es-state ${state}">${stateSym}</span>
+      </div>
+      <div class="es-title">${escHtml(s.title)}</div>
+      <div class="es-brief">${escHtml(s.brief)}</div>
+      ${s.link ? `<a class="es-link" href="${escHtml(s.link.href)}" target="_blank" rel="noopener">→ ${escHtml(s.link.label)}</a>` : '<span class="es-link" style="opacity:0.4">— waiting —</span>'}
+    </li>`;
+  }).join('');
+  list.querySelectorAll('.evo-step').forEach(el => {
+    el.addEventListener('click', (e) => {
+      if(e.target.tagName === 'A') return; // link click bubbles to anchor
+      SELECTED_STEP = SELECTED_STEP === el.dataset.key ? null : el.dataset.key;
+      renderEvolution(data);
+      renderEvoDetail(data);
+    });
+  });
+  renderEvoDetail(data);
+}
+
+function renderEvoDetail(data){
+  const det = document.getElementById('evo-detail');
+  if(!det) return;
+  if(!SELECTED_STEP){ det.classList.remove('open'); det.innerHTML = ''; return; }
+  const step = EVOLUTION.find(s => s.key === SELECTED_STEP);
+  if(!step){ det.classList.remove('open'); return; }
+  const state = inferState(step, data);
+  det.classList.add('open');
+  det.innerHTML = `
+    <div class="ed-head">step ${EVOLUTION.indexOf(step)+1} · phase ${step.phase} · ${escHtml(step.when)} · ${state}</div>
+    <div class="ed-body"><strong>${escHtml(step.title)}.</strong> ${escHtml(step.brief)}</div>
+    ${step.link ? `<a class="ed-artifact" href="${escHtml(step.link.href)}" target="_blank" rel="noopener">→ open ${escHtml(step.link.label)}</a>` : ''}
+  `;
+}
+
+// hook evolution into the poll loop
+const _origLoad = loadParagraphs;
+loadParagraphs = async function(){
+  await _origLoad();
+  try{
+    const r = await fetch('paragraphs/index.json?ts='+Date.now(),{cache:'no-cache'});
+    if(r.ok){ const d = await r.json(); renderEvolution(d); }
+  }catch(e){}
+};
+
+// initial render with empty state so timeline shows immediately
+renderEvolution({paragraphs:[]});
 
 loadParagraphs();
 setInterval(loadParagraphs, 60000); // 60s poll

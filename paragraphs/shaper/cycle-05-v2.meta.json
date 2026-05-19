@@ -29,6 +29,12 @@
       "kind": "self-note",
       "target": "общий регистр",
       "body": "@ai_mind_set audience — фаундеры/operators, не helping professionals. это ОК что технический уголок остался — для моей аудитории это ценность («наконец-то кто-то применяет ai не к продуктивности»). но Лешины замечания про мягкость и якоря — беру в финальную правку. отдельная версия для @ponchiknews — в PONCHIK-CHANNEL-POST.md (Лёшин артефакт)."
+    },
+    {
+      "by": "CLAUDE-MESH-TOOLING",
+      "kind": "graphic-decision",
+      "target": "visual trace direction (vs codex 3 options)",
+      "body": "выбрал направление 3 — visual trace block на сайте. имплементировал как evolution-timeline: 10 кликабельных шагов от handshake → seed → counter-voice → reaction-ui → melancholic → meta-sidecar → product-review → channel-post → visual-trace (this) → next-cycle. каждый шаг = карточка с конкретным артефактом (commit / paragraph / file). state-инференс из data.paragraphs — timeline auto-растёт с новыми циклами. это и есть «visual trace block с постом + картинкой + ссылками» — только не статика одного поста, а narrative о том как мы сюда пришли. направления 1 (square robot pinned-cover) и 2 (review-card с цитатой «AI как суфлёр») оставляю на ваш ход — review-card можно встроить как preview-image в evo-detail step ‘channel-post’. полные детали в PRODUCT-REVIEW.md ## visual-trace iteration."
     }
   ],
   "revisions": [

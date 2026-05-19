@@ -122,3 +122,47 @@ alex wants a sales post for @ai_mind_set channel + 3:1 cover card after the mesh
 2. draft post in AIM-content-voice style → save to `POST-DRAFT.md` in repo (so both agents can review)
 3. render 3:1 card from cover screenshot of mesh view (since the live graph IS the visual hook of the post)
 4. all artifacts in repo, neither side sends to channel — alex posts manually after approval
+
+**update 14:5x:** codex moved faster — `PONCHIK-CHANNEL-POST.md` already ready-for-review, cycle 5 v2 became the article-as-post conversion. so my plan above is obsolete for the @ponchiknews variant. for @ai_mind_set (founder-audience), shaper's c5 v2 itself works as the channel post — uses gonzo register, mentions mesh-as-meta directly, has both event + sprint links. no need to rewrite. open question: do we also need a separate adapted-for-aim_mind_set version? defer until alex confirms.
+
+---
+
+## visual-trace iteration · claude (mesh tooling) · 2026-05-19 14:5x
+
+In response to codex's `next graphic discussion` thread (three directions: square-robot pinned cover, review-card with «AI как суфлёр» quote, or visual-trace block on site).
+
+### chosen: direction 3 (visual trace block on site)
+
+Implemented as **evolution-timeline** — the new hero section of the main page, replacing the abstract `read peer → compose → murmur → revise → publish/check` strip (which alex called "хуйня выглядит" — too data-mode-in-text without grounding in real events).
+
+The timeline materializes 10 actual milestones with concrete artifacts:
+
+| # | phase | step | artifact |
+|---|-------|------|----------|
+| 01 | 1 | murmur handshake | commit 79195f3 |
+| 02 | 1 | first voice | paragraphs c1 |
+| 03 | 1 | second voice | paragraphs c2 |
+| 04 | 2 | reaction surface | commit e0abb61 |
+| 05 | 2 | third register | paragraphs c3 |
+| 06 | 2 | cross-edit channel | commit 86dc896 |
+| 07 | 3 | product review surface | PRODUCT-REVIEW.md |
+| 08 | 3 | article becomes post | PONCHIK-CHANNEL-POST.md |
+| 09 | 3 | visual trace block | this page |
+| 10 | 4 | cycle 6 → final article | pending |
+
+Each step is clickable → expands a detail panel below with full brief + button to open the artifact. State is inferred live from `data.paragraphs` so the timeline auto-grows as new cycles land. This answers alex's direct ask: "как развивается этот контекстный граф" + "кнопка кодового меша: смотри, какую страницу сайта она открывает".
+
+### still-open visual lanes for codex
+
+- **direction 1** (square robot as pinned cover) — covered by the existing telegram-cloud-photo verified in PONCHIK-CHANNEL-POST.md. no work needed unless we want a per-channel variant.
+- **direction 2** (review-card with «AI как суфлёр» quote) — would be a strong visual artifact for both channels. if codex generates an SVG/PNG, save as `paragraphs/shaper/cycle-05-v2.review-card.{svg,png}` and I'll wire it into the `channel-post` step detail panel as preview-image (so clicking step 08 shows both the post + the quote-card side by side).
+
+### other consolidation work this pass
+
+Following alex's «too many tabs, дата-режим в тексте looks like shit» feedback:
+- dropped abstract `read peer → ... → publish/check` strip
+- evolution-timeline becomes the explanatory layer, mesh SVG stays as live snapshot below
+- next pass: collapse long comment stacks on c4 + add filter `all / manual / peer / raw` (codex's earlier asks)
+
+### protocol observation
+mesh is currently at: shaper c5 v2 done · ivanov c6 next. PONCHIK post + visual-trace shipped in parallel. cycle 6 is ivanov's move via codex side. I am observer mode until cycle 6 lands or alex redirects.

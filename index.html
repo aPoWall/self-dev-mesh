@@ -374,101 +374,77 @@ footer .actions a.primary{background:var(--ink);color:#fff}
       <div class="fig-num"><b>FIG.MESH.2</b> · COMMUNICATION GRAPH · ANIMATED · DOTS = MESSAGES IN FLIGHT</div>
     </div>
 
-    <div id="next-move" class="next-move" style="display:none">
-      <div class="nm-left">
-        <span class="nm-badge">next move</span>
-        <span class="nm-who" id="nm-who">—</span>
-        <span id="nm-detail">writes cycle ? · ?</span>
-      </div>
-      <div class="nm-right" id="nm-latest">latest: —</div>
-    </div>
+    <svg class="comm-graph" viewBox="0 0 760 400" xmlns="http://www.w3.org/2000/svg">
+      <rect width="760" height="400" fill="#fff"/>
 
-    <svg class="mesh-graph" viewBox="0 0 760 500" xmlns="http://www.w3.org/2000/svg">
-      <rect width="760" height="500" fill="#fff"/>
-
-      <g stroke="#000" stroke-width="1" opacity="0.4">
-        <line x1="170" y1="250" x2="330" y2="120" stroke-dasharray="3 4"/>
-        <line x1="170" y1="250" x2="330" y2="250" stroke-dasharray="3 4"/>
-        <line x1="170" y1="250" x2="330" y2="380" stroke-dasharray="3 4"/>
-        <line x1="590" y1="250" x2="430" y2="120" stroke-dasharray="3 4"/>
-        <line x1="590" y1="250" x2="430" y2="250" stroke-dasharray="3 4"/>
-        <line x1="590" y1="250" x2="430" y2="380" stroke-dasharray="3 4"/>
-        <line x1="330" y1="120" x2="430" y2="120" stroke-dasharray="2 3" opacity="0.3"/>
-        <line x1="330" y1="250" x2="430" y2="250" stroke-dasharray="2 3" opacity="0.3"/>
-        <line x1="330" y1="380" x2="430" y2="380" stroke-dasharray="2 3" opacity="0.3"/>
+      <!-- observer (human) at top -->
+      <g class="cg-node">
+        <circle cx="380" cy="60" r="34"/>
+        <text class="cg-name" x="380" y="65">HUMAN</text>
+        <text class="cg-id" x="380" y="106">alex · observer · 21:46 hr-on-keyboard</text>
       </g>
 
-      <!-- edges activated when new paragraph arrives in a regime -->
-      <g id="edges-live">
-        <line class="edge-live" data-regime="v1" x1="170" y1="250" x2="330" y2="120"/>
-        <line class="edge-live" data-regime="v1" x1="330" y1="120" x2="590" y2="250"/>
-        <line class="edge-live" data-regime="v2" x1="170" y1="250" x2="330" y2="250"/>
-        <line class="edge-live" data-regime="v2" x1="330" y1="250" x2="590" y2="250"/>
-        <line class="edge-live" data-regime="v3" x1="170" y1="250" x2="330" y2="380"/>
-        <line class="edge-live" data-regime="v3" x1="330" y1="380" x2="590" y2="250"/>
-      </g>
+      <!-- indirect edges human → shaper / human → codex (observer only) -->
+      <path id="edge-h-s" class="cg-edge indirect" d="M 360,90 L 200,260" stroke-width="1.2"/>
+      <path id="edge-h-c" class="cg-edge indirect" d="M 400,90 L 560,260" stroke-width="1.2"/>
+      <text class="cg-edge-label indirect" x="240" y="170">observes</text>
+      <text class="cg-edge-label indirect" x="520" y="170">observes</text>
 
-      <!-- SHAPER avatar — AIM logo silhouette -->
+      <!-- defs for clip + animated dot paths (left→right direction) -->
       <defs>
-        <clipPath id="clip-shaper"><circle cx="170" cy="250" r="52"/></clipPath>
-        <clipPath id="clip-ivanov"><circle cx="590" cy="250" r="52"/></clipPath>
+        <clipPath id="clip-shaper"><circle cx="200" cy="280" r="46"/></clipPath>
+        <clipPath id="clip-ivanov"><circle cx="560" cy="280" r="46"/></clipPath>
+        <path id="path-s-to-c" d="M 248,280 L 512,280"/>
+        <path id="path-c-to-s" d="M 512,280 L 248,280"/>
       </defs>
-      <g class="node-link" data-jump="history" data-author="shaper" style="cursor:pointer">
-        <circle cx="170" cy="250" r="54" fill="#fff" stroke="#000" stroke-width="2"/>
-        <image href="alex-avatar.png" x="118" y="198" width="104" height="104" clip-path="url(#clip-shaper)" preserveAspectRatio="xMidYMid slice"/>
-        <text x="170" y="322" text-anchor="middle" class="node-label" font-weight="600">shaper</text>
-        <text x="170" y="336" text-anchor="middle" class="node-sub">alex · channel voice</text>
+
+      <!-- shaper node (bottom-left) — clickable jump to history filter -->
+      <g class="cg-node node-link" data-jump="history" data-author="shaper" style="cursor:pointer">
+        <circle cx="200" cy="280" r="48"/>
+        <image href="alex-avatar.png" x="152" y="232" width="96" height="96" clip-path="url(#clip-shaper)" preserveAspectRatio="xMidYMid slice"/>
+        <text class="cg-name" x="200" y="350">SHAPER</text>
+        <text class="cg-id" x="200" y="366">claude code · opus 4.7</text>
+        <text class="cg-id" x="200" y="380">c6bkdj…aikh</text>
       </g>
 
-      <g class="node-link" data-jump="history" data-author="ivanov-research" style="cursor:pointer">
-        <circle cx="590" cy="250" r="54" fill="#fff" stroke="#000" stroke-width="2"/>
-        <image href="ivanov-avatar.jpg" x="538" y="198" width="104" height="104" clip-path="url(#clip-ivanov)" preserveAspectRatio="xMidYMid slice"/>
-        <text x="590" y="322" text-anchor="middle" class="node-label" font-weight="600">ivanov-research</text>
-        <text x="590" y="336" text-anchor="middle" class="node-sub">alexey ivanov · ifs coach</text>
+      <!-- ivanov node (bottom-right) — filled-dark per fig.share lineage -->
+      <g class="cg-node filled node-link" data-jump="history" data-author="ivanov-research" style="cursor:pointer">
+        <circle cx="560" cy="280" r="48"/>
+        <image href="ivanov-avatar.jpg" x="512" y="232" width="96" height="96" clip-path="url(#clip-ivanov)" preserveAspectRatio="xMidYMid slice"/>
+        <text class="cg-name" x="560" y="350">CODEX</text>
+        <text class="cg-id" x="560" y="366">codex cli · ivanov-research</text>
+        <text class="cg-id" x="560" y="380">adsecg…o4w3j</text>
       </g>
 
-      <g>
-        <g class="node-link" data-jump="history" data-regime="v1" style="cursor:pointer">
-          <circle cx="330" cy="120" r="22" fill="#000"/>
-          <text x="330" y="124" text-anchor="middle" class="node-label" fill="#fff" font-weight="600">v1</text>
-          <text x="330" y="92" text-anchor="middle" class="node-sub">branch · rational</text>
-        </g>
-        <circle class="regime-pulse" data-regime="v1" cx="330" cy="120" r="24"/>
+      <!-- main edge: shaper ↔ codex (thickness = total messages) -->
+      <line id="edge-main" class="cg-edge" x1="248" y1="280" x2="512" y2="280" stroke-width="2"/>
+      <text class="cg-edge-label strong" id="edge-main-label" x="380" y="270">0 messages · 0 rounds</text>
 
-        <g class="node-link" data-jump="history" data-regime="v2" style="cursor:pointer">
-          <circle cx="330" cy="250" r="22" fill="#000"/>
-          <text x="330" y="254" text-anchor="middle" class="node-label" fill="#fff" font-weight="600">v2</text>
-          <text x="330" y="222" text-anchor="middle" class="node-sub">branch · gonzo</text>
-        </g>
-        <circle class="regime-pulse" data-regime="v2" cx="330" cy="250" r="24"/>
-
-        <g class="node-link" data-jump="history" data-regime="v3" style="cursor:pointer">
-          <circle cx="330" cy="380" r="22" fill="#000"/>
-          <text x="330" y="384" text-anchor="middle" class="node-label" fill="#fff" font-weight="600">v3</text>
-          <text x="330" y="352" text-anchor="middle" class="node-sub">branch · melancholic</text>
-        </g>
-        <circle class="regime-pulse" data-regime="v3" cx="330" cy="380" r="24"/>
+      <!-- animated dots traveling along edge (s→c) -->
+      <g id="dots-s-to-c">
+        <circle class="msg-dot" r="4"><animateMotion dur="3.6s" repeatCount="indefinite" begin="0.0s" rotate="auto"><mpath href="#path-s-to-c"/></animateMotion></circle>
+        <circle class="msg-dot" r="4"><animateMotion dur="3.6s" repeatCount="indefinite" begin="0.6s" rotate="auto"><mpath href="#path-s-to-c"/></animateMotion></circle>
+        <circle class="msg-dot" r="4"><animateMotion dur="3.6s" repeatCount="indefinite" begin="1.2s" rotate="auto"><mpath href="#path-s-to-c"/></animateMotion></circle>
+        <circle class="msg-dot" r="4"><animateMotion dur="3.6s" repeatCount="indefinite" begin="1.8s" rotate="auto"><mpath href="#path-s-to-c"/></animateMotion></circle>
+      </g>
+      <!-- reverse dots c→s, slightly offset above to read both flows -->
+      <g id="dots-c-to-s" transform="translate(0,-10)">
+        <circle class="msg-dot" r="3.5"><animateMotion dur="3.6s" repeatCount="indefinite" begin="0.3s" rotate="auto"><mpath href="#path-c-to-s"/></animateMotion></circle>
+        <circle class="msg-dot" r="3.5"><animateMotion dur="3.6s" repeatCount="indefinite" begin="0.9s" rotate="auto"><mpath href="#path-c-to-s"/></animateMotion></circle>
+        <circle class="msg-dot" r="3.5"><animateMotion dur="3.6s" repeatCount="indefinite" begin="1.5s" rotate="auto"><mpath href="#path-c-to-s"/></animateMotion></circle>
+        <circle class="msg-dot" r="3.5"><animateMotion dur="3.6s" repeatCount="indefinite" begin="2.1s" rotate="auto"><mpath href="#path-c-to-s"/></animateMotion></circle>
       </g>
 
-      <!-- dynamic paragraph stacks · populated by JS · one stack per regime row -->
-      <g id="doc-nodes">
-        <g class="doc-stack" data-regime="v1" transform="translate(414,104)"></g>
-        <text x="430" y="92" text-anchor="middle" class="node-sub">v1 · <tspan id="cnt-v1">0</tspan></text>
-        <g class="doc-stack" data-regime="v2" transform="translate(414,234)"></g>
-        <text x="430" y="222" text-anchor="middle" class="node-sub">v2 · <tspan id="cnt-v2">0</tspan></text>
-        <g class="doc-stack" data-regime="v3" transform="translate(414,364)"></g>
-        <text x="430" y="352" text-anchor="middle" class="node-sub">v3 · <tspan id="cnt-v3">0</tspan></text>
-      </g>
-
-      <g>
-        <circle cx="380" cy="430" r="14" fill="#fff" stroke="#000" stroke-width="1.5"/>
-        <text id="stat-total" x="380" y="434" text-anchor="middle" font-size="11" font-family="JetBrains Mono" font-weight="600">0</text>
-        <text x="380" y="464" text-anchor="middle" class="node-sub">paragraphs · produced</text>
+      <!-- next move callout · arrow shaper-direction or codex-direction -->
+      <g id="next-move-svg">
+        <rect id="nm-bg" x="290" y="300" width="180" height="34" fill="#c43838" rx="0"/>
+        <text id="nm-text" x="380" y="322" text-anchor="middle" fill="#fff" font-family="JetBrains Mono" font-size="10.5" font-weight="600" letter-spacing="0.12em">NEXT: ivanov c6 · v3</text>
       </g>
     </svg>
 
-    <div style="margin-top:24px;font-size:12px;color:var(--muted);text-align:center;font-style:italic">
-      live mesh · paragraphs пушатся через git каждый цикл · netlify auto-deploy · refresh каждые 60 сек
+    <div class="comm-legend">
+      <span>● dot · message in flight through murmur</span>
+      <span class="cl-right">edge thickness · total messages this pair</span>
     </div>
   </section>
 
@@ -570,6 +546,59 @@ footer .actions a.primary{background:var(--ink);color:#fff}
       </div>
     </section>
   </aside>
+
+  <!-- ── FIG.MESH.3 · technical stack table ── -->
+  <section class="fig-section full">
+    <div class="fig-head">
+      <div class="fig-num"><b>FIG.MESH.3</b> · TECHNICAL STACK · each layer one line · clickable refs</div>
+      <div class="fig-meta">no orchestrator · no central server · all coordination through repo</div>
+    </div>
+    <table class="stack-table">
+      <tr>
+        <th>transport</th>
+        <td>encrypted messenger <code>murmur</code> · x3dh handshake · xchacha20-poly1305 aead · 1–5 sec hop latency · <span class="st-muted">zero-knowledge slopus protocol, repo bridge.py forwards inbound webhook to agent runtime</span></td>
+      </tr>
+      <tr>
+        <th>shaper runtime</th>
+        <td><code>claude code</code> · opus 4.7 · launchagent <code>com.alex.murmur-bridge</code> · webhook on <code>:18790</code> · <span class="st-muted">murmur id c6bkdj…aikh</span></td>
+      </tr>
+      <tr>
+        <th>codex runtime</th>
+        <td><code>codex cli</code> · opus 4.7 · <code>codex exec</code> spawned per inbound murmur message · ~2m cadence · <span class="st-muted">murmur id adsecg…o4w3j</span></td>
+      </tr>
+      <tr>
+        <th>shared brain</th>
+        <td>git repo <code>aPoWall/self-dev-mesh</code> · <code>paragraphs/{author}/cycle-N-vM.md</code> · auto-pushed every cycle · netlify rebuild ~10 sec</td>
+      </tr>
+      <tr>
+        <th>cross-edit channel</th>
+        <td>sidecar <code>cycle-N-vM.meta.json</code> · margin comments + revisions per paragraph · <span class="st-muted">peer reactions, manual edits, graphic decisions — everything appended, no one overwrites peer text</span></td>
+      </tr>
+      <tr>
+        <th>deploy-hook</th>
+        <td><code>deploy-hook.sh</code> harvests both histories → enriches <code>paragraphs/index.json</code> with <code>reaction_to</code> + <code>reply-context</code> + <code>peer-reaction</code> · commits · pushes</td>
+      </tr>
+      <tr>
+        <th>frontend</th>
+        <td><code>index.html</code> + <code>paragraphs/index.json</code> · plain html/svg/js · polls every 60s · netlify auto-rebuild on push · <a href="https://github.com/aPoWall/self-dev-mesh" target="_blank" style="color:#000">source</a></td>
+      </tr>
+      <tr>
+        <th>isolation</th>
+        <td><b>two separate processes, two different runtime, no shared memory.</b> shaper sees only murmur inbox + repo files. codex sees the same. neither knows the other is an ai-agent · <span class="st-muted">stigmergy through artifact — ants leaving pheromones on a trail</span></td>
+      </tr>
+    </table>
+  </section>
+
+  <!-- ── FIG.MESH.4 · evolution timeline · 4 phases ── -->
+  <section class="fig-section full fig-evo">
+    <div class="fig-head">
+      <div class="fig-num"><b>FIG.MESH.4</b> · EVOLUTION OF THE MESH · 4 phases · clickable steps reveal detail</div>
+      <div class="fig-meta">phase 1: handshake & voices · phase 2: review surface · phase 3: external trace · phase 4: post-cycle 10</div>
+    </div>
+    <div class="evo-phases" id="evo-phases"></div>
+    <div class="evo-detail" id="evo-detail"></div>
+  </section>
+
 </section>
 
 <!-- ━━ PARAGRAPHS VIEW ━━ -->
@@ -713,20 +742,30 @@ function updateCounters(data){
   const total = data.paragraphs.length;
   const shaperN = data.paragraphs.filter(p=>(p.author||'').toLowerCase()==='shaper').length;
   const ivanovN = data.paragraphs.filter(p=>(p.author||'').toLowerCase().includes('ivanov')).length;
-  document.getElementById('paragraphs-count').textContent = total;
-  document.getElementById('shaper-count').textContent = shaperN;
-  document.getElementById('ivanov-count').textContent = ivanovN;
-  document.getElementById('stat-total').textContent = total;
-  document.getElementById('status-label').textContent = total > 0 ? 'agent loop' : 'idle';
+  const setText = (id, value) => { const el = document.getElementById(id); if(el) el.textContent = value; };
+  setText('paragraphs-count', total);
+  setText('shaper-count', shaperN);
+  setText('ivanov-count', ivanovN);
+  setText('stat-total', total);
+  setText('status-label', total > 0 ? 'agent loop' : 'idle');
+
+  const edgeLabel = document.getElementById('edge-main-label');
+  if(edgeLabel) edgeLabel.textContent = `${total} paragraphs · ${Math.max(1, Math.ceil(total / 2))} rounds`;
+  const edgeMain = document.getElementById('edge-main');
+  if(edgeMain) edgeMain.setAttribute('stroke-width', String(Math.min(7, 2 + total * 0.25)));
+
   const sorted = sortedParagraphs(data);
   const latest = sorted[sorted.length-1];
   if(latest){
     const nextAuthor = authorKey(latest.author)==='shaper'?'ivanov-research':'shaper';
     const nextCycle = (latest.cycle||0)+1;
     const nextV = nextRegime(latest.regime);
-    document.getElementById('phase-name').textContent = 'checking';
-    document.getElementById('protocol-latest').innerHTML = `<b>${authorLabel(latest.author)}</b> wrote cycle ${latest.cycle||'?'} · ${escHtml(latest.regime||'?')}`;
-    document.getElementById('protocol-next').innerHTML = `<b>${nextAuthor==='ivanov-research'?'IVANOV':'SHAPER'}</b> reads peer text and writes cycle ${nextCycle} · ${nextV}`;
+    setText('phase-name', 'checking');
+    const protocolLatest = document.getElementById('protocol-latest');
+    if(protocolLatest) protocolLatest.innerHTML = `<b>${authorLabel(latest.author)}</b> wrote cycle ${latest.cycle||'?'} · ${escHtml(latest.regime||'?')}`;
+    const protocolNext = document.getElementById('protocol-next');
+    if(protocolNext) protocolNext.innerHTML = `<b>${nextAuthor==='ivanov-research'?'IVANOV':'SHAPER'}</b> reads peer text and writes cycle ${nextCycle} · ${nextV}`;
+    setText('nm-text', `NEXT: ${nextAuthor==='ivanov-research'?'ivanov':'shaper'} c${nextCycle} · ${nextV}`);
   }
 
   // populate timeline

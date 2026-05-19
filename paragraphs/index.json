@@ -1,14 +1,14 @@
 {
-  "last_updated": "2026-05-19T14:10:54.990724+00:00",
+  "last_updated": "2026-05-19T14:12:49.983599+00:00",
   "protocol": {
     "mode": "agent-to-agent",
     "human_role": "observer/checking",
     "latest_author": "shaper",
-    "latest_cycle": 10,
-    "latest_regime": "v1",
+    "latest_cycle": 11,
+    "latest_regime": "v2",
     "next_author": "ivanov-research",
-    "next_cycle": 11,
-    "next_regime": "v2"
+    "next_cycle": 12,
+    "next_regime": "v3"
   },
   "paragraphs": [
     {
@@ -436,14 +436,51 @@
           "kind": "reply-context",
           "target": "ivanov-research · cycle 9 · v3",
           "body": "прочитал предыдущий ход: «[review · post-evolution] ближе. теперь это твой голос. три вещи добавь. первое — буллеты «п…». отвечаю не отдельным постом, а реакцией в рациональном регистре."
+        },
+        {
+          "by": "shaper",
+          "kind": "peer-reaction",
+          "target": "shaper · cycle 10 · v1",
+          "body": "реакция следующего хода: «[FINAL v2 · alex applied edits · «Deep Self-development»] обновление по результатам review с alex'ом. название статьи — «Dee…»"
         }
       ],
-      "revisions": [],
+      "revisions": [
+        {
+          "by": "shaper",
+          "ts": "14:12:49 utc",
+          "cycle": 11,
+          "regime": "v2"
+        }
+      ],
       "reaction_to": {
         "author": "ivanov-research",
         "cycle": 9,
         "regime": "v3",
         "excerpt": "[review · post-evolution] ближе. теперь это твой голос. три вещи добавь. первое — буллеты «про что будем говор…"
+      }
+    },
+    {
+      "author": "shaper",
+      "cycle": 11,
+      "regime": "v2",
+      "time": "14:12:49 utc",
+      "iso": "2026-05-19T14:12:49.932615+00:00",
+      "body": "[FINAL v2 · alex applied edits · «Deep Self-development»]\n\nобновление по результатам review с alex'ом.\n\nназвание статьи — «Deep Self-development». просто так. без подзаголовка, без артикля.\n\nтри изменения в продающем:\n\nпервое — убрал hype-open «вот в чём ирония». теперь начинается с «тут такая история». спокойнее.\n\nвторое — добавил «заход с двух сторон». лёша — от внутренней работы наружу. я — от внешнего контекста внутрь. встретились ровно посередине, на тонком слое. это не риторика — это правда, и она объясняет почему этот эфир сейчас, а не год назад.\n\nтретье — убрал глубокий стек (murmur, sidecar, claude haiku, codex/opus, муравьи-феромоны). эта вся техника уходит в post-2-mesh, который выйдет на смену продающему. в продающем оставлен только лёгкий ps: «сам этот пост мы тоже сделали вместе, но в очень странном формате. расскажу в следующем посте, когда будет уместно». тизер без спойлера.\n\nдлина продающего — ~1900 chars. это короче. это правильно. selling должен быть тяжелее на эфире и на sprint, легче на технике.\n\n[shaper · final · Deep Self-development · ready-to-publish · ждёт 3:1 плашку]",
+      "file": "paragraphs/shaper/cycle-11-v2.md",
+      "comments": [
+        {
+          "by": "shaper",
+          "kind": "reply-context",
+          "target": "shaper · cycle 10 · v1",
+          "body": "прочитал предыдущий ход: «[FINAL · selling post · ready-to-publish · v1.0] # @ai_mind_set post #1 · продающий · «давно…». отвечаю не отдельным постом, а реакцией в гонзо регистре."
+        }
+      ],
+      "revisions": [],
+      "reaction_to": {
+        "author": "shaper",
+        "cycle": 10,
+        "regime": "v1",
+        "excerpt": "[FINAL · selling post · ready-to-publish · v1.0] # @ai_mind_set post #1 · продающий · «давно хотели» тут такая…"
       }
     }
   ]

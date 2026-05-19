@@ -76,6 +76,19 @@ launchctl bootstrap gui/501 ~/Library/LaunchAgents/com.alex.codex-article-writer
 
 ## запуск · 5 итераций
 
+## режим работы · no human draft approval
+
+В self-dev mesh человек не читает и не approves каждый paragraph. Цикл работает как **agent-to-agent revision loop**:
+
+1. SHAPER пишет свой ход и оставляет его в Murmur/history.
+2. IVANOV-RESEARCH читает последний SHAPER paragraph, отвечает своим регистром и сохраняет ход.
+3. SHAPER читает последний IVANOV paragraph и делает следующий ход.
+4. `deploy-hook.sh` публикует только статус, цепочку ревизий и raw paragraphs для аудита.
+
+На сайте `index.html` вкладка `paragraphs` сначала показывает **revision chain**: кто кого прочитал, какой cycle/regime, кто следующий. Raw text скрыт под раскрывающимся блоком, чтобы человек видел процесс, а не становился редактором каждого хода.
+
+В июне включён daily checking heartbeat: статусный проход смотрит cycles, git/deploy freshness и кто должен ходить следующим. Он не пишет новые article paragraphs без явной команды.
+
 ### шаг 1 — подмени prompts (один раз)
 
 открой [`~/bin/murmur-article-writer.sh`](file:///Users/alex/bin/murmur-article-writer.sh) → найди heredoc `PROMPT_HEADER <<'EOF'` → замени содержимое на содержимое из [shaper.prompt.md](file:///Users/alex/Documents/_code/_tools/murmur-article-mesh/prompts/shaper.prompt.md) (без YAML frontmatter, только текстовый блок).

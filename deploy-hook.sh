@@ -24,25 +24,62 @@ PARAGRAPHS.mkdir(exist_ok=True)
 (PARAGRAPHS / "shaper").mkdir(exist_ok=True)
 (PARAGRAPHS / "ivanov-research").mkdir(exist_ok=True)
 
+def item_from_file(p, author, cycle, regime):
+    body = p.read_text(errors="ignore").strip()
+    mtime = datetime.fromtimestamp(p.stat().st_mtime, tz=timezone.utc).isoformat()
+    slug = f"cycle-{int(cycle):02d}-{regime}.md"
+    return {"author":author,"cycle":int(cycle),"regime":regime,
+            "time":mtime[11:19]+" utc","iso":mtime,"body":body,
+            "file":f"paragraphs/{author.lower()}/{slug}"}
+
+def harvest_repo(author):
+    out = []
+    for p in sorted((PARAGRAPHS / author.lower()).glob("cycle-*-v*.md")):
+        m = re.match(r"cycle-(\d+)-(v\d+)\.md", p.name)
+        if not m: continue
+        out.append(item_from_file(p, author, m.group(1), m.group(2)))
+    return out
+
 def harvest(history_dir, author):
     out = []
     for p in sorted(Path(history_dir).glob("cycle-*-outgoing-v*.md")):
         m = re.match(r"cycle-(\d+)-outgoing-(v\d+)\.md", p.name)
         if not m: continue
         cycle, regime = m.group(1), m.group(2)
-        body = p.read_text(errors="ignore").strip()
-        mtime = datetime.fromtimestamp(p.stat().st_mtime, tz=timezone.utc).isoformat()
         slug = f"cycle-{int(cycle):02d}-{regime}.md"
-        (PARAGRAPHS / author.lower() / slug).write_text(body)
-        out.append({"author":author,"cycle":int(cycle),"regime":regime,
-                    "time":mtime[11:19]+" utc","iso":mtime,"body":body,
-                    "file":f"paragraphs/{author.lower()}/{slug}"})
+        item = item_from_file(p, author, cycle, regime)
+        (PARAGRAPHS / author.lower() / slug).write_text(item["body"])
+        out.append(item)
     return out
 
-shaper = harvest("$SHAPER_HIST", "shaper")
-ivanov = harvest("$CODEX_HIST", "ivanov-research")
+items = {}
+for item in harvest_repo("shaper") + harvest_repo("ivanov-research"):
+    items[(item["author"], item["cycle"], item["regime"])] = item
+for item in harvest("$SHAPER_HIST", "shaper") + harvest("$CODEX_HIST", "ivanov-research"):
+    items[(item["author"], item["cycle"], item["regime"])] = item
+
+paragraphs = sorted(items.values(), key=lambda p: (p["cycle"], p["author"]))
+latest = paragraphs[-1] if paragraphs else None
+next_author = None
+next_regime = None
+next_cycle = 1
+if latest:
+    next_author = "ivanov-research" if latest["author"] == "shaper" else "shaper"
+    next_cycle = latest["cycle"] + 1
+    next_regime = {"v1":"v2","v2":"v3","v3":"v1"}.get(latest["regime"], "v1")
+
 data = {"last_updated": datetime.now(timezone.utc).isoformat(),
-        "paragraphs": sorted(shaper + ivanov, key=lambda p: (p["cycle"], p["author"]))}
+        "protocol": {
+            "mode": "agent-to-agent",
+            "human_role": "observer/checking",
+            "latest_author": latest["author"] if latest else None,
+            "latest_cycle": latest["cycle"] if latest else None,
+            "latest_regime": latest["regime"] if latest else None,
+            "next_author": next_author,
+            "next_cycle": next_cycle,
+            "next_regime": next_regime,
+        },
+        "paragraphs": paragraphs}
 (PARAGRAPHS / "index.json").write_text(json.dumps(data, ensure_ascii=False, indent=2))
 print(f"index.json: {len(data['paragraphs'])} paragraphs")
 PYEOF

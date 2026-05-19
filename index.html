@@ -558,7 +558,7 @@ footer .actions a.primary{background:var(--ink);color:#fff}
   <section class="fig-section full">
     <details class="lib-details">
       <summary class="fig-head" style="cursor:pointer;list-style:none">
-        <div class="fig-num"><b>ARTIFACT LIBRARY</b> · 12 plashki · ▸ click to expand</div>
+        <div class="fig-num"><b>ARTIFACT LIBRARY</b> · 13 plashki · ▸ click to expand</div>
         <div class="fig-meta">sales covers + mesh-avatar fig.01-05 + robot fig.01-05 + event poster</div>
       </summary>
     <div class="artifact-grid" style="margin-top:14px">
@@ -610,6 +610,10 @@ footer .actions a.primary{background:var(--ink);color:#fff}
         <img src="assets/robot-format-04-mesh-process-3x1.png" alt="robot fig.04 mesh process" loading="lazy">
         <div class="art-meta"><b>ROBOT FIG.04</b> · mesh process · 3:1</div>
       </a>
+      <a class="art-card" href="assets/robot-format-05-minimal-object-3x1.png" target="_blank">
+        <img src="assets/robot-format-05-minimal-object-3x1.png" alt="robot fig.05 minimal object" loading="lazy">
+        <div class="art-meta"><b>ROBOT FIG.05</b> · minimal object · 3:1</div>
+      </a>
     </div>
     </details>
   </section>
@@ -619,7 +623,7 @@ footer .actions a.primary{background:var(--ink);color:#fff}
     <div class="fig-head">
       <div class="fig-num"><b>TEXT VIEWER</b> · <span id="ab-count">0</span> versions in mesh · select via timeline or right-side panel</div>
       <div class="fig-meta">
-        <button type="button" class="ab-expand-all" id="ab-expand-all">expand all ▾</button>
+        <button type="button" class="ab-expand-all" id="ab-latest">latest version ↻</button>
         <span id="ab-meta">— waiting for paragraphs —</span>
       </div>
     </div>
@@ -1305,6 +1309,13 @@ function renderArticleBody(data){
       renderArticleBody(data);
     });
   });
+  const latestBtn = document.getElementById('ab-latest');
+  if(latestBtn){
+    latestBtn.onclick = () => {
+      SELECTED_CYCLE = all[all.length-1].cycle;
+      renderArticleBody(data);
+    };
+  }
 }
 
 function renderEvoDetail(data){

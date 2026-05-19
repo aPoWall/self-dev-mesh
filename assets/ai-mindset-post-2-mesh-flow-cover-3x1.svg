@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="600" viewBox="0 0 1800 600">
+  <defs>
+    <pattern id="grid" width="34" height="34" patternUnits="userSpaceOnUse">
+      <path d="M34 0H0V34" fill="none" stroke="#eeeeee" stroke-width="1"/>
+    </pattern>
+    <marker id="arrowRed" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#c43838"/></marker>
+    <marker id="arrowInk" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#000"/></marker>
+    <clipPath id="clipAlex"><circle cx="156" cy="456" r="50"/></clipPath>
+    <clipPath id="clipIvanov"><circle cx="402" cy="456" r="50"/></clipPath>
+    <clipPath id="clipRobot"><rect x="690" y="76" width="408" height="408" rx="0"/></clipPath>
+    <style>
+      @keyframes flowA{from{offset-distance:0%}to{offset-distance:100%}}
+      @keyframes dash{from{stroke-dashoffset:0}to{stroke-dashoffset:-44}}
+      .mono{font-family:JetBrains Mono,SFMono-Regular,Menlo,Consolas,monospace}
+      .sans{font-family:Arial,Helvetica,sans-serif}
+      .serif{font-family:Georgia,Times New Roman,serif}
+      .label{font-size:12px;letter-spacing:4px;text-transform:uppercase;fill:#888}
+      .tiny{font-size:10px;letter-spacing:2.4px;text-transform:uppercase;fill:#888}
+      .dashline{fill:none;stroke:#b8b8b8;stroke-width:2;stroke-dasharray:8 10;animation:dash 2.8s linear infinite}
+      .redline{fill:none;stroke:#c43838;stroke-width:3.2;stroke-dasharray:12 9;animation:dash 2.2s linear infinite}
+      .flowDot{r:6;fill:#000;stroke:#fff;stroke-width:2}.flowDot.redDot{fill:#c43838}
+      .dot1{offset-path:path('M536 424 C 622 228, 704 174, 794 230 S 1030 312, 1178 170 S 1380 124, 1506 158');animation:flowA 5.8s linear infinite}
+      .dot2{offset-path:path('M536 448 C 640 342, 720 324, 804 310 S 1036 286, 1178 284 S 1370 264, 1506 258');animation:flowA 6.4s linear infinite .7s}
+      .dot3{offset-path:path('M536 472 C 650 456, 724 426, 808 390 S 1030 382, 1178 388 S 1372 388, 1506 358');animation:flowA 5.4s linear infinite .35s}
+      .dot4{offset-path:path('M536 496 C 650 520, 740 498, 812 450 S 1020 420, 1178 486 S 1370 494, 1506 458');animation:flowA 6.1s linear infinite 1s}
+    </style>
+  </defs>
+
+  <rect width="1800" height="600" fill="#fff"/>
+  <rect width="1800" height="600" fill="url(#grid)" opacity=".34"/>
+  <rect x="28" y="28" width="1744" height="544" fill="none" stroke="#000" stroke-width="2"/>
+  <line x1="28" y1="96" x2="1772" y2="96" stroke="#000" stroke-width="1"/>
+
+  <text x="62" y="72" class="mono label" fill="#000">fig.post2 · self-dev mesh · data-flow cover</text>
+  <text x="1690" y="72" class="mono tiny" text-anchor="end">murmur → sidecar → git → netlify → live</text>
+
+  <g transform="translate(62 132)">
+    <rect x="0" y="0" width="116" height="28" fill="#c43838"/>
+    <text x="58" y="19" class="mono" font-size="11" font-weight="700" letter-spacing="3" text-anchor="middle" fill="#fff">POST #2</text>
+    <text x="0" y="88" class="sans" font-size="56" font-weight="900" letter-spacing="0" fill="#000">как родился</text>
+    <text x="0" y="150" class="sans" font-size="56" font-weight="900" letter-spacing="0" fill="#000">вчерашний пост</text>
+    <line x1="0" y1="184" x2="470" y2="184" stroke="#000" stroke-width="2"/>
+    <text x="0" y="224" class="serif" font-size="22" fill="#000">две ai-сессии пишут в одну тетрадь</text>
+    <text x="0" y="254" class="serif" font-size="22" fill="#000">наружу выходят продукты</text>
+  </g>
+
+  <g opacity=".065" clip-path="url(#clipRobot)"><image href="robot-source-clean-normalized.jpg" x="642" y="54" width="520" height="520" preserveAspectRatio="xMidYMid slice"/></g>
+
+  <g>
+    <rect x="68" y="400" width="222" height="104" fill="#fff" stroke="#000" stroke-width="2"/>
+    <circle cx="156" cy="456" r="54" fill="#fff" stroke="#000" stroke-width="2"/>
+    <image href="mesh-alex-avatar.png" x="106" y="406" width="100" height="100" clip-path="url(#clipAlex)" preserveAspectRatio="xMidYMid slice"/>
+    <rect x="178" y="448" width="58" height="16" fill="#c43838" opacity=".9"/>
+    <text x="156" y="530" class="mono" font-size="17" font-weight="800" letter-spacing="4" text-anchor="middle">SHAPER</text>
+    <text x="156" y="552" class="mono tiny" text-anchor="middle">channel voice</text>
+  </g>
+  <g>
+    <rect x="314" y="400" width="222" height="104" fill="#000" stroke="#000" stroke-width="2"/>
+    <circle cx="402" cy="456" r="54" fill="#fff" stroke="#000" stroke-width="2"/>
+    <image href="mesh-ivanov-avatar.jpg" x="352" y="406" width="100" height="100" clip-path="url(#clipIvanov)" preserveAspectRatio="xMidYMid slice"/>
+    <text x="402" y="530" class="mono" font-size="17" font-weight="800" letter-spacing="4" text-anchor="middle" fill="#fff">IVANOV</text>
+    <text x="402" y="552" class="mono tiny" text-anchor="middle" fill="#bfbfbf">codex cli</text>
+  </g>
+
+  <g>
+    <path d="M536 424 C 622 228, 704 174, 794 230 S 1030 312, 1178 170 S 1380 124, 1506 158" class="redline" marker-end="url(#arrowRed)"/>
+    <path d="M536 448 C 640 342, 720 324, 804 310 S 1036 286, 1178 284 S 1370 264, 1506 258" class="dashline" marker-end="url(#arrowInk)"/>
+    <path d="M536 472 C 650 456, 724 426, 808 390 S 1030 382, 1178 388 S 1372 388, 1506 358" class="redline" marker-end="url(#arrowRed)"/>
+    <path d="M536 496 C 650 520, 740 498, 812 450 S 1020 420, 1178 486 S 1370 494, 1506 458" class="dashline" marker-end="url(#arrowInk)"/>
+    <circle class="flowDot redDot dot1" cx="0" cy="0"/>
+    <circle class="flowDot dot2" cx="0" cy="0"/>
+    <circle class="flowDot redDot dot3" cx="0" cy="0"/>
+    <circle class="flowDot dot4" cx="0" cy="0"/>
+  </g>
+
+  <g transform="translate(650 162)">
+    <rect x="0" y="0" width="468" height="264" fill="#fff" stroke="#000" stroke-width="2"/>
+    <rect x="0" y="0" width="468" height="44" fill="#000"/>
+    <text x="24" y="29" class="mono" font-size="13" font-weight="700" letter-spacing="3" fill="#fff">SHARED NOTEBOOK / REPO</text>
+    <text x="24" y="84" class="mono label">01 · paragraph.md</text>
+    <line x1="24" y1="98" x2="444" y2="98" stroke="#d9d9d9" stroke-width="1"/>
+    <text x="24" y="134" class="mono label">02 · sidecar.meta.json</text>
+    <line x1="24" y1="148" x2="444" y2="148" stroke="#d9d9d9" stroke-width="1"/>
+    <text x="24" y="184" class="mono label">03 · commit + push</text>
+    <line x1="24" y1="198" x2="444" y2="198" stroke="#d9d9d9" stroke-width="1"/>
+    <rect x="24" y="220" width="174" height="28" fill="#c43838"/>
+    <text x="111" y="239" class="mono" font-size="10" font-weight="700" letter-spacing="2" text-anchor="middle" fill="#fff">12 VERSIONS</text>
+    <text x="220" y="239" class="mono tiny">review through commit, not chat</text>
+  </g>
+
+  <g transform="translate(1258 124)">
+    <text x="0" y="0" class="mono label" fill="#000">products leaving the mesh</text>
+    <g transform="translate(0 26)"><rect x="0" y="0" width="356" height="64" fill="#fff" stroke="#000" stroke-width="2"/><rect x="0" y="0" width="8" height="64" fill="#c43838"/><text x="28" y="28" class="mono" font-size="15" font-weight="800" letter-spacing="2">CHANNEL POST</text><text x="28" y="50" class="mono tiny">published story · warm entry</text></g>
+    <g transform="translate(0 126)"><rect x="0" y="0" width="356" height="64" fill="#000" stroke="#000" stroke-width="2"/><text x="28" y="28" class="mono" font-size="15" font-weight="800" letter-spacing="2" fill="#fff">LIVE ARTICLE</text><text x="28" y="50" class="mono tiny" fill="#bfbfbf">versioned paragraphs · observer view</text></g>
+    <g transform="translate(0 226)"><rect x="0" y="0" width="356" height="64" fill="#fff" stroke="#000" stroke-width="2"/><text x="28" y="28" class="mono" font-size="15" font-weight="800" letter-spacing="2">SPRINT PROTOCOL</text><text x="28" y="50" class="mono tiny">1–14 june · memory between sessions</text></g>
+    <g transform="translate(0 326)"><rect x="0" y="0" width="356" height="64" fill="#fff" stroke="#000" stroke-width="2"/><text x="28" y="28" class="mono" font-size="15" font-weight="800" letter-spacing="2">VISUAL SYSTEM</text><text x="28" y="50" class="mono tiny">covers · graph · telemetry</text></g>
+  </g>
+
+</svg>

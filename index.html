@@ -79,6 +79,17 @@ body{min-height:100vh;display:flex;flex-direction:column}
 .edge-live.active{opacity:.85;animation:edge-flow 1.4s linear 2}
 @keyframes edge-flow{from{stroke-dashoffset:0}to{stroke-dashoffset:-48}}
 
+/* canonical published artifact — frozen final post */
+.canonical-artifact{border:2px solid var(--ink);background:#fffbe6;padding:14px 18px;margin:14px 28px 24px;font-family:var(--mono)}
+.canonical-artifact .ca-rail{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.canonical-artifact .ca-badge{font-size:9px;letter-spacing:0.20em;text-transform:uppercase;background:var(--ink);color:#fff;padding:3px 9px;font-weight:600}
+.canonical-artifact .ca-title{font-size:15px;font-weight:600;letter-spacing:0.04em;color:var(--ink)}
+.canonical-artifact .ca-meta{font-size:10px;letter-spacing:0.10em;text-transform:uppercase;color:var(--muted);margin-left:auto}
+.canonical-artifact .ca-toggle{font-family:var(--mono);font-size:10px;letter-spacing:0.14em;border:1px solid var(--ink);background:#fff;color:var(--ink);padding:5px 12px;cursor:pointer}
+.canonical-artifact .ca-toggle:hover{background:var(--ink);color:#fff}
+.canonical-artifact .ca-body{margin-top:14px;padding-top:14px;border-top:1px dashed var(--ink);font-size:13.5px;line-height:1.65;letter-spacing:-0.005em;white-space:pre-wrap;color:var(--ink);max-width:760px}
+.canonical-artifact .ca-body a{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+
 /* final article panel */
 .final-article{border-top:1px dashed var(--soft);padding-top:18px;margin-top:32px}
 .final-meta{font-size:10.5px;letter-spacing:0.06em;color:var(--muted);margin:0 0 14px}
@@ -180,6 +191,38 @@ body{min-height:100vh;display:flex;flex-direction:column}
 .stack-table td code{font-family:var(--mono);background:#f4f4f4;padding:1px 5px;font-size:11px}
 .stack-table td .st-muted{color:var(--muted);font-size:10.5px;letter-spacing:0.04em}
 @media (max-width:780px){.stack-table th{width:auto;display:block;padding-bottom:0}.stack-table td{display:block;padding-top:4px}}
+
+/* article body — full flowing text · bi-directionally linked to timeline */
+.article-body{padding:22px 28px;border-right:1px solid var(--soft);min-height:540px;background:#fff}
+.article-body .fig-head{margin-bottom:16px}
+.article-paragraphs{display:flex;flex-direction:column;gap:22px;margin-top:8px}
+.article-empty{color:var(--muted);font-style:italic;text-align:center;padding:60px 0;border:1px dashed #ddd}
+.article-paragraph{border:1px solid var(--soft);background:#fff;padding:18px 22px;display:flex;flex-direction:column;gap:10px;transition:border-color .2s,box-shadow .2s,background .2s;position:relative;cursor:default;scroll-margin-top:80px}
+.article-paragraph:hover{border-color:var(--ink);box-shadow:3px 3px 0 var(--ink)}
+.article-paragraph.linked-from-timeline{border-color:#c43838;box-shadow:3px 3px 0 #c43838;background:#fffbe6}
+.article-paragraph.flash{animation:ap-flash 1.8s ease-out 1}
+@keyframes ap-flash{0%{box-shadow:0 0 0 0 rgba(196,56,56,1)}30%{box-shadow:0 0 0 10px rgba(196,56,56,.28)}100%{box-shadow:3px 3px 0 var(--ink)}}
+.ap-head{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);gap:14px;flex-wrap:wrap;border-bottom:1px solid var(--soft);padding-bottom:8px}
+.ap-author{display:flex;align-items:center;gap:8px}
+.ap-author img{width:24px;height:24px;border-radius:50%;border:1px solid var(--ink);object-fit:cover}
+.ap-author b{color:var(--ink);font-weight:600;letter-spacing:0.10em}
+.ap-cycle{color:var(--ink);font-weight:600}
+.ap-regime{opacity:0.7}
+.ap-body{font-family:Georgia,"Times New Roman",serif;font-size:15px;line-height:1.65;color:var(--ink);letter-spacing:-0.005em}
+.ap-body p{margin:0 0 12px}
+.ap-body p:last-child{margin-bottom:0}
+.ap-body ins{background:#dff5d4;text-decoration:none;padding:0 2px}
+.ap-body del{background:#f9d4d4;text-decoration:line-through;opacity:0.7;padding:0 2px}
+.ap-comments{display:flex;flex-direction:column;gap:6px;border-top:1px dashed var(--soft);padding-top:10px;margin-top:4px}
+.ap-comment{font-family:var(--mono);font-size:10.5px;line-height:1.5;padding:7px 10px;background:#fffbe6;border-left:3px solid #f0e6a0}
+.ap-comment.ivanov{background:#fafafa;border-color:#000}
+.ap-comment-meta{font-weight:600;letter-spacing:0.10em;text-transform:uppercase;font-size:9px;color:var(--muted);margin-bottom:3px}
+.ap-link-step{font-family:var(--mono);font-size:9.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-top:6px;border-top:1px dotted var(--soft);padding-top:8px}
+.ap-link-step b{color:var(--ink);cursor:pointer}
+.ap-link-step b:hover{color:#c43838}
+
+/* highlight state on timeline step driven by paragraph hover */
+.evo-step.linked-from-paragraph{border-color:#c43838;background:#fffbe6;box-shadow:3px 3px 0 #c43838}
 
 /* FIG.MESH.4 — compressed evo timeline (4-phase row) */
 .fig-evo .evo-phases{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
@@ -346,6 +389,17 @@ footer .actions a.primary{background:var(--ink);color:#fff}
     </div>
     <ol class="evo-steps" id="evo-steps"></ol>
     <div class="evo-detail" id="evo-detail"></div>
+  </section>
+
+  <!-- ── CANONICAL PUBLISHED ARTIFACT — frozen final selling post ── -->
+  <section class="canonical-artifact" id="canonical-artifact" style="display:none">
+    <div class="ca-rail">
+      <span class="ca-badge">canonical · frozen</span>
+      <span class="ca-title" id="ca-title">— title —</span>
+      <span class="ca-meta" id="ca-meta">— meta —</span>
+      <button class="ca-toggle" id="ca-toggle" aria-expanded="false">show full text ▾</button>
+    </div>
+    <article class="ca-body" id="ca-body" hidden></article>
   </section>
 
   <!-- ── ARTICLE BODY (left main) — full flowing text · each block hover-linked to timeline ── -->
@@ -1024,6 +1078,37 @@ document.querySelectorAll('.node-link').forEach(node=>{
 });
 document.getElementById('filter-clear').addEventListener('click',()=>applyHistoryFilter(null));
 
+// ── canonical published artifact ──
+function renderCanonicalArtifact(data){
+  const root = document.getElementById('canonical-artifact');
+  if(!root) return;
+  const canon = (data.paragraphs||[]).filter(p=>p.canonical).sort((a,b)=>(b.cycle||0)-(a.cycle||0))[0];
+  if(!canon){ root.style.display='none'; return; }
+  root.style.display='block';
+  document.getElementById('ca-title').textContent = canon.title || `cycle ${canon.cycle} · ${canon.regime}`;
+  const ts = canon.frozen_at ? new Date(canon.frozen_at).toISOString().slice(11,16)+' utc' : (canon.time||'');
+  document.getElementById('ca-meta').textContent = `${canon.channel_target||''} · cycle ${canon.cycle} · frozen ${ts}`;
+  // Strip the [CANONICAL...] header and trailing [shaper · frozen...] markers from body
+  let body = (canon.body||'')
+    .replace(/^\[CANONICAL[^\]]*\]\s*\n+/m,'')
+    .replace(/\n+\[shaper[^\]]*\]\s*$/m,'')
+    .replace(/────[^\n]*\n+/g,'')
+    .trim();
+  // linkify URLs
+  body = body.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+             .replace(/(https?:\/\/[^\s]+)/g,'<a href="$1" target="_blank">$1</a>');
+  document.getElementById('ca-body').innerHTML = body;
+}
+const _caToggle = document.getElementById('ca-toggle');
+if(_caToggle){
+  _caToggle.addEventListener('click',()=>{
+    const body = document.getElementById('ca-body');
+    const open = body.hasAttribute('hidden');
+    if(open){ body.removeAttribute('hidden'); _caToggle.textContent='hide ▴'; _caToggle.setAttribute('aria-expanded','true'); }
+    else { body.setAttribute('hidden',''); _caToggle.textContent='show full text ▾'; _caToggle.setAttribute('aria-expanded','false'); }
+  });
+}
+
 // ── final article assembly ──
 function renderFinalArticle(data){
   const body = document.getElementById('final-body');
@@ -1061,6 +1146,7 @@ loadParagraphs = async function(){
       renderParagraphs(filtered);
     }
     renderFinalArticle(data);
+    renderCanonicalArtifact(data);
   }catch(e){console.warn('extras failed',e);}
 };
 

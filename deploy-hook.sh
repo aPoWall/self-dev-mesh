@@ -69,6 +69,10 @@ for key, item in items.items():
             item["manual_revisions"] = meta.get("revisions", [])
             if meta.get("body_with_marks"):
                 item["body_with_marks"] = meta["body_with_marks"]
+            # Propagate top-level meta flags (canonical, frozen_at, title, type)
+            for k in ("canonical","frozen_at","title","channel_target","type"):
+                if k in meta:
+                    item[k] = meta[k]
         except Exception as e:
             print(f"meta parse failed for {meta_path.name}: {e}")
 

@@ -60,6 +60,39 @@ body{min-height:100vh;display:flex;flex-direction:column}
 .node-label{font-family:var(--mono);font-size:11px;letter-spacing:0.04em;fill:var(--ink)}
 .node-sub{font-family:var(--mono);font-size:9.5px;letter-spacing:0.06em;fill:var(--muted);text-transform:uppercase}
 
+/* live mesh — dynamic paragraph nodes per regime */
+.para-node{transition:opacity .3s ease}
+.para-node.shaper rect{fill:#fff;stroke:#000;stroke-width:1.5}
+.para-node.ivanov rect{fill:#000;stroke:#000;stroke-width:1.5}
+.para-node text{font-family:var(--mono);font-size:8.5px;letter-spacing:0.04em;text-anchor:middle;pointer-events:none}
+.para-node.shaper text{fill:#000}
+.para-node.ivanov text{fill:#fff}
+.para-node:hover rect{stroke-width:2.5}
+.para-node.fresh{animation:para-pop .9s cubic-bezier(.2,1.5,.4,1) both}
+.para-node.fresh rect{animation:para-flash 1.8s ease-out 1}
+@keyframes para-pop{0%{opacity:0;transform:scale(0)}60%{opacity:1;transform:scale(1.4)}100%{opacity:1;transform:scale(1)}}
+@keyframes para-flash{0%{filter:drop-shadow(0 0 0 #c43838)}40%{filter:drop-shadow(0 0 6px #c43838)}100%{filter:drop-shadow(0 0 0 transparent)}}
+.regime-pulse{fill:none;stroke:#c43838;stroke-width:2;opacity:0;pointer-events:none}
+.regime-pulse.active{animation:regime-ring 1.6s ease-out 2}
+@keyframes regime-ring{0%{r:24;opacity:.9}100%{r:64;opacity:0}}
+.edge-live{stroke:#c43838;stroke-width:1.2;stroke-dasharray:6 6;opacity:0;pointer-events:none}
+.edge-live.active{opacity:.85;animation:edge-flow 1.4s linear 2}
+@keyframes edge-flow{from{stroke-dashoffset:0}to{stroke-dashoffset:-48}}
+
+/* murmur status pill in header tabs */
+.murmur-status{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:9.5px;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);border:1px solid var(--soft);padding:4px 9px;margin-left:8px}
+.murmur-status i{display:inline-block;width:8px;height:8px;border-radius:50%;background:#bbb;box-shadow:0 0 0 0 rgba(0,0,0,0)}
+.murmur-status.ok i{background:#3a9d3a;animation:pulse-dot 1.6s ease-in-out infinite}
+.murmur-status.stale i{background:#c43838}
+@keyframes pulse-dot{0%,100%{box-shadow:0 0 0 0 rgba(58,157,58,.5)}50%{box-shadow:0 0 0 5px rgba(58,157,58,0)}}
+
+/* prominent "next move" callout above graph */
+.next-move{display:flex;justify-content:space-between;align-items:center;border:1px solid var(--ink);background:#fff;padding:10px 14px;margin-bottom:12px;font-family:var(--mono);font-size:11px;letter-spacing:0.06em}
+.next-move .nm-left{display:flex;align-items:center;gap:10px}
+.next-move .nm-badge{font-size:9px;letter-spacing:0.18em;text-transform:uppercase;background:#c43838;color:#fff;padding:3px 8px;font-weight:600}
+.next-move .nm-who{font-weight:600;font-size:13px;letter-spacing:0.12em;text-transform:uppercase}
+.next-move .nm-right{font-size:10px;color:var(--muted);letter-spacing:0.06em}
+
 .sim-events-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;font-size:11px;max-height:300px;overflow-y:auto}
 .sim-events-list li{border:1px solid var(--soft);padding:6px 10px;background:#fff;line-height:1.45}
 .sim-events-list .ev-time{color:var(--muted);letter-spacing:0.06em;margin-right:8px}
@@ -206,6 +239,15 @@ footer .actions a.primary{background:var(--ink);color:#fff}
       <span><i class="lg-stat"></i>stat</span>
     </div>
 
+    <div id="next-move" class="next-move" style="display:none">
+      <div class="nm-left">
+        <span class="nm-badge">next move</span>
+        <span class="nm-who" id="nm-who">—</span>
+        <span id="nm-detail">writes cycle ? · ?</span>
+      </div>
+      <div class="nm-right" id="nm-latest">latest: —</div>
+    </div>
+
     <svg class="mesh-graph" viewBox="0 0 760 500" xmlns="http://www.w3.org/2000/svg">
       <rect width="760" height="500" fill="#fff"/>
 
@@ -219,6 +261,16 @@ footer .actions a.primary{background:var(--ink);color:#fff}
         <line x1="330" y1="120" x2="430" y2="120" stroke-dasharray="2 3" opacity="0.3"/>
         <line x1="330" y1="250" x2="430" y2="250" stroke-dasharray="2 3" opacity="0.3"/>
         <line x1="330" y1="380" x2="430" y2="380" stroke-dasharray="2 3" opacity="0.3"/>
+      </g>
+
+      <!-- edges activated when new paragraph arrives in a regime -->
+      <g id="edges-live">
+        <line class="edge-live" data-regime="v1" x1="170" y1="250" x2="330" y2="120"/>
+        <line class="edge-live" data-regime="v1" x1="330" y1="120" x2="590" y2="250"/>
+        <line class="edge-live" data-regime="v2" x1="170" y1="250" x2="330" y2="250"/>
+        <line class="edge-live" data-regime="v2" x1="330" y1="250" x2="590" y2="250"/>
+        <line class="edge-live" data-regime="v3" x1="170" y1="250" x2="330" y2="380"/>
+        <line class="edge-live" data-regime="v3" x1="330" y1="380" x2="590" y2="250"/>
       </g>
 
       <!-- SHAPER avatar — AIM logo silhouette -->
@@ -244,37 +296,27 @@ footer .actions a.primary{background:var(--ink);color:#fff}
         <circle cx="330" cy="120" r="22" fill="#000"/>
         <text x="330" y="124" text-anchor="middle" class="node-label" fill="#fff" font-weight="600">v1</text>
         <text x="330" y="92" text-anchor="middle" class="node-sub">branch · rational</text>
+        <circle class="regime-pulse" data-regime="v1" cx="330" cy="120" r="24"/>
 
         <circle cx="330" cy="250" r="22" fill="#000"/>
         <text x="330" y="254" text-anchor="middle" class="node-label" fill="#fff" font-weight="600">v2</text>
         <text x="330" y="222" text-anchor="middle" class="node-sub">branch · gonzo</text>
+        <circle class="regime-pulse" data-regime="v2" cx="330" cy="250" r="24"/>
 
         <circle cx="330" cy="380" r="22" fill="#000"/>
         <text x="330" y="384" text-anchor="middle" class="node-label" fill="#fff" font-weight="600">v3</text>
         <text x="330" y="352" text-anchor="middle" class="node-sub">branch · melancholic</text>
+        <circle class="regime-pulse" data-regime="v3" cx="330" cy="380" r="24"/>
       </g>
 
+      <!-- dynamic paragraph stacks · populated by JS · one stack per regime row -->
       <g id="doc-nodes">
-        <g transform="translate(414,104)">
-          <rect width="32" height="32" fill="#fff" stroke="#000" stroke-width="1.5"/>
-          <line x1="0" y1="0" x2="32" y2="32" stroke="#000" stroke-width="1.5"/>
-          <line x1="32" y1="0" x2="0" y2="32" stroke="#000" stroke-width="1.5"/>
-        </g>
-        <text x="430" y="92" text-anchor="middle" class="node-sub">paragraph · v1</text>
-
-        <g transform="translate(414,234)">
-          <rect width="32" height="32" fill="#fff" stroke="#000" stroke-width="1.5"/>
-          <line x1="0" y1="0" x2="32" y2="32" stroke="#000" stroke-width="1.5"/>
-          <line x1="32" y1="0" x2="0" y2="32" stroke="#000" stroke-width="1.5"/>
-        </g>
-        <text x="430" y="222" text-anchor="middle" class="node-sub">paragraph · v2</text>
-
-        <g transform="translate(414,364)">
-          <rect width="32" height="32" fill="#fff" stroke="#000" stroke-width="1.5"/>
-          <line x1="0" y1="0" x2="32" y2="32" stroke="#000" stroke-width="1.5"/>
-          <line x1="32" y1="0" x2="0" y2="32" stroke="#000" stroke-width="1.5"/>
-        </g>
-        <text x="430" y="352" text-anchor="middle" class="node-sub">paragraph · v3</text>
+        <g class="doc-stack" data-regime="v1" transform="translate(414,104)"></g>
+        <text x="430" y="92" text-anchor="middle" class="node-sub">v1 · <tspan id="cnt-v1">0</tspan></text>
+        <g class="doc-stack" data-regime="v2" transform="translate(414,234)"></g>
+        <text x="430" y="222" text-anchor="middle" class="node-sub">v2 · <tspan id="cnt-v2">0</tspan></text>
+        <g class="doc-stack" data-regime="v3" transform="translate(414,364)"></g>
+        <text x="430" y="352" text-anchor="middle" class="node-sub">v3 · <tspan id="cnt-v3">0</tspan></text>
       </g>
 
       <g>
@@ -371,21 +413,11 @@ footer .actions a.primary{background:var(--ink);color:#fff}
   </div>
 </section>
 
-<!-- ━━ DASHBOARD VIEW ━━ -->
-<section id="view-dashboard" class="view">
-  <div class="dashboard-toolbar">
-    <span class="kicker" style="margin:0">live walkie-talkie snapshot</span>
-    <span style="color:#ccc">|</span>
-    <a href="dashboard.html" target="_blank">→ open standalone</a>
-    <button class="reload" onclick="document.getElementById('dash-frame').src=document.getElementById('dash-frame').src">reload</button>
-  </div>
-  <iframe id="dash-frame" src="dashboard.html" title="self-dev mesh · live dashboard"></iframe>
-</section>
-
 <footer>
   <div>self-dev mesh · alex p × alexey ivanov · live</div>
   <div></div>
   <div class="actions">
+    <a href="dashboard.html" target="_blank">dashboard</a>
     <a href="https://github.com/aPoWall/self-dev-mesh" target="_blank">source</a>
     <a href="https://selfdev.aimindset.org/" target="_blank">sprint</a>
     <a href="https://aimindset.org" target="_blank" class="primary">ai mindset</a>
@@ -418,6 +450,8 @@ async function loadParagraphs(){
     const data = await r.json();
     renderParagraphs(data);
     updateCounters(data);
+    renderMeshLive(data);
+    updateMurmurStatus(data);
     document.getElementById('last-update').textContent = 'last update ' + new Date().toISOString().slice(11,19) + ' utc';
   }catch(e){console.warn('paragraphs not available yet',e);}
 }
@@ -524,6 +558,82 @@ function updateCounters(data){
       return `<li><span class="ev-time">${escHtml(p.time||'—')}</span><span class="ev-phase">${escHtml(p.regime||'v?')}</span>${authorLabel(p.author)} · cycle ${p.cycle||'?'} · ${readLine}</li>`;
     }).join('');
   }
+}
+
+// ────────────────────────────────────────────────────────────────
+// dynamic mesh graph · per-regime paragraph stacks + fresh-pulse
+// ────────────────────────────────────────────────────────────────
+const SEEN_KEY = 'selfdev-mesh-seen-v1';
+function loadSeen(){ try{ return new Set(JSON.parse(localStorage.getItem(SEEN_KEY)||'[]')); }catch(e){ return new Set(); } }
+function saveSeen(set){ try{ localStorage.setItem(SEEN_KEY, JSON.stringify([...set])); }catch(e){} }
+function paraKey(p){ return `${p.cycle}|${p.regime}|${authorKey(p.author)}`; }
+
+function renderMeshLive(data){
+  const seen = loadSeen();
+  const all = sortedParagraphs(data);
+  // group by regime
+  const byRegime = {v1:[], v2:[], v3:[]};
+  all.forEach(p => { if(byRegime[p.regime]) byRegime[p.regime].push(p); });
+
+  const freshRegimes = new Set();
+  ['v1','v2','v3'].forEach(reg => {
+    const stack = document.querySelector(`.doc-stack[data-regime="${reg}"]`);
+    const counter = document.getElementById('cnt-'+reg);
+    if(!stack) return;
+    const items = byRegime[reg];
+    if(counter) counter.textContent = items.length;
+    // layout: vertically stacked 24x24 rects, gap 4. centered on y=0 of group transform
+    const SIZE=24, GAP=4;
+    const totalH = items.length * SIZE + Math.max(0, items.length-1) * GAP;
+    const startY = -totalH/2 + SIZE/2;
+    stack.innerHTML = items.map((p,i) => {
+      const cy = startY + i*(SIZE+GAP);
+      const key = paraKey(p);
+      const isFresh = !seen.has(key);
+      if(isFresh) freshRegimes.add(reg);
+      const cls = 'para-node ' + (authorKey(p.author)==='ivanov-research' ? 'ivanov' : 'shaper') + (isFresh ? ' fresh' : '');
+      const label = `c${p.cycle}`;
+      return `<g class="${cls}" data-key="${key}" transform="translate(-${SIZE/2}, ${cy - SIZE/2})">
+        <title>${authorLabel(p.author)} · cycle ${p.cycle} · ${p.regime} · ${p.time||''}</title>
+        <rect width="${SIZE}" height="${SIZE}"/>
+        <text x="${SIZE/2}" y="${SIZE/2+3}">${label}</text>
+      </g>`;
+    }).join('');
+  });
+
+  // trigger pulse rings + edge flow for regimes with fresh paragraphs
+  freshRegimes.forEach(reg => {
+    const ring = document.querySelector(`.regime-pulse[data-regime="${reg}"]`);
+    if(ring){ ring.classList.remove('active'); void ring.getBoundingClientRect(); ring.classList.add('active'); }
+    document.querySelectorAll(`.edge-live[data-regime="${reg}"]`).forEach(e=>{
+      e.classList.remove('active'); void e.getBoundingClientRect(); e.classList.add('active');
+    });
+  });
+
+  // mark all current paragraphs as seen for next poll
+  all.forEach(p => seen.add(paraKey(p)));
+  saveSeen(seen);
+
+  // next-move callout above graph
+  const callout = document.getElementById('next-move');
+  const proto = data.protocol || {};
+  if(callout && proto.next_author){
+    callout.style.display = 'flex';
+    document.getElementById('nm-who').textContent = (proto.next_author||'').includes('ivanov') ? 'IVANOV' : 'SHAPER';
+    document.getElementById('nm-detail').textContent = `writes cycle ${proto.next_cycle} · ${proto.next_regime}`;
+    document.getElementById('nm-latest').textContent =
+      `latest: ${(proto.latest_author||'').toUpperCase()} c${proto.latest_cycle||'?'} · ${proto.latest_regime||'?'}`;
+  }
+}
+
+function updateMurmurStatus(data){
+  const el = document.getElementById('murmur-status');
+  if(!el) return;
+  const ts = data.last_updated ? Date.parse(data.last_updated) : 0;
+  const ageMin = ts ? (Date.now() - ts) / 60000 : 999;
+  el.classList.toggle('ok', ageMin < 30);   // fresh within 30 min
+  el.classList.toggle('stale', ageMin >= 30);
+  el.title = `murmur transport · last update ${Math.round(ageMin)} min ago`;
 }
 
 loadParagraphs();

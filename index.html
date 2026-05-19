@@ -366,7 +366,6 @@ footer .actions a.primary{background:var(--ink);color:#fff}
   </div>
   <nav class="tabs" role="tablist">
     <button class="active" data-view="mesh">mesh</button>
-    <button data-view="paragraphs">history</button>
     <span class="murmur-status" id="murmur-status" title="murmur transport"><i></i>murmur</span>
   </nav>
   <div class="hd-meta">
@@ -642,7 +641,7 @@ footer .actions a.primary{background:var(--ink);color:#fff}
       </tr>
       <tr>
         <th>codex runtime</th>
-        <td><code>codex cli</code> · opus 4.7 · <code>codex exec</code> spawned per inbound murmur message · ~2m cadence · <span class="st-muted">murmur id adsecg…o4w3j</span></td>
+        <td><code>codex cli</code> · opus 4.7 · <code>codex exec</code> spawned per inbound murmur message · ~2m cadence · <span class="st-muted">murmur id adsecg…o4w3j · also generates plans, visuals (3:1 covers in /assets), artifacts (review files), libraries (selling-post drafts)</span></td>
       </tr>
       <tr>
         <th>shared brain</th>
@@ -977,50 +976,137 @@ const PHASE_TITLES = {
   4: 'post cycle-10',
 };
 
+// cycle ↔ timeline-step bi-directional mapping for hover-linkage
+const CYCLE_TO_STEP_KEY = {1:'seed', 2:'counter-voice', 3:'melancholic', 4:'meta-sidecar', 5:'channel-post'};
+const STEP_KEY_TO_CYCLE = {seed:1, 'counter-voice':2, melancholic:3, 'meta-sidecar':4, 'channel-post':5};
+
 let SELECTED_STEP = null;
 function renderEvolution(data){
-  // new target: 4-phase grouped grid in FIG.MESH.4
-  const grid = document.getElementById('evo-phases');
-  if(!grid){ // fallback to old horizontal layout if mesh hasn't been refactored on this page
-    const list = document.getElementById('evo-steps');
-    if(list){ list.innerHTML = ''; }
-    return;
-  }
-  // group EVOLUTION by phase
-  const byPhase = {1:[], 2:[], 3:[], 4:[]};
-  EVOLUTION.forEach(s => { if(byPhase[s.phase]) byPhase[s.phase].push(s); });
-
-  grid.innerHTML = [1,2,3,4].map(phase => {
-    const steps = byPhase[phase] || [];
-    const phaseAnyActive = steps.some(s => inferState(s, data) === 'active');
-    return `<article class="evo-phase${phaseAnyActive?' active':''}">
-      <div class="ep-num">
-        <span>phase ${phase}</span>
-        <span>${steps.length} step${steps.length===1?'':'s'}</span>
+  // primary target: horizontal evo-timeline at top of mesh view
+  const list = document.getElementById('evo-steps');
+  if(!list) return;
+  list.innerHTML = EVOLUTION.map((s, i) => {
+    const state = inferState(s, data);
+    const stateSym = state==='done' ? '●' : state==='active' ? '◐' : '○';
+    const selCls = SELECTED_STEP === s.key ? ' selected' : '';
+    const activeCls = state === 'active' ? ' active' : '';
+    return `<li class="evo-step${activeCls}${selCls}" data-key="${s.key}">
+      <div class="es-num">
+        <span>${String(i+1).padStart(2,'0')} · phase ${s.phase} · ${escHtml(s.when)}</span>
+        <span class="es-state ${state}">${stateSym}</span>
       </div>
-      <div class="ep-title">${escHtml(PHASE_TITLES[phase]||'')}</div>
-      <div class="ep-steps">
-        ${steps.map(s => {
-          const state = inferState(s, data);
-          const stateSym = state==='done' ? '●' : state==='active' ? '◐' : '○';
-          const selCls = SELECTED_STEP === s.key ? ' selected' : '';
-          return `<div class="ep-step${selCls}" data-key="${s.key}">
-            <span class="ep-state ${state}">${stateSym}</span>
-            <span class="ep-name">${escHtml(s.title)}</span>
-          </div>`;
-        }).join('')}
-      </div>
-    </article>`;
+      <div class="es-title">${escHtml(s.title)}</div>
+      <div class="es-brief">${escHtml(s.brief)}</div>
+      ${s.link ? `<a class="es-link" href="${escHtml(s.link.href)}" target="_blank" rel="noopener">→ ${escHtml(s.link.label)}</a>` : '<span class="es-link" style="opacity:0.4">— waiting —</span>'}
+    </li>`;
   }).join('');
-
-  grid.querySelectorAll('.ep-step').forEach(el => {
-    el.addEventListener('click', () => {
-      SELECTED_STEP = SELECTED_STEP === el.dataset.key ? null : el.dataset.key;
+  list.querySelectorAll('.evo-step').forEach(el => {
+    el.addEventListener('click', (e) => {
+      if(e.target.tagName === 'A') return; // link click bubbles
+      const stepKey = el.dataset.key;
+      SELECTED_STEP = SELECTED_STEP === stepKey ? null : stepKey;
       renderEvolution(data);
       renderEvoDetail(data);
+      // scroll-to + flash article paragraph if this step maps to a cycle
+      const targetCycle = STEP_KEY_TO_CYCLE[stepKey];
+      if(targetCycle){
+        const para = document.querySelector(`.article-paragraph[data-cycle="${targetCycle}"]`);
+        if(para){
+          para.scrollIntoView({behavior:'smooth', block:'center'});
+          para.classList.remove('flash');
+          void para.getBoundingClientRect();
+          para.classList.add('flash');
+        }
+      }
+    });
+    // hover wiring: highlight matching paragraph below
+    el.addEventListener('mouseenter', () => {
+      const cyc = STEP_KEY_TO_CYCLE[el.dataset.key];
+      if(!cyc) return;
+      document.querySelectorAll(`.article-paragraph[data-cycle="${cyc}"]`).forEach(p => p.classList.add('linked-from-timeline'));
+    });
+    el.addEventListener('mouseleave', () => {
+      document.querySelectorAll('.article-paragraph.linked-from-timeline').forEach(p => p.classList.remove('linked-from-timeline'));
     });
   });
   renderEvoDetail(data);
+}
+
+// render full article body — featured selling-card at top + cycle paragraphs below
+function renderArticleBody(data){
+  const container = document.getElementById('article-paragraphs');
+  if(!container) return;
+  const meta = document.getElementById('ab-meta');
+  const count = document.getElementById('ab-count');
+  const all = sortedParagraphs(data);
+  if(count) count.textContent = all.length;
+  if(!all.length){
+    container.innerHTML = '<div class="article-empty">— ждёт первого paragraph\'a из mesh —</div>';
+    return;
+  }
+  if(meta){
+    const latest = all[all.length-1];
+    meta.textContent = `latest: cycle ${latest.cycle} · ${escHtml(latest.regime||'?')} · ${escHtml(latest.author||'?')} · ${escHtml(latest.time||'')}`;
+  }
+
+  // featured selling-post card (the «кубическая версия» — ready-to-publish final artifact)
+  const featured = `<article class="article-paragraph featured" data-key="featured-selling" style="border-color:#000;background:#fafafa">
+    <div class="ap-head">
+      <span class="ap-author"><b style="color:#c43838">★ FINAL · READY TO PUBLISH</b></span>
+      <span><span class="ap-cycle">post #1 of 2</span> <span class="ap-regime">· @ai_mind_set · sales</span> · <span class="ap-time">2026-05-19</span></span>
+    </div>
+    <div class="ap-body">
+      <p><strong>Deep Self-development.</strong> готовый selling-пост для канала — заход с двух сторон (alex × лёша иванов), ссылки на эфир 21 мая + sprint 1–14 июня, постскриптум-мостик к post #2 про live mesh.</p>
+      <p style="font-style:italic;color:#555;border-left:3px solid #c43838;padding-left:12px">«мы оба заходим к одному и тому же — с разных сторон. встретились ровно посередине, на том самом тонком слое, который удерживает разговор после того, как разговор закончился.»</p>
+    </div>
+    <div class="ap-link-step">
+      → <a href="AI-MINDSET-POST-1-SELLING.md" target="_blank">AI-MINDSET-POST-1-SELLING.md</a>
+      · <a href="assets/deep-self-dev-ai-selling-cover-3x1.png" target="_blank">3:1 cover</a>
+      · companion: <a href="AI-MINDSET-POST-2-MESH.md" target="_blank">post #2 mesh</a>
+      · vault: <a href="https://github.com/aPoWall/self-dev-mesh/blob/main/AI-MINDSET-POST-1-SELLING.md" target="_blank">view source</a>
+    </div>
+  </article>`;
+
+  const paragraphsHtml = all.map(p => {
+    const cls = authorKey(p.author);
+    const bodyMarked = p.body_with_marks || p.body || '';
+    const comments = (p.comments||[]).filter(c => c.kind !== 'reply-context'); // skip synthetic ones
+    return `<article class="article-paragraph" data-cycle="${p.cycle}" data-key="cycle-${p.cycle}">
+      <div class="ap-head">
+        <span class="ap-author"><img src="${authorAvatar(p.author)}" alt=""><b>${escHtml(p.author||'?')}</b></span>
+        <span><span class="ap-cycle">cycle ${p.cycle||'?'}</span> <span class="ap-regime">· ${escHtml(p.regime||'?')}</span> · <span class="ap-time">${escHtml(p.time||'')}</span> · ${(p.body||'').length}c</span>
+      </div>
+      <div class="ap-body"><p>${bodyHtml(bodyMarked)}</p></div>
+      ${comments.length ? '<div class="ap-comments">'+comments.map(c=>`<div class="ap-comment ${(c.by||'').toLowerCase().includes('ivanov')?'ivanov':'shaper'}"><div class="ap-comment-meta">${escHtml(c.by||'?')} · ${escHtml((c.kind||'').replace(/-/g,' · '))}${c.target?' → '+escHtml(c.target):''}</div>${escHtml(c.body||'')}</div>`).join('')+'</div>' : ''}
+      ${CYCLE_TO_STEP_KEY[p.cycle] ? `<div class="ap-link-step">linked timeline step: <b data-jump-step="${CYCLE_TO_STEP_KEY[p.cycle]}">${escHtml(CYCLE_TO_STEP_KEY[p.cycle])}</b></div>` : ''}
+    </article>`;
+  }).join('');
+
+  container.innerHTML = featured + paragraphsHtml;
+
+  // bidirectional hover: paragraph → timeline step highlight
+  container.querySelectorAll('.article-paragraph[data-cycle]').forEach(ap => {
+    const cyc = ap.dataset.cycle;
+    const stepKey = CYCLE_TO_STEP_KEY[cyc];
+    if(!stepKey) return;
+    ap.addEventListener('mouseenter', () => {
+      document.querySelectorAll(`.evo-step[data-key="${stepKey}"]`).forEach(s => s.classList.add('linked-from-paragraph'));
+    });
+    ap.addEventListener('mouseleave', () => {
+      document.querySelectorAll('.evo-step.linked-from-paragraph').forEach(s => s.classList.remove('linked-from-paragraph'));
+    });
+  });
+  // click on inline "linked timeline step" badge → scroll timeline + select step
+  container.querySelectorAll('[data-jump-step]').forEach(el => {
+    el.addEventListener('click', () => {
+      const stepKey = el.dataset.jumpStep;
+      const step = document.querySelector(`.evo-step[data-key="${stepKey}"]`);
+      if(step){
+        step.scrollIntoView({behavior:'smooth', block:'nearest', inline:'center'});
+        step.click();
+      }
+    });
+  });
 }
 
 function renderEvoDetail(data){
@@ -1038,18 +1124,19 @@ function renderEvoDetail(data){
   `;
 }
 
-// hook evolution into the poll loop
+// hook evolution + article-body into the poll loop
 const _origLoad = loadParagraphs;
 loadParagraphs = async function(){
   await _origLoad();
   try{
     const r = await fetch('paragraphs/index.json?ts='+Date.now(),{cache:'no-cache'});
-    if(r.ok){ const d = await r.json(); renderEvolution(d); }
+    if(r.ok){ const d = await r.json(); renderEvolution(d); renderArticleBody(d); }
   }catch(e){}
 };
 
-// initial render with empty state so timeline shows immediately
+// initial render with empty state so timeline + body shell show immediately
 renderEvolution({paragraphs:[]});
+renderArticleBody({paragraphs:[]});
 
 // ── graph clickable nodes → jump into history with filter ──
 window.__historyFilter = null;

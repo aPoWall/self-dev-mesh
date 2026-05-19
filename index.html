@@ -79,6 +79,26 @@ body{min-height:100vh;display:flex;flex-direction:column}
 .edge-live.active{opacity:.85;animation:edge-flow 1.4s linear 2}
 @keyframes edge-flow{from{stroke-dashoffset:0}to{stroke-dashoffset:-48}}
 
+/* final article panel */
+.final-article{border-top:1px dashed var(--soft);padding-top:18px;margin-top:32px}
+.final-meta{font-size:10.5px;letter-spacing:0.06em;color:var(--muted);margin:0 0 14px}
+.final-body{font-size:13px;line-height:1.6;letter-spacing:-0.005em;color:var(--ink);max-width:720px}
+.final-body p{margin:0 0 14px}
+.final-body p.from-shaper{border-left:2px solid var(--ink);padding-left:12px}
+.final-body p.from-ivanov{border-left:2px solid var(--ink);background:#fafafa;padding:8px 12px}
+.final-body p.from-ivanov::before{content:"иванов · ";font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:4px}
+.final-body p.from-shaper::before{content:"shaper · ";font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:4px}
+
+/* clickable graph nodes — hover affordance */
+.node-link:hover circle{stroke:#3a9d3a;stroke-width:3}
+.node-link:hover text.node-label{fill:#3a9d3a}
+
+/* filter chip when arrived via graph */
+.history-filter{display:none;font-size:10.5px;letter-spacing:0.10em;text-transform:uppercase;color:var(--muted);margin:0 0 14px;padding:6px 12px;border:1px solid var(--soft);background:#fafafa;align-items:center;gap:10px}
+.history-filter.active{display:inline-flex}
+.history-filter b{color:var(--ink);font-weight:600}
+.history-filter button{font-family:inherit;font-size:10px;letter-spacing:0.10em;border:1px solid var(--ink);background:#fff;padding:3px 9px;cursor:pointer;margin-left:6px}
+
 /* murmur status pill in header tabs */
 /* evolution timeline · how the context graph grew · main-page hero */
 .evolution{padding:22px 28px 8px;border-bottom:1px solid var(--soft);background:#fff;grid-column:1/-1}
@@ -308,14 +328,14 @@ footer .actions a.primary{background:var(--ink);color:#fff}
         <clipPath id="clip-shaper"><circle cx="170" cy="250" r="52"/></clipPath>
         <clipPath id="clip-ivanov"><circle cx="590" cy="250" r="52"/></clipPath>
       </defs>
-      <g>
+      <g class="node-link" data-jump="history" data-author="shaper" style="cursor:pointer">
         <circle cx="170" cy="250" r="54" fill="#fff" stroke="#000" stroke-width="2"/>
         <image href="alex-avatar.png" x="118" y="198" width="104" height="104" clip-path="url(#clip-shaper)" preserveAspectRatio="xMidYMid slice"/>
         <text x="170" y="322" text-anchor="middle" class="node-label" font-weight="600">shaper</text>
         <text x="170" y="336" text-anchor="middle" class="node-sub">alex · channel voice</text>
       </g>
 
-      <g>
+      <g class="node-link" data-jump="history" data-author="ivanov-research" style="cursor:pointer">
         <circle cx="590" cy="250" r="54" fill="#fff" stroke="#000" stroke-width="2"/>
         <image href="ivanov-avatar.jpg" x="538" y="198" width="104" height="104" clip-path="url(#clip-ivanov)" preserveAspectRatio="xMidYMid slice"/>
         <text x="590" y="322" text-anchor="middle" class="node-label" font-weight="600">ivanov-research</text>
@@ -323,19 +343,25 @@ footer .actions a.primary{background:var(--ink);color:#fff}
       </g>
 
       <g>
-        <circle cx="330" cy="120" r="22" fill="#000"/>
-        <text x="330" y="124" text-anchor="middle" class="node-label" fill="#fff" font-weight="600">v1</text>
-        <text x="330" y="92" text-anchor="middle" class="node-sub">branch · rational</text>
+        <g class="node-link" data-jump="history" data-regime="v1" style="cursor:pointer">
+          <circle cx="330" cy="120" r="22" fill="#000"/>
+          <text x="330" y="124" text-anchor="middle" class="node-label" fill="#fff" font-weight="600">v1</text>
+          <text x="330" y="92" text-anchor="middle" class="node-sub">branch · rational</text>
+        </g>
         <circle class="regime-pulse" data-regime="v1" cx="330" cy="120" r="24"/>
 
-        <circle cx="330" cy="250" r="22" fill="#000"/>
-        <text x="330" y="254" text-anchor="middle" class="node-label" fill="#fff" font-weight="600">v2</text>
-        <text x="330" y="222" text-anchor="middle" class="node-sub">branch · gonzo</text>
+        <g class="node-link" data-jump="history" data-regime="v2" style="cursor:pointer">
+          <circle cx="330" cy="250" r="22" fill="#000"/>
+          <text x="330" y="254" text-anchor="middle" class="node-label" fill="#fff" font-weight="600">v2</text>
+          <text x="330" y="222" text-anchor="middle" class="node-sub">branch · gonzo</text>
+        </g>
         <circle class="regime-pulse" data-regime="v2" cx="330" cy="250" r="24"/>
 
-        <circle cx="330" cy="380" r="22" fill="#000"/>
-        <text x="330" y="384" text-anchor="middle" class="node-label" fill="#fff" font-weight="600">v3</text>
-        <text x="330" y="352" text-anchor="middle" class="node-sub">branch · melancholic</text>
+        <g class="node-link" data-jump="history" data-regime="v3" style="cursor:pointer">
+          <circle cx="330" cy="380" r="22" fill="#000"/>
+          <text x="330" y="384" text-anchor="middle" class="node-label" fill="#fff" font-weight="600">v3</text>
+          <text x="330" y="352" text-anchor="middle" class="node-sub">branch · melancholic</text>
+        </g>
         <circle class="regime-pulse" data-regime="v3" cx="330" cy="380" r="24"/>
       </g>
 
@@ -429,25 +455,47 @@ footer .actions a.primary{background:var(--ink);color:#fff}
         1–14 июня 2026 · alex × алексей иванов
       </p>
     </section>
+
+    <section>
+      <div class="kicker">live event · 21 may</div>
+      <a href="https://luma.com/ai-5wx5" target="_blank" style="display:block">
+        <img src="assets/poster-founder-os-32.jpg" alt="founder os #32 · deep self-development + ai" style="width:100%;height:auto;border:1px solid var(--ink);display:block">
+      </a>
+      <p style="font-size:10.5px;line-height:1.5;margin:8px 0 0;color:var(--muted);letter-spacing:0.04em">
+        <b style="color:var(--ink)">founder os #32</b> · 21 мая · 15:00 berlin / 16:00 msk · zoom · 96+ going<br>
+        <a href="https://luma.com/ai-5wx5" target="_blank" style="color:#000">luma.com/ai-5wx5</a>
+      </p>
+    </section>
   </aside>
 </section>
 
 <!-- ━━ PARAGRAPHS VIEW ━━ -->
 <section id="view-paragraphs" class="view">
   <div class="kicker">paragraphs · revision chain · text hidden by default</div>
+  <div class="history-filter" id="history-filter">
+    filter: <b id="filter-label">—</b>
+    <button id="filter-clear">clear ✕</button>
+  </div>
   <div id="revision-flow" class="revision-flow">
-    <div class="paragraphs-empty">— waiting for revision chain —</div>
+    <div class="paragraphs-empty">── waiting for revision chain ──</div>
   </div>
   <div id="paragraphs-grid" class="paragraphs-grid">
-    <div class="paragraphs-empty">— ждёт первого paragraph'а из murmur loop —</div>
+    <div class="paragraphs-empty">── ждёт первого paragraph'а из murmur loop ──</div>
   </div>
+
+  <section class="final-article" id="final-article">
+    <div class="kicker" style="margin-top:36px">final · article growing</div>
+    <p class="final-meta" id="final-meta">— <span id="final-cycles-count">0</span> cycles assembled · auto-built from accepted SHAPER + IVANOV revisions —</p>
+    <div class="final-body" id="final-body">
+      <div class="paragraphs-empty">— final article will materialize after cycle 6+ когда наберётся достаточно accepted revisions —</div>
+    </div>
+  </section>
 </section>
 
 <footer>
   <div>self-dev mesh · alex p × alexey ivanov · live</div>
   <div></div>
   <div class="actions">
-    <a href="dashboard.html" target="_blank">dashboard</a>
     <a href="https://github.com/aPoWall/self-dev-mesh" target="_blank">source</a>
     <a href="https://selfdev.aimindset.org/" target="_blank">sprint</a>
     <a href="https://aimindset.org" target="_blank" class="primary">ai mindset</a>
@@ -754,6 +802,80 @@ loadParagraphs = async function(){
 
 // initial render with empty state so timeline shows immediately
 renderEvolution({paragraphs:[]});
+
+// ── graph clickable nodes → jump into history with filter ──
+window.__historyFilter = null;
+function applyHistoryFilter(filter){
+  window.__historyFilter = filter;
+  const chip = document.getElementById('history-filter');
+  const label = document.getElementById('filter-label');
+  if(filter){
+    chip.classList.add('active');
+    label.textContent = filter.author ? filter.author.toUpperCase() : (filter.regime || '—');
+  } else {
+    chip.classList.remove('active');
+  }
+  // re-render history with current data
+  loadParagraphs();
+}
+document.querySelectorAll('.node-link').forEach(node=>{
+  node.addEventListener('click',()=>{
+    const filter = {};
+    if(node.dataset.author) filter.author = node.dataset.author;
+    if(node.dataset.regime) filter.regime = node.dataset.regime;
+    applyHistoryFilter(Object.keys(filter).length ? filter : null);
+    activateView(node.dataset.jump || 'history');
+    document.getElementById('view-paragraphs').scrollIntoView({behavior:'smooth',block:'start'});
+  });
+});
+document.getElementById('filter-clear').addEventListener('click',()=>applyHistoryFilter(null));
+
+// ── final article assembly ──
+function renderFinalArticle(data){
+  const body = document.getElementById('final-body');
+  const count = document.getElementById('final-cycles-count');
+  const sorted = sortedParagraphs(data);
+  count.textContent = sorted.length;
+  if(sorted.length < 4){
+    body.innerHTML = '<div class="paragraphs-empty">— final article will materialize after cycle 6+ когда наберётся достаточно accepted revisions —</div>';
+    return;
+  }
+  // Heuristic build: chronological merge, alternating SHAPER/IVANOV best fragments
+  // Each paragraph contributes its body trimmed to first ~3 sentences for readability
+  body.innerHTML = sorted.map(p=>{
+    const cls = (p.author||'').toLowerCase().includes('ivanov') ? 'from-ivanov' : 'from-shaper';
+    // first 2 paragraphs (split by \n\n) — the punchy opening of each cycle
+    const head = (p.body||'').split(/\n\n+/).slice(0,2).join('\n\n');
+    return `<p class="${cls}">${escHtml(head).replace(/\n/g,'<br>')}</p>`;
+  }).join('');
+}
+
+// patch renderParagraphs to apply filter + render final
+const _origLoad = loadParagraphs;
+loadParagraphs = async function(){
+  try{
+    const r = await fetch('paragraphs/index.json?ts='+Date.now(),{cache:'no-cache'});
+    if(!r.ok) return;
+    const data = await r.json();
+    // apply filter if any
+    const filt = window.__historyFilter;
+    const filtered = filt ? {
+      ...data,
+      paragraphs: (data.paragraphs||[]).filter(p=>
+        (!filt.author || (p.author||'').toLowerCase()===filt.author.toLowerCase()) &&
+        (!filt.regime || p.regime===filt.regime))
+    } : data;
+    renderParagraphs(filtered);
+    updateCounters(data);
+    if(typeof updateProtocol === 'function') updateProtocol(data);
+    if(typeof updateMurmurStatus === 'function') updateMurmurStatus(data);
+    if(typeof renderEvolution === 'function') renderEvolution(data);
+    if(typeof renderEdgesAndStacks === 'function') renderEdgesAndStacks(data);
+    renderFinalArticle(data);
+    const lu = document.getElementById('last-update');
+    if(lu) lu.textContent = 'last update ' + new Date().toISOString().slice(11,19) + ' utc';
+  }catch(e){console.warn('load failed',e);}
+};
 
 loadParagraphs();
 setInterval(loadParagraphs, 60000); // 60s poll

@@ -1,0 +1,25 @@
+{
+  "canonical": true,
+  "frozen_at": "2026-05-19T14:20:00Z",
+  "title": "Deep Self-development",
+  "channel_target": "@ai_mind_set",
+  "type": "published-artifact",
+  "comments": [
+    {
+      "by": "IVANOV-RESEARCH",
+      "kind": "manual-reaction",
+      "target": "финальная версия · canonical",
+      "body": "принимаю. на @ponchiknews идёт мой pinned, на @ai_mind_set — этот. оба зеркалят друг друга через cross-tag, оба ведут на 21 мая + sprint. ship."
+    },
+    {
+      "by": "SHAPER",
+      "kind": "self-note",
+      "target": "frozen flag",
+      "body": "cycle 12 закрывает post-1 evolution arc (cycles 6→12). дальнейшие cycles в mesh — это уже про post-2 (mesh meta), не про этот текст."
+    }
+  ],
+  "revisions": [
+    {"by": "ALEX", "ts": "14:18 UTC", "kind": "approval", "note": "review pass · accepted as canonical"},
+    {"by": "SHAPER", "ts": "14:20 UTC", "kind": "freeze", "note": "marked as published-artifact · only ship from here"}
+  ]
+}

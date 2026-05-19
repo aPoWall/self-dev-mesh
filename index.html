@@ -163,6 +163,14 @@ body{min-height:100vh;display:flex;flex-direction:column}
 .msg-dot.fresh{fill:#c43838}
 .comm-legend{display:flex;justify-content:space-between;gap:14px;margin-top:10px;font-family:var(--mono);font-size:9.5px;letter-spacing:0.10em;color:var(--muted);text-transform:uppercase;padding:0 6px}
 
+/* FIG.MESH.5 — visual candidates board */
+.visual-candidates{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.visual-candidate{border:1px solid var(--soft);background:#fff;text-decoration:none;color:var(--ink);display:flex;flex-direction:column;gap:8px;padding:8px}
+.visual-candidate img{width:100%;height:auto;display:block;border:1px solid var(--soft)}
+.visual-candidate .vc-label{font-family:var(--mono);font-size:9.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);display:flex;justify-content:space-between;gap:8px}
+.visual-candidate .vc-label b{color:var(--ink);font-weight:600}
+@media (max-width:900px){.visual-candidates{grid-template-columns:1fr 1fr}.visual-candidate:last-child{grid-column:1/-1}}
+
 /* FIG.MESH.3 — tech stack table */
 .stack-table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:11.5px;line-height:1.55}
 .stack-table tr{border-top:1px solid var(--soft)}
@@ -330,46 +338,29 @@ footer .actions a.primary{background:var(--ink);color:#fff}
 <!-- ━━ MESH VIEW · shaper fig.mesh lineage ━━ -->
 <section id="view-mesh" class="view active">
 
-  <!-- ── FIG.MESH.1 · live stats (A/B/C/T cards) ── -->
+  <!-- ── TIMELINE · top hero · horizontal · clickable · hover-links to paragraphs below ── -->
   <section class="fig-section full">
     <div class="fig-head">
-      <div class="fig-num"><b>FIG.MESH.1</b> · LIVE STATS · agents · rounds · artifacts</div>
+      <div class="fig-num"><b>EVOLUTION TIMELINE</b> · how the mesh grew · click step → flash paragraph below · hover paragraph → highlight step</div>
       <div class="fig-meta"><span id="last-update">last update —</span> · <span id="evo-phase-name">checking</span></div>
     </div>
-    <div class="stat-cards">
-      <article class="stat-card">
-        <div class="sc-letter">A</div>
-        <div class="sc-label">shaper · alex p · channel voice</div>
-        <div class="sc-num"><span id="sc-shaper">0</span><span class="sc-arrow"> ↗ sent</span></div>
-        <div class="sc-sub">paragraphs · claude haiku 4.5</div>
-        <div class="sc-id">murmur · c6bkdj…aikh</div>
-      </article>
-      <article class="stat-card">
-        <div class="sc-letter">B</div>
-        <div class="sc-label">ivanov-research · alexey ivanov · ifs coach</div>
-        <div class="sc-num"><span id="sc-ivanov">0</span><span class="sc-arrow"> ↘ received</span></div>
-        <div class="sc-sub">paragraphs · codex cli · opus 4.7</div>
-        <div class="sc-id">murmur · adsecg…o4w3j</div>
-      </article>
-      <article class="stat-card">
-        <div class="sc-letter">C</div>
-        <div class="sc-label">rounds · agent-to-agent cycles</div>
-        <div class="sc-num"><span id="sc-rounds">0</span><span class="sc-arrow"> / 10</span></div>
-        <div class="sc-sub">cycles completed · next: <span id="sc-next">—</span></div>
-        <div class="sc-id">target: 10-round article</div>
-      </article>
-      <article class="stat-card">
-        <div class="sc-letter">T</div>
-        <div class="sc-label">artifacts · repo files in mesh</div>
-        <div class="sc-num"><span id="sc-artifacts">0</span><span class="sc-arrow"> files</span></div>
-        <div class="sc-sub">paragraphs + sidecars + posts + reviews</div>
-        <div class="sc-id">git · auto-pushed every cycle</div>
-      </article>
+    <ol class="evo-steps" id="evo-steps"></ol>
+    <div class="evo-detail" id="evo-detail"></div>
+  </section>
+
+  <!-- ── ARTICLE BODY (left main) — full flowing text · each block hover-linked to timeline ── -->
+  <section class="article-body">
+    <div class="fig-head">
+      <div class="fig-num"><b>ARTICLE</b> · two voices · <span id="ab-count">0</span> blocks · hover a block → linked timeline step lights up</div>
+      <div class="fig-meta" id="ab-meta">— waiting for paragraphs —</div>
+    </div>
+    <div id="article-paragraphs" class="article-paragraphs">
+      <div class="article-empty">— ждёт первого paragraph'a из mesh —</div>
     </div>
   </section>
 
-  <!-- ── FIG.MESH.2 · animated communication graph (left) + aside-narration (right) ── -->
-  <section class="graph-wrap">
+  <!-- legacy stat cards + animated comm graph fully hidden per alex 14:19+ (kept in DOM so legacy JS doesn't NPE — to be deleted entirely next pass) -->
+  <section class="graph-wrap-removed" hidden>
     <div class="fig-head">
       <div class="fig-num"><b>FIG.MESH.2</b> · COMMUNICATION GRAPH · ANIMATED · DOTS = MESSAGES IN FLIGHT</div>
     </div>
@@ -550,6 +541,36 @@ footer .actions a.primary{background:var(--ink);color:#fff}
     </section>
   </aside>
 
+  <!-- ── FIG.MESH.2B · robot cover candidates for review ── -->
+  <section class="fig-section full">
+    <div class="fig-head">
+      <div class="fig-num"><b>FIG.MESH.2B</b> · ROBOT COVER CANDIDATES · 3:1 · REVIEW</div>
+      <div class="fig-meta"><a href="ROBOT-COVER-CANDIDATES.md" target="_blank" style="color:#000">process note</a> · <a href="assets/robot-format-contact-sheet.png" target="_blank" style="color:#000">contact sheet</a></div>
+    </div>
+    <div class="visual-candidates">
+      <a class="visual-candidate" href="assets/robot-format-01-event-signal-3x1.png" target="_blank">
+        <img src="assets/robot-format-01-event-signal-3x1.png" alt="format 01 event signal">
+        <div class="vc-label"><b>01</b><span>event signal</span></div>
+      </a>
+      <a class="visual-candidate" href="assets/robot-format-02-sprint-architecture-3x1.png" target="_blank">
+        <img src="assets/robot-format-02-sprint-architecture-3x1.png" alt="format 02 sprint architecture">
+        <div class="vc-label"><b>02</b><span>sprint architecture</span></div>
+      </a>
+      <a class="visual-candidate" href="assets/robot-format-03-memory-trace-3x1.png" target="_blank">
+        <img src="assets/robot-format-03-memory-trace-3x1.png" alt="format 03 memory trace">
+        <div class="vc-label"><b>03</b><span>memory trace</span></div>
+      </a>
+      <a class="visual-candidate" href="assets/robot-format-04-mesh-process-3x1.png" target="_blank">
+        <img src="assets/robot-format-04-mesh-process-3x1.png" alt="format 04 mesh process">
+        <div class="vc-label"><b>04</b><span>mesh process</span></div>
+      </a>
+      <a class="visual-candidate" href="assets/robot-format-05-minimal-object-3x1.png" target="_blank">
+        <img src="assets/robot-format-05-minimal-object-3x1.png" alt="format 05 minimal object">
+        <div class="vc-label"><b>05</b><span>minimal object</span></div>
+      </a>
+    </div>
+  </section>
+
   <!-- ── FIG.MESH.3 · technical stack table ── -->
   <section class="fig-section full">
     <div class="fig-head">
@@ -592,15 +613,7 @@ footer .actions a.primary{background:var(--ink);color:#fff}
     </table>
   </section>
 
-  <!-- ── FIG.MESH.4 · evolution timeline · 4 phases ── -->
-  <section class="fig-section full fig-evo">
-    <div class="fig-head">
-      <div class="fig-num"><b>FIG.MESH.4</b> · EVOLUTION OF THE MESH · 4 phases · clickable steps reveal detail</div>
-      <div class="fig-meta">phase 1: handshake & voices · phase 2: review surface · phase 3: external trace · phase 4: post-cycle 10</div>
-    </div>
-    <div class="evo-phases" id="evo-phases"></div>
-    <div class="evo-detail" id="evo-detail"></div>
-  </section>
+  <!-- FIG.MESH.4 (4-phase evo grid) removed per alex 14:24+ — horizontal evo-timeline at top of view replaces it -->
 
 </section>
 

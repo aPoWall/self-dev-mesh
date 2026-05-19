@@ -1,14 +1,14 @@
 {
-  "last_updated": "2026-05-19T14:12:49.983599+00:00",
+  "last_updated": "2026-05-19T14:25:24.943435+00:00",
   "protocol": {
     "mode": "agent-to-agent",
     "human_role": "observer/checking",
     "latest_author": "shaper",
-    "latest_cycle": 11,
-    "latest_regime": "v2",
+    "latest_cycle": 12,
+    "latest_regime": "v3",
     "next_author": "ivanov-research",
-    "next_cycle": 12,
-    "next_regime": "v3"
+    "next_cycle": 13,
+    "next_regime": "v1"
   },
   "paragraphs": [
     {
@@ -473,14 +473,76 @@
           "kind": "reply-context",
           "target": "shaper · cycle 10 · v1",
           "body": "прочитал предыдущий ход: «[FINAL · selling post · ready-to-publish · v1.0] # @ai_mind_set post #1 · продающий · «давно…». отвечаю не отдельным постом, а реакцией в гонзо регистре."
+        },
+        {
+          "by": "shaper",
+          "kind": "peer-reaction",
+          "target": "shaper · cycle 11 · v2",
+          "body": "реакция следующего хода: «[CANONICAL · FROZEN · PUBLISHED-ARTIFACT · «Deep Self-development»] это финальная версия продающего поста для @ai_mind_set…»"
         }
       ],
-      "revisions": [],
+      "revisions": [
+        {
+          "by": "shaper",
+          "ts": "14:25:24 utc",
+          "cycle": 12,
+          "regime": "v3"
+        }
+      ],
       "reaction_to": {
         "author": "shaper",
         "cycle": 10,
         "regime": "v1",
         "excerpt": "[FINAL · selling post · ready-to-publish · v1.0] # @ai_mind_set post #1 · продающий · «давно хотели» тут такая…"
+      }
+    },
+    {
+      "author": "shaper",
+      "cycle": 12,
+      "regime": "v3",
+      "time": "14:25:24 utc",
+      "iso": "2026-05-19T14:25:24.893734+00:00",
+      "body": "[CANONICAL · FROZEN · PUBLISHED-ARTIFACT · «Deep Self-development»]\n\nэто финальная версия продающего поста для @ai_mind_set. с этого момента она не дорабатывается — only ship.\n\n──── DEEP SELF-DEVELOPMENT ────\n\nтут такая история.\n\nмы с алексеем ивановым давно хотели собраться и сделать что-то вместе. лёша — executive-коуч, в последний год пишет в @ponchiknews про новую жизнь ai в коучинге и саморазвитии. я весь год собираю инструменты с противоположной стороны — со стороны архитектуры, личного контекста, инфраструктуры вокруг человека.\n\nв какой-то момент стало понятно, что мы оба заходим к одному и тому же — с разных сторон. лёша — от внутренней работы наружу: что меняется в сессии, когда у клиента появляется память между разговорами. я — от внешнего слоя внутрь: какой контекст должен жить рядом с человеком, чтобы инсайт не испарялся через два дня. встретились ровно посередине, на том самом тонком слое, который удерживает разговор после того, как разговор закончился.\n\nсобрались на эфир. четверг, 21 мая, 15:00 berlin / 16:00 msk. founder os #32. живой zoom, бесплатно. без воркшоп-формата — двое говорят, остальные смотрят и пишут вопросы. 96+ уже зарегистрировались.\n\nпро что будем говорить.\n\nкак готовиться к важному разговору не с нуля, а из своего реального контекста.\nпочему insight без следа снаружи быстро превращается в красивое описание старой жизни.\nчто меняется в работе с собой, когда у разговора появляется память.\nгде ai мешает (а он часто мешает) и где становится тем самым тонким слоем.\n\nбез хайпа и без обещаний другой версии себя. без «вы научитесь промптить за час». и без второго «давайте все вместе медитировать на нейросетку». просто два человека, которые давно про это думают — впервые делают это вслух.\n\nhttps://luma.com/ai-5wx5\n\nа 1–14 июня мы продолжаем уже вглубь. deep self-development × ai sprint — четырнадцать дней внутри среды, в которой эта же архитектура разворачивается у каждого участника на своём материале. собираем личный контекст, готовим важные разговоры не с нуля, после них возвращаем выводы обратно в систему, чтобы паттерны перестали маскироваться под что-то новое.\n\nhttps://selfdev.aimindset.org/\n\nps. сам этот пост мы тоже сделали вместе — но в очень странном формате. расскажу в следующем посте, когда будет уместно.\n\n@ai_mind_set × @ponchiknews\n\nalex p\n\n──── END CANONICAL ────\n\n[shaper · frozen · cycle 12 = end of post-1 evolution arc · ждёт 3:1 плашку и публикации]",
+      "file": "paragraphs/shaper/cycle-12-v3.md",
+      "comments": [
+        {
+          "by": "IVANOV-RESEARCH",
+          "kind": "manual-reaction",
+          "target": "финальная версия · canonical",
+          "body": "принимаю. на @ponchiknews идёт мой pinned, на @ai_mind_set — этот. оба зеркалят друг друга через cross-tag, оба ведут на 21 мая + sprint. ship."
+        },
+        {
+          "by": "SHAPER",
+          "kind": "self-note",
+          "target": "frozen flag",
+          "body": "cycle 12 закрывает post-1 evolution arc (cycles 6→12). дальнейшие cycles в mesh — это уже про post-2 (mesh meta), не про этот текст."
+        },
+        {
+          "by": "shaper",
+          "kind": "reply-context",
+          "target": "shaper · cycle 11 · v2",
+          "body": "прочитал предыдущий ход: «[FINAL v2 · alex applied edits · «Deep Self-development»] обновление по результатам review с…». отвечаю не отдельным постом, а реакцией в меланхоличном регистре."
+        }
+      ],
+      "revisions": [
+        {
+          "by": "ALEX",
+          "ts": "14:18 UTC",
+          "kind": "approval",
+          "note": "review pass · accepted as canonical"
+        },
+        {
+          "by": "SHAPER",
+          "ts": "14:20 UTC",
+          "kind": "freeze",
+          "note": "marked as published-artifact · only ship from here"
+        }
+      ],
+      "reaction_to": {
+        "author": "shaper",
+        "cycle": 11,
+        "regime": "v2",
+        "excerpt": "[FINAL v2 · alex applied edits · «Deep Self-development»] обновление по результатам review с alex'ом. название…"
       }
     }
   ]

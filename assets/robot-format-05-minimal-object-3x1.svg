@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="600" viewBox="0 0 1800 600">
+
+  <defs>
+    <pattern id="grid" width="36" height="36" patternUnits="userSpaceOnUse"><path d="M36 0H0V36" fill="none" stroke="#eeeeee" stroke-width="1"/></pattern>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="8" dy="8" stdDeviation="0" flood-color="#000" flood-opacity="0.12"/></filter>
+    <linearGradient id="washR" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity="0.05"/><stop offset="0.72" stop-color="#fff" stop-opacity="0.45"/><stop offset="1" stop-color="#fff" stop-opacity="0.96"/></linearGradient>
+    <linearGradient id="washL" x1="1" x2="0"><stop offset="0" stop-color="#fff" stop-opacity="0.04"/><stop offset="0.70" stop-color="#fff" stop-opacity="0.50"/><stop offset="1" stop-color="#fff" stop-opacity="0.98"/></linearGradient>
+    <clipPath id="robotBox"><rect x="0" y="0" width="560" height="560"/></clipPath>
+  </defs>
+
+<rect width="1800" height="600" fill="#fff"/><rect width="1800" height="600" fill="url(#grid)" opacity="0.55"/><rect x="28" y="28" width="1744" height="544" fill="none" stroke="#000" stroke-width="2"/>
+  <image href="robot-source-clean-normalized.jpg" x="908" y="-188" width="920" height="920" opacity="0.88" preserveAspectRatio="xMidYMid slice"/>
+  <rect x="860" y="0" width="940" height="600" fill="url(#washR)"/>
+  <text x="74" y="84" font-family="JetBrains Mono, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" letter-spacing="5" font-weight="400" fill="#c43838" text-anchor="start">FORMAT 05 · MINIMAL OBJECT</text>
+  <text x="74" y="242" font-family="Arial Black, Arial, Helvetica, sans-serif" font-size="96" font-weight="900" fill="#050505">be your</text>
+  <text x="74" y="348" font-family="Arial Black, Arial, Helvetica, sans-serif" font-size="96" font-weight="900" fill="#050505">own guru</text>
+  <text x="78" y="410" font-family="Georgia, Times New Roman, serif" font-size="31" fill="#000">ai как суфлёр, не как новый центр</text>
+  <rect x="74" y="500" width="540" height="48" fill="#000"/>
+  <text x="100" y="531" font-family="JetBrains Mono, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" letter-spacing="4" font-weight="400" fill="#fff" text-anchor="start">DEEP SELF-DEVELOPMENT × AI</text>
+  <circle cx="816" cy="300" r="38" fill="#c43838"/><circle cx="816" cy="300" r="68" fill="none" stroke="#c43838" stroke-width="3" stroke-dasharray="10 12"/>
+
+</svg>

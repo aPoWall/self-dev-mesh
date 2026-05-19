@@ -1183,35 +1183,27 @@ function renderArticleBody(data){
     meta.textContent = `latest: cycle ${latest.cycle} · ${escHtml(latest.regime||'?')} · ${escHtml(latest.author||'?')} · ${escHtml(latest.time||'')}`;
   }
 
-  // featured selling-post card (the «кубическая версия» — ready-to-publish final artifact)
-  const featured = `<article class="article-paragraph featured" data-key="featured-selling" style="border-color:#000;background:#fafafa">
-    <div class="ap-head">
-      <span class="ap-author"><b style="color:#c43838">★ FINAL · READY TO PUBLISH</b></span>
-      <span><span class="ap-cycle">post #1 of 2</span> <span class="ap-regime">· @ai_mind_set · sales</span> · <span class="ap-time">2026-05-19</span></span>
-    </div>
-    <div class="ap-body">
-      <p><strong>Deep Self-development.</strong> готовый selling-пост для канала — заход с двух сторон (alex × лёша иванов), ссылки на эфир 21 мая + sprint 1–14 июня, постскриптум-мостик к post #2 про live mesh.</p>
-      <p style="font-style:italic;color:#555;border-left:3px solid #c43838;padding-left:12px">«мы оба заходим к одному и тому же — с разных сторон. встретились ровно посередине, на том самом тонком слое, который удерживает разговор после того, как разговор закончился.»</p>
-    </div>
-    <div class="ap-link-step">
-      → <a href="AI-MINDSET-POST-1-SELLING.md" target="_blank">AI-MINDSET-POST-1-SELLING.md</a>
-      · <a href="assets/deep-self-dev-ai-selling-cover-3x1.png" target="_blank">3:1 cover</a>
-      · companion: <a href="AI-MINDSET-POST-2-MESH.md" target="_blank">post #2 mesh</a>
-      · vault: <a href="https://github.com/aPoWall/self-dev-mesh/blob/main/AI-MINDSET-POST-1-SELLING.md" target="_blank">view source</a>
-    </div>
-  </article>`;
+  // featured selling-post card removed — Codex's canonical-artifact card above already covers this
+  const featured = '';
 
   const paragraphsHtml = all.map(p => {
     const cls = authorKey(p.author);
     const bodyMarked = p.body_with_marks || p.body || '';
     const comments = (p.comments||[]).filter(c => c.kind !== 'reply-context'); // skip synthetic ones
+    const preview = (p.body||'').replace(/\[ins\]|\[\/ins\]|\[del\]|\[\/del\]/g,'').replace(/\s+/g,' ').trim().slice(0,140) + '…';
     return `<article class="article-paragraph" data-cycle="${p.cycle}" data-key="cycle-${p.cycle}">
       <div class="ap-head">
         <span class="ap-author"><img src="${authorAvatar(p.author)}" alt=""><b>${escHtml(p.author||'?')}</b></span>
         <span><span class="ap-cycle">cycle ${p.cycle||'?'}</span> <span class="ap-regime">· ${escHtml(p.regime||'?')}</span> · <span class="ap-time">${escHtml(p.time||'')}</span> · ${(p.body||'').length}c</span>
       </div>
-      <div class="ap-body"><p>${bodyHtml(bodyMarked)}</p></div>
-      ${comments.length ? '<div class="ap-comments">'+comments.map(c=>`<div class="ap-comment ${(c.by||'').toLowerCase().includes('ivanov')?'ivanov':'shaper'}"><div class="ap-comment-meta">${escHtml(c.by||'?')} · ${escHtml((c.kind||'').replace(/-/g,' · '))}${c.target?' → '+escHtml(c.target):''}</div>${escHtml(c.body||'')}</div>`).join('')+'</div>' : ''}
+      <details>
+        <summary>
+          cycle ${p.cycle||'?'} · ${escHtml(p.regime||'?')} · ${(p.body||'').length}c · click to expand
+          <span class="ap-preview">${escHtml(preview)}</span>
+        </summary>
+        <div class="ap-body" style="margin-top:12px"><p>${bodyHtml(bodyMarked)}</p></div>
+        ${comments.length ? '<div class="ap-comments">'+comments.map(c=>`<div class="ap-comment ${(c.by||'').toLowerCase().includes('ivanov')?'ivanov':'shaper'}"><div class="ap-comment-meta">${escHtml(c.by||'?')} · ${escHtml((c.kind||'').replace(/-/g,' · '))}${c.target?' → '+escHtml(c.target):''}</div>${escHtml(c.body||'')}</div>`).join('')+'</div>' : ''}
+      </details>
       ${CYCLE_TO_STEP_KEY[p.cycle] ? `<div class="ap-link-step">linked timeline step: <b data-jump-step="${CYCLE_TO_STEP_KEY[p.cycle]}">${escHtml(CYCLE_TO_STEP_KEY[p.cycle])}</b></div>` : ''}
     </article>`;
   }).join('');
@@ -1241,6 +1233,16 @@ function renderArticleBody(data){
       }
     });
   });
+  // expand-all toggle
+  const expandBtn = document.getElementById('ab-expand-all');
+  if(expandBtn){
+    expandBtn.onclick = () => {
+      const details = container.querySelectorAll('.article-paragraph details');
+      const allOpen = [...details].every(d => d.open);
+      details.forEach(d => { d.open = !allOpen; });
+      expandBtn.textContent = allOpen ? 'expand all ▾' : 'collapse all ▴';
+    };
+  }
 }
 
 function renderEvoDetail(data){

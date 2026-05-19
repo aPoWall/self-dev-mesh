@@ -749,6 +749,19 @@ function updateCounters(data){
   setText('stat-total', total);
   setText('status-label', total > 0 ? 'agent loop' : 'idle');
 
+  // FIG.MESH.1 stat cards · A/B/C/T
+  setText('sc-shaper', shaperN);
+  setText('sc-ivanov', ivanovN);
+  setText('sc-rounds', total);
+  // artifacts estimate: each paragraph = 1.md + ~0.7 sidecar.json + 5 top-level (PRODUCT-REVIEW, PONCHIK, AI-MINDSET, MURMUR_HANDSHAKE, LAUNCH) + dashboard.html + index.json
+  const artifacts = Math.round(total * 1.7) + 7;
+  setText('sc-artifacts', artifacts);
+  const protoData = data.protocol || {};
+  if(protoData.next_author){
+    const nextWho = (protoData.next_author||'').includes('ivanov') ? 'ivanov' : 'shaper';
+    setText('sc-next', `${nextWho} c${protoData.next_cycle} · ${protoData.next_regime}`);
+  }
+
   const edgeLabel = document.getElementById('edge-main-label');
   if(edgeLabel) edgeLabel.textContent = `${total} paragraphs · ${Math.max(1, Math.ceil(total / 2))} rounds`;
   const edgeMain = document.getElementById('edge-main');
@@ -887,28 +900,51 @@ function inferState(step, data){
   return 'done';
 }
 
+const PHASE_TITLES = {
+  1: 'protocol & voices',
+  2: 'review surface',
+  3: 'external trace',
+  4: 'post cycle-10',
+};
+
 let SELECTED_STEP = null;
 function renderEvolution(data){
-  const list = document.getElementById('evo-steps');
-  if(!list) return;
-  list.innerHTML = EVOLUTION.map((s, i) => {
-    const state = inferState(s, data);
-    const stateSym = state==='done' ? '●' : state==='active' ? '◐' : '○';
-    const selCls = SELECTED_STEP === s.key ? ' selected' : '';
-    const activeCls = state === 'active' ? ' active' : '';
-    return `<li class="evo-step${activeCls}${selCls}" data-key="${s.key}">
-      <div class="es-num">
-        <span>${String(i+1).padStart(2,'0')} · phase ${s.phase} · ${escHtml(s.when)}</span>
-        <span class="es-state ${state}">${stateSym}</span>
+  // new target: 4-phase grouped grid in FIG.MESH.4
+  const grid = document.getElementById('evo-phases');
+  if(!grid){ // fallback to old horizontal layout if mesh hasn't been refactored on this page
+    const list = document.getElementById('evo-steps');
+    if(list){ list.innerHTML = ''; }
+    return;
+  }
+  // group EVOLUTION by phase
+  const byPhase = {1:[], 2:[], 3:[], 4:[]};
+  EVOLUTION.forEach(s => { if(byPhase[s.phase]) byPhase[s.phase].push(s); });
+
+  grid.innerHTML = [1,2,3,4].map(phase => {
+    const steps = byPhase[phase] || [];
+    const phaseAnyActive = steps.some(s => inferState(s, data) === 'active');
+    return `<article class="evo-phase${phaseAnyActive?' active':''}">
+      <div class="ep-num">
+        <span>phase ${phase}</span>
+        <span>${steps.length} step${steps.length===1?'':'s'}</span>
       </div>
-      <div class="es-title">${escHtml(s.title)}</div>
-      <div class="es-brief">${escHtml(s.brief)}</div>
-      ${s.link ? `<a class="es-link" href="${escHtml(s.link.href)}" target="_blank" rel="noopener">→ ${escHtml(s.link.label)}</a>` : '<span class="es-link" style="opacity:0.4">— waiting —</span>'}
-    </li>`;
+      <div class="ep-title">${escHtml(PHASE_TITLES[phase]||'')}</div>
+      <div class="ep-steps">
+        ${steps.map(s => {
+          const state = inferState(s, data);
+          const stateSym = state==='done' ? '●' : state==='active' ? '◐' : '○';
+          const selCls = SELECTED_STEP === s.key ? ' selected' : '';
+          return `<div class="ep-step${selCls}" data-key="${s.key}">
+            <span class="ep-state ${state}">${stateSym}</span>
+            <span class="ep-name">${escHtml(s.title)}</span>
+          </div>`;
+        }).join('')}
+      </div>
+    </article>`;
   }).join('');
-  list.querySelectorAll('.evo-step').forEach(el => {
-    el.addEventListener('click', (e) => {
-      if(e.target.tagName === 'A') return; // link click bubbles to anchor
+
+  grid.querySelectorAll('.ep-step').forEach(el => {
+    el.addEventListener('click', () => {
       SELECTED_STEP = SELECTED_STEP === el.dataset.key ? null : el.dataset.key;
       renderEvolution(data);
       renderEvoDetail(data);

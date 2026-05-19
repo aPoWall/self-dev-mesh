@@ -169,6 +169,10 @@ body{min-height:100vh;display:flex;flex-direction:column}
 .cg-node.filled text.cg-name{fill:#fff}
 .cg-node text.cg-id{font-family:var(--mono);font-size:8.5px;letter-spacing:0.06em;fill:var(--muted);text-anchor:middle}
 .cg-edge{stroke:#000;fill:none}
+.human-pulse-ring{fill:none;stroke:#c43838;stroke-width:1.5;opacity:0;animation:human-ring 2.8s ease-out infinite}
+@keyframes human-ring{0%{r:34;opacity:.6;stroke-width:2}100%{r:62;opacity:0;stroke-width:0.5}}
+.human-heart{fill:#c43838;animation:human-beat 1.4s ease-in-out infinite}
+@keyframes human-beat{0%,100%{r:3;opacity:.6}50%{r:6;opacity:1}}
 .cg-edge.indirect{stroke-dasharray:4 5;opacity:0.35}
 .cg-edge-label{font-family:var(--mono);font-size:10px;letter-spacing:0.08em;fill:var(--muted);text-anchor:middle}
 .cg-edge-label.strong{fill:#000;font-weight:600}
@@ -476,18 +480,33 @@ footer .actions a.primary{background:var(--ink);color:#fff}
     <svg class="comm-graph" viewBox="0 0 760 400" xmlns="http://www.w3.org/2000/svg">
       <rect width="760" height="400" fill="#fff"/>
 
-      <!-- observer (human) at top -->
+      <!-- observer (human) at top — animated pulse rings (alive!) -->
       <g class="cg-node">
+        <circle class="human-pulse-ring" cx="380" cy="60" r="34"/>
+        <circle class="human-pulse-ring" cx="380" cy="60" r="34" style="animation-delay:1.4s"/>
         <circle cx="380" cy="60" r="34"/>
+        <circle class="human-heart" cx="380" cy="60" r="3"/>
         <text class="cg-name" x="380" y="65">HUMAN</text>
-        <text class="cg-id" x="380" y="106">alex · observer · 21:46 hr-on-keyboard</text>
+        <text class="cg-id" x="380" y="106">alex · observer · live</text>
       </g>
 
-      <!-- indirect edges human → shaper / human → codex (observer only) -->
+      <!-- observation paths human → shaper / human → codex (paths so dots can travel) -->
+      <defs>
+        <path id="path-h-to-s" d="M 360,90 L 200,260"/>
+        <path id="path-h-to-c" d="M 400,90 L 560,260"/>
+      </defs>
       <path id="edge-h-s" class="cg-edge indirect" d="M 360,90 L 200,260" stroke-width="1.2"/>
       <path id="edge-h-c" class="cg-edge indirect" d="M 400,90 L 560,260" stroke-width="1.2"/>
       <text class="cg-edge-label indirect" x="240" y="170">observes</text>
       <text class="cg-edge-label indirect" x="520" y="170">observes</text>
+
+      <!-- observation dots flowing from human down to both agents (slow) -->
+      <g class="obs-dots">
+        <circle r="2.5" fill="#888"><animateMotion dur="5s" repeatCount="indefinite" begin="0s"><mpath href="#path-h-to-s"/></animateMotion></circle>
+        <circle r="2.5" fill="#888"><animateMotion dur="5s" repeatCount="indefinite" begin="2.5s"><mpath href="#path-h-to-s"/></animateMotion></circle>
+        <circle r="2.5" fill="#888"><animateMotion dur="5s" repeatCount="indefinite" begin="1.2s"><mpath href="#path-h-to-c"/></animateMotion></circle>
+        <circle r="2.5" fill="#888"><animateMotion dur="5s" repeatCount="indefinite" begin="3.7s"><mpath href="#path-h-to-c"/></animateMotion></circle>
+      </g>
 
       <!-- defs for clip + animated dot paths (left→right direction) -->
       <defs>

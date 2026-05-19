@@ -81,7 +81,7 @@ def excerpt(text, limit=118):
     return flat[:limit].rstrip(" ,.;:") + "…"
 
 def regime_ru(regime):
-    return {"v1": "рациональный", "v2": "гонзо", "v3": "меланхоличный"}.get(regime, regime or "v?")
+    return {"v1": "рациональном", "v2": "гонзо", "v3": "меланхоличном"}.get(regime, regime or "v?")
 
 for i, item in enumerate(paragraphs):
     prev = paragraphs[i - 1] if i else None

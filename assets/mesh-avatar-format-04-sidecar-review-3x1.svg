@@ -2,32 +2,26 @@
 
   <defs>
     <pattern id="grid" width="36" height="36" patternUnits="userSpaceOnUse"><path d="M36 0H0V36" fill="none" stroke="#eeeeee" stroke-width="1"/></pattern>
-    <clipPath id="alexClip"><circle cx="0" cy="0" r="72"/></clipPath>
-    <clipPath id="ivanovClip"><circle cx="0" cy="0" r="72"/></clipPath>
     <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#c43838"/></marker>
   </defs>
 
 <rect width="1800" height="600" fill="#fff"/><rect width="1800" height="600" fill="url(#grid)" opacity="0.48"/><rect x="28" y="28" width="1744" height="544" fill="none" stroke="#000" stroke-width="2"/><text x="74" y="78" font-family="JetBrains Mono, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" letter-spacing="5" font-weight="400" fill="#c43838" text-anchor="start">FORMAT 04 · SIDECAR REVIEW</text><text x="74" y="176" font-family="Arial Black, Arial, Helvetica, sans-serif" font-size="82" font-weight="900" fill="#050505" text-anchor="start">review</text><text x="74" y="266" font-family="Arial Black, Arial, Helvetica, sans-serif" font-size="82" font-weight="900" fill="#050505" text-anchor="start">through files</text><text x="78" y="326" font-family="Georgia, Times New Roman, serif" font-size="29" fill="#000" text-anchor="start">комментарии не в чате, а рядом с paragraph как trace</text>
+    <defs><clipPath id="clip-alex4"><circle cx="1305" cy="355" r="72"/></clipPath></defs>
     <g>
       <rect x="1193" y="257" width="224" height="250" fill="#fff" stroke="#000" stroke-width="2"/>
-      <g transform="translate(1305,355)"><circle r="76" fill="#fff" stroke="#000" stroke-width="2"/><image href="alex-avatar.png" x="-72" y="-72" width="144" height="144" clip-path="url(#alexClip)" preserveAspectRatio="xMidYMid slice"/></g>
+      <circle cx="1305" cy="355" r="76" fill="#fff" stroke="#000" stroke-width="2"/>
+      <image href="mesh-alex-avatar.png" x="1233" y="283" width="144" height="144" clip-path="url(#clip-alex4)" preserveAspectRatio="xMidYMid slice"/>
       <text x="1305" y="465" font-family="JetBrains Mono, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" letter-spacing="4" font-weight="700" fill="#000" text-anchor="middle">SHAPER</text>
       <text x="1305" y="491" font-family="JetBrains Mono, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" letter-spacing="2.4" font-weight="400" fill="#888" text-anchor="middle">leaves margin notes</text>
     </g>
+    <defs><clipPath id="clip-iv4"><circle cx="1550" cy="355" r="72"/></clipPath></defs>
     <g>
       <rect x="1438" y="257" width="224" height="250" fill="#000" stroke="#000" stroke-width="2"/>
-      <g transform="translate(1550,355)"><circle r="76" fill="#fff" stroke="#000" stroke-width="2"/><image href="ivanov-avatar.jpg" x="-72" y="-72" width="144" height="144" clip-path="url(#ivanovClip)" preserveAspectRatio="xMidYMid slice"/></g>
+      <circle cx="1550" cy="355" r="76" fill="#fff" stroke="#000" stroke-width="2"/>
+      <image href="mesh-ivanov-avatar.jpg" x="1478" y="283" width="144" height="144" clip-path="url(#clip-iv4)" preserveAspectRatio="xMidYMid slice"/>
       <text x="1550" y="465" font-family="JetBrains Mono, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" letter-spacing="4" font-weight="700" fill="#fff" text-anchor="middle">IVANOV</text>
       <text x="1550" y="491" font-family="JetBrains Mono, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" letter-spacing="2.4" font-weight="400" fill="#bfbfbf" text-anchor="middle">accepts / counters</text>
     </g>
-<g font-family="JetBrains Mono, monospace">
-<rect x="620" y="128" width="520" height="300" fill="#fff" stroke="#000" stroke-width="2"/>
-<text x="648" y="168" font-size="15" letter-spacing="3">paragraph/cycle-10-v1.md</text>
-<line x1="648" y1="190" x2="1088" y2="190" stroke="#ddd"/>
-<rect x="648" y="220" width="260" height="22" fill="#dff5d4"/><rect x="648" y="260" width="360" height="22" fill="#f8d7d7"/>
-<rect x="648" y="316" width="420" height="62" fill="#000"/><text x="672" y="352" font-size="14" letter-spacing="2.6" fill="#fff">META.JSON · peer reaction</text>
-</g>
-<path d="M1140 350H1190" stroke="#c43838" stroke-width="3" marker-end="url(#arr)"/>
-<text x="74" y="532" font-family="JetBrains Mono, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" letter-spacing="3" font-weight="400" fill="#000" text-anchor="start">raw text hidden by default · review is the visible product</text>
+<g font-family="JetBrains Mono, monospace"><rect x="620" y="128" width="520" height="300" fill="#fff" stroke="#000" stroke-width="2"/><text x="648" y="168" font-size="15" letter-spacing="3">paragraph/cycle-10-v1.md</text><line x1="648" y1="190" x2="1088" y2="190" stroke="#ddd"/><rect x="648" y="220" width="260" height="22" fill="#dff5d4"/><rect x="648" y="260" width="360" height="22" fill="#f8d7d7"/><rect x="648" y="316" width="420" height="62" fill="#000"/><text x="672" y="352" font-size="14" letter-spacing="2.6" fill="#fff">META.JSON · peer reaction</text></g><path d="M1140 350H1190" stroke="#c43838" stroke-width="3" marker-end="url(#arr)"/><text x="74" y="532" font-family="JetBrains Mono, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" letter-spacing="3" font-weight="400" fill="#000" text-anchor="start">raw text hidden by default · review is the visible product</text>
 
 </svg>

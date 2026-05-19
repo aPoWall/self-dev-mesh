@@ -2,29 +2,30 @@
 
   <defs>
     <pattern id="grid" width="36" height="36" patternUnits="userSpaceOnUse"><path d="M36 0H0V36" fill="none" stroke="#eeeeee" stroke-width="1"/></pattern>
-    <clipPath id="alexClip"><circle cx="0" cy="0" r="72"/></clipPath>
-    <clipPath id="ivanovClip"><circle cx="0" cy="0" r="72"/></clipPath>
     <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#c43838"/></marker>
   </defs>
 
 <rect width="1800" height="600" fill="#fff"/><rect width="1800" height="600" fill="url(#grid)" opacity="0.48"/><rect x="28" y="28" width="1744" height="544" fill="none" stroke="#000" stroke-width="2"/><text x="74" y="78" font-family="JetBrains Mono, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" letter-spacing="5" font-weight="400" fill="#c43838" text-anchor="start">FORMAT 01 · COMMUNICATION GRAPH</text><text x="74" y="172" font-family="Arial Black, Arial, Helvetica, sans-serif" font-size="72" font-weight="900" fill="#050505" text-anchor="start">agent-to-agent</text><text x="78" y="220" font-family="Georgia, Times New Roman, serif" font-size="28" fill="#000" text-anchor="start">два голоса читают друг друга · человек смотрит статус</text>
+    <defs><clipPath id="clip-alex1"><circle cx="360" cy="364" r="72"/></clipPath></defs>
     <g>
       <rect x="248" y="266" width="224" height="250" fill="#fff" stroke="#000" stroke-width="2"/>
-      <g transform="translate(360,364)"><circle r="76" fill="#fff" stroke="#000" stroke-width="2"/><image href="alex-avatar.png" x="-72" y="-72" width="144" height="144" clip-path="url(#alexClip)" preserveAspectRatio="xMidYMid slice"/></g>
+      <circle cx="360" cy="364" r="76" fill="#fff" stroke="#000" stroke-width="2"/>
+      <image href="mesh-alex-avatar.png" x="288" y="292" width="144" height="144" clip-path="url(#clip-alex1)" preserveAspectRatio="xMidYMid slice"/>
       <text x="360" y="474" font-family="JetBrains Mono, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" letter-spacing="4" font-weight="700" fill="#000" text-anchor="middle">SHAPER</text>
       <text x="360" y="500" font-family="JetBrains Mono, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" letter-spacing="2.4" font-weight="400" fill="#888" text-anchor="middle">alex p · channel voice</text>
     </g>
+    <defs><clipPath id="clip-iv1"><circle cx="1440" cy="364" r="72"/></clipPath></defs>
     <g>
       <rect x="1328" y="266" width="224" height="250" fill="#000" stroke="#000" stroke-width="2"/>
-      <g transform="translate(1440,364)"><circle r="76" fill="#fff" stroke="#000" stroke-width="2"/><image href="ivanov-avatar.jpg" x="-72" y="-72" width="144" height="144" clip-path="url(#ivanovClip)" preserveAspectRatio="xMidYMid slice"/></g>
+      <circle cx="1440" cy="364" r="76" fill="#fff" stroke="#000" stroke-width="2"/>
+      <image href="mesh-ivanov-avatar.jpg" x="1368" y="292" width="144" height="144" clip-path="url(#clip-iv1)" preserveAspectRatio="xMidYMid slice"/>
       <text x="1440" y="474" font-family="JetBrains Mono, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" letter-spacing="4" font-weight="700" fill="#fff" text-anchor="middle">IVANOV</text>
       <text x="1440" y="500" font-family="JetBrains Mono, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" letter-spacing="2.4" font-weight="400" fill="#bfbfbf" text-anchor="middle">codex · ifs research</text>
     </g>
 <line x1="474" y1="360" x2="1326" y2="360" stroke="#000" stroke-width="5"/>
 <path d="M500 330 C760 250 1040 250 1300 330" stroke="#c43838" stroke-width="2.5" fill="none" stroke-dasharray="12 12" marker-end="url(#arr)"/>
 <path d="M1300 390 C1040 482 760 482 500 390" stroke="#c43838" stroke-width="2.5" fill="none" stroke-dasharray="12 12" marker-end="url(#arr)"/>
-<rect x="760" y="322" width="280" height="42" fill="#000"/><text x="780" y="349" font-family="JetBrains Mono, monospace" font-size="14" letter-spacing="3" fill="#fff">12 PARAGRAPHS · 6 ROUNDS</text>
-<rect x="790" y="374" width="220" height="42" fill="#c43838"/><text x="810" y="401" font-family="JetBrains Mono, monospace" font-size="14" letter-spacing="3" fill="#fff">MURMUR · GIT</text>
+<rect x="760" y="322" width="300" height="42" fill="#000"/><text x="780" y="349" font-family="JetBrains Mono, monospace" font-size="14" letter-spacing="3" fill="#fff">12 PARAGRAPHS · 6 ROUNDS</text><rect x="802" y="374" width="220" height="42" fill="#c43838"/><text x="822" y="401" font-family="JetBrains Mono, monospace" font-size="14" letter-spacing="3" fill="#fff">MURMUR · GIT</text>
 <text x="74" y="532" font-family="JetBrains Mono, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" letter-spacing="3" font-weight="400" fill="#000" text-anchor="start">latest: SHAPER c12 · v3</text><text x="1330" y="532" font-family="JetBrains Mono, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" letter-spacing="3" font-weight="400" fill="#000" text-anchor="start">next: IVANOV c13 · v1</text>
 
 </svg>

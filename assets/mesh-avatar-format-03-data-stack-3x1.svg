@@ -2,31 +2,27 @@
 
   <defs>
     <pattern id="grid" width="36" height="36" patternUnits="userSpaceOnUse"><path d="M36 0H0V36" fill="none" stroke="#eeeeee" stroke-width="1"/></pattern>
-    <clipPath id="alexClip"><circle cx="0" cy="0" r="72"/></clipPath>
-    <clipPath id="ivanovClip"><circle cx="0" cy="0" r="72"/></clipPath>
     <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#c43838"/></marker>
   </defs>
 
 <rect width="1800" height="600" fill="#fff"/><rect width="1800" height="600" fill="url(#grid)" opacity="0.48"/><rect x="28" y="28" width="1744" height="544" fill="none" stroke="#000" stroke-width="2"/><text x="74" y="78" font-family="JetBrains Mono, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" letter-spacing="5" font-weight="400" fill="#c43838" text-anchor="start">FORMAT 03 · DATA STACK</text><text x="74" y="170" font-family="Arial Black, Arial, Helvetica, sans-serif" font-size="72" font-weight="900" fill="#050505" text-anchor="start">murmur</text><text x="74" y="252" font-family="Arial Black, Arial, Helvetica, sans-serif" font-size="72" font-weight="900" fill="#050505" text-anchor="start">+ git</text><text x="74" y="334" font-family="Arial Black, Arial, Helvetica, sans-serif" font-size="72" font-weight="900" fill="#050505" text-anchor="start">+ netlify</text><text x="78" y="390" font-family="Georgia, Times New Roman, serif" font-size="29" fill="#000" text-anchor="start">координация через следы, а не общий мозг</text>
+    <defs><clipPath id="clip-alex3"><circle cx="1250" cy="204" r="72"/></clipPath></defs>
     <g>
       <rect x="1138" y="106" width="224" height="250" fill="#fff" stroke="#000" stroke-width="2"/>
-      <g transform="translate(1250,204)"><circle r="76" fill="#fff" stroke="#000" stroke-width="2"/><image href="alex-avatar.png" x="-72" y="-72" width="144" height="144" clip-path="url(#alexClip)" preserveAspectRatio="xMidYMid slice"/></g>
+      <circle cx="1250" cy="204" r="76" fill="#fff" stroke="#000" stroke-width="2"/>
+      <image href="mesh-alex-avatar.png" x="1178" y="132" width="144" height="144" clip-path="url(#clip-alex3)" preserveAspectRatio="xMidYMid slice"/>
       <text x="1250" y="314" font-family="JetBrains Mono, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" letter-spacing="4" font-weight="700" fill="#000" text-anchor="middle">SHAPER</text>
       <text x="1250" y="340" font-family="JetBrains Mono, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" letter-spacing="2.4" font-weight="400" fill="#888" text-anchor="middle">writes / reviews</text>
     </g>
+    <defs><clipPath id="clip-iv3"><circle cx="1510" cy="204" r="72"/></clipPath></defs>
     <g>
       <rect x="1398" y="106" width="224" height="250" fill="#000" stroke="#000" stroke-width="2"/>
-      <g transform="translate(1510,204)"><circle r="76" fill="#fff" stroke="#000" stroke-width="2"/><image href="ivanov-avatar.jpg" x="-72" y="-72" width="144" height="144" clip-path="url(#ivanovClip)" preserveAspectRatio="xMidYMid slice"/></g>
+      <circle cx="1510" cy="204" r="76" fill="#fff" stroke="#000" stroke-width="2"/>
+      <image href="mesh-ivanov-avatar.jpg" x="1438" y="132" width="144" height="144" clip-path="url(#clip-iv3)" preserveAspectRatio="xMidYMid slice"/>
       <text x="1510" y="314" font-family="JetBrains Mono, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" letter-spacing="4" font-weight="700" fill="#fff" text-anchor="middle">IVANOV</text>
       <text x="1510" y="340" font-family="JetBrains Mono, SFMono-Regular, Menlo, Consolas, monospace" font-size="10" letter-spacing="2.4" font-weight="400" fill="#bfbfbf" text-anchor="middle">reads / replies</text>
     </g>
-<g font-family="JetBrains Mono, monospace" font-size="15" letter-spacing="3">
-<rect x="812" y="124" width="300" height="52" fill="#000"/><text x="838" y="157" fill="#fff">01 · ENCRYPTED MESSAGE</text>
-<rect x="812" y="202" width="300" height="52" fill="#fff" stroke="#000" stroke-width="2"/><text x="838" y="235" fill="#000">02 · SIDECAR REVIEW</text>
-<rect x="812" y="280" width="300" height="52" fill="#000"/><text x="838" y="313" fill="#fff">03 · COMMIT + PUSH</text>
-<rect x="812" y="358" width="300" height="52" fill="#c43838"/><text x="838" y="391" fill="#fff">04 · LIVE REFRESH</text>
-</g>
-<path d="M1118 150H1185" stroke="#c43838" stroke-width="3" marker-end="url(#arr)"/><path d="M1118 306H1185" stroke="#c43838" stroke-width="3" marker-end="url(#arr)"/>
-<text x="78" y="532" font-family="JetBrains Mono, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" letter-spacing="3" font-weight="400" fill="#000" text-anchor="start">12 blocks · 8/4 voice split · 5-minute heartbeat</text>
+<g font-family="JetBrains Mono, monospace" font-size="15" letter-spacing="3"><rect x="812" y="124" width="300" height="52" fill="#000"/><text x="838" y="157" fill="#fff">01 · ENCRYPTED MESSAGE</text><rect x="812" y="202" width="300" height="52" fill="#fff" stroke="#000" stroke-width="2"/><text x="838" y="235" fill="#000">02 · SIDECAR REVIEW</text><rect x="812" y="280" width="300" height="52" fill="#000"/><text x="838" y="313" fill="#fff">03 · COMMIT + PUSH</text><rect x="812" y="358" width="300" height="52" fill="#c43838"/><text x="838" y="391" fill="#fff">04 · LIVE REFRESH</text></g>
+<path d="M1118 150H1185" stroke="#c43838" stroke-width="3" marker-end="url(#arr)"/><path d="M1118 306H1185" stroke="#c43838" stroke-width="3" marker-end="url(#arr)"/><text x="78" y="532" font-family="JetBrains Mono, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" letter-spacing="3" font-weight="400" fill="#000" text-anchor="start">12 blocks · 8/4 voice split · 5-minute heartbeat</text>
 
 </svg>

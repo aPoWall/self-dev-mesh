@@ -181,6 +181,12 @@ body{min-height:100vh;display:flex;flex-direction:column}
 .visual-candidate .vc-label{font-family:var(--mono);font-size:9.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);display:flex;justify-content:space-between;gap:8px}
 .visual-candidate .vc-label b{color:var(--ink);font-weight:600}
 @media (max-width:900px){.visual-candidates{grid-template-columns:1fr 1fr}.visual-candidate:last-child{grid-column:1/-1}}
+.visual-review-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.visual-review-card{border:1px solid var(--ink);padding:10px;background:#fff;color:var(--ink);text-decoration:none;display:flex;flex-direction:column;gap:8px}
+.visual-review-card img{width:100%;height:260px;object-fit:cover;object-position:top;border:1px solid var(--soft);display:block}
+.visual-review-card .vrc-label{font-family:var(--mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);display:flex;justify-content:space-between;gap:10px}
+.visual-review-card .vrc-label b{color:var(--ink)}
+@media (max-width:900px){.visual-review-grid{grid-template-columns:1fr}.visual-review-card img{height:220px}}
 
 /* FIG.MESH.3 — tech stack table */
 .stack-table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:11.5px;line-height:1.55}
@@ -388,6 +394,24 @@ footer .actions a.primary{background:var(--ink);color:#fff}
     </div>
     <ol class="evo-steps" id="evo-steps"></ol>
     <div class="evo-detail" id="evo-detail"></div>
+  </section>
+
+  <!-- ── VISUAL REVIEW · two contact sheets near the top ── -->
+  <section class="fig-section full">
+    <div class="fig-head">
+      <div class="fig-num"><b>VISUAL REVIEW</b> · 10 candidate covers · pick direction before final polish</div>
+      <div class="fig-meta"><a href="ROBOT-COVER-CANDIDATES.md" target="_blank" style="color:#000">robot note</a> · <a href="MESH-AVATAR-COVER-CANDIDATES.md" target="_blank" style="color:#000">mesh note</a></div>
+    </div>
+    <div class="visual-review-grid">
+      <a class="visual-review-card" href="assets/robot-format-contact-sheet.png" target="_blank">
+        <img src="assets/robot-format-contact-sheet.png" alt="robot cover contact sheet">
+        <div class="vrc-label"><b>robot family</b><span>event / sprint / philosophy</span></div>
+      </a>
+      <a class="visual-review-card" href="assets/mesh-avatar-format-contact-sheet.png" target="_blank">
+        <img src="assets/mesh-avatar-format-contact-sheet.png" alt="mesh avatar cover contact sheet">
+        <div class="vrc-label"><b>mesh family</b><span>avatars / data-line / process</span></div>
+      </a>
+    </div>
   </section>
 
   <!-- ── CANONICAL PUBLISHED ARTIFACT — frozen final selling post ── -->
@@ -620,6 +644,36 @@ footer .actions a.primary{background:var(--ink);color:#fff}
       <a class="visual-candidate" href="assets/robot-format-05-minimal-object-3x1.png" target="_blank">
         <img src="assets/robot-format-05-minimal-object-3x1.png" alt="format 05 minimal object">
         <div class="vc-label"><b>05</b><span>minimal object</span></div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ── FIG.MESH.2C · mesh avatar candidates for review ── -->
+  <section class="fig-section full">
+    <div class="fig-head">
+      <div class="fig-num"><b>FIG.MESH.2C</b> · MESH AVATAR CANDIDATES · 3:1 · REVIEW</div>
+      <div class="fig-meta"><a href="MESH-AVATAR-COVER-CANDIDATES.md" target="_blank" style="color:#000">process note</a> · <a href="assets/mesh-avatar-format-contact-sheet.png" target="_blank" style="color:#000">contact sheet</a></div>
+    </div>
+    <div class="visual-candidates">
+      <a class="visual-candidate" href="assets/mesh-avatar-format-01-communication-graph-3x1.png" target="_blank">
+        <img src="assets/mesh-avatar-format-01-communication-graph-3x1.png" alt="mesh format 01 communication graph">
+        <div class="vc-label"><b>01</b><span>communication graph</span></div>
+      </a>
+      <a class="visual-candidate" href="assets/mesh-avatar-format-02-revision-line-3x1.png" target="_blank">
+        <img src="assets/mesh-avatar-format-02-revision-line-3x1.png" alt="mesh format 02 revision line">
+        <div class="vc-label"><b>02</b><span>revision line</span></div>
+      </a>
+      <a class="visual-candidate" href="assets/mesh-avatar-format-03-data-stack-3x1.png" target="_blank">
+        <img src="assets/mesh-avatar-format-03-data-stack-3x1.png" alt="mesh format 03 data stack">
+        <div class="vc-label"><b>03</b><span>data stack</span></div>
+      </a>
+      <a class="visual-candidate" href="assets/mesh-avatar-format-04-sidecar-review-3x1.png" target="_blank">
+        <img src="assets/mesh-avatar-format-04-sidecar-review-3x1.png" alt="mesh format 04 sidecar review">
+        <div class="vc-label"><b>04</b><span>sidecar review</span></div>
+      </a>
+      <a class="visual-candidate" href="assets/mesh-avatar-format-05-live-telemetry-3x1.png" target="_blank">
+        <img src="assets/mesh-avatar-format-05-live-telemetry-3x1.png" alt="mesh format 05 live telemetry">
+        <div class="vc-label"><b>05</b><span>live telemetry</span></div>
       </a>
     </div>
   </section>

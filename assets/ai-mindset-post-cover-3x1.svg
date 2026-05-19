@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="600" viewBox="0 0 1800 600" role="img" aria-labelledby="title desc">
+  <title id="title">self-dev mesh · статья про статью</title>
+  <desc id="desc">3:1 cover card for AI Mindset channel post about agent-to-agent writing mesh and deep self development sprint.</desc>
+  <defs>
+    <pattern id="paper" width="54" height="54" patternUnits="userSpaceOnUse">
+      <rect width="54" height="54" fill="#f8f7f3"/>
+      <path d="M0 54 L54 0" stroke="#111" stroke-opacity="0.035" stroke-width="1"/>
+    </pattern>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="7" dy="7" stdDeviation="0" flood-color="#111" flood-opacity="0.95"/>
+    </filter>
+    <style>
+      .mono{font-family:"JetBrains Mono","IBM Plex Mono","SFMono-Regular",Menlo,monospace}
+      .sans{font-family:Inter,Arial,sans-serif}
+      .serif{font-family:Georgia,"Times New Roman",serif}
+      .ink{fill:#111}
+      .muted{fill:#62605d}
+      .red{fill:#c43838}
+      .line{stroke:#111;stroke-width:2;fill:none}
+      .thin{stroke:#111;stroke-width:1;fill:none;opacity:.28}
+      .dash{stroke:#111;stroke-width:1.5;fill:none;stroke-dasharray:8 8;opacity:.38}
+    </style>
+  </defs>
+
+  <rect width="1800" height="600" fill="url(#paper)"/>
+  <rect x="28" y="28" width="1744" height="544" fill="none" stroke="#111" stroke-width="2"/>
+
+  <g class="mono" font-size="22" letter-spacing="8" fill="#111">
+    <text x="70" y="82">AI MINDSET · SELF-DEV MESH</text>
+    <text x="1456" y="82" text-anchor="end">LIVE TRACE</text>
+    <rect x="1474" y="56" width="230" height="38" fill="#111"/>
+    <text x="1589" y="82" text-anchor="middle" fill="#fff" letter-spacing="5">CYCLE 5</text>
+  </g>
+
+  <g transform="translate(72 134)">
+    <text class="mono red" x="0" y="0" font-size="24" letter-spacing="7">СТАТЬЯ ПРО СТАТЬЮ</text>
+    <text class="sans ink" x="0" y="98" font-size="92" font-weight="800" letter-spacing="0">как AI</text>
+    <text class="sans ink" x="0" y="188" font-size="92" font-weight="800" letter-spacing="0">держит нить</text>
+    <text class="serif ink" x="2" y="252" font-size="33" letter-spacing="0">между insight и следующим действием</text>
+    <text class="mono muted" x="4" y="319" font-size="20" letter-spacing="2">две модели читают друг друга · человек смотрит статус</text>
+    <text class="mono ink" x="4" y="365" font-size="24" letter-spacing="2">aim-self-dev-mesh.netlify.app</text>
+  </g>
+
+  <g transform="translate(982 117)">
+    <rect x="0" y="0" width="690" height="405" fill="#fff" stroke="#111" stroke-width="2" filter="url(#softShadow)"/>
+    <text class="mono muted" x="34" y="44" font-size="18" letter-spacing="5">AGENT-TO-AGENT REVISION LOOP</text>
+
+    <g transform="translate(54 88)">
+      <line class="thin" x1="120" y1="150" x2="286" y2="48"/>
+      <line class="thin" x1="120" y1="150" x2="286" y2="150"/>
+      <line class="thin" x1="120" y1="150" x2="286" y2="252"/>
+      <line class="thin" x1="286" y1="48" x2="500" y2="150"/>
+      <line class="thin" x1="286" y1="150" x2="500" y2="150"/>
+      <line class="thin" x1="286" y1="252" x2="500" y2="150"/>
+      <path class="dash" d="M120 150 C196 72 412 72 500 150"/>
+      <path class="dash" d="M120 150 C216 234 408 236 500 150"/>
+
+      <circle cx="120" cy="150" r="58" fill="#fff" stroke="#111" stroke-width="3"/>
+      <circle cx="500" cy="150" r="58" fill="#111" stroke="#111" stroke-width="3"/>
+      <text class="mono ink" x="120" y="146" font-size="15" text-anchor="middle" letter-spacing="3">SHAPER</text>
+      <text class="mono ink" x="120" y="168" font-size="12" text-anchor="middle" letter-spacing="2">alex p</text>
+      <text class="mono" x="500" y="146" font-size="15" text-anchor="middle" letter-spacing="3" fill="#fff">IVANOV</text>
+      <text class="mono" x="500" y="168" font-size="12" text-anchor="middle" letter-spacing="2" fill="#fff">IFS</text>
+
+      <g class="mono" font-size="18" text-anchor="middle" font-weight="700">
+        <circle cx="286" cy="48" r="34" fill="#111"/>
+        <text x="286" y="55" fill="#fff">v1</text>
+        <circle cx="286" cy="150" r="34" fill="#111"/>
+        <text x="286" y="157" fill="#fff">v2</text>
+        <circle cx="286" cy="252" r="34" fill="#111"/>
+        <text x="286" y="259" fill="#fff">v3</text>
+      </g>
+
+      <g class="mono" font-size="13" text-anchor="middle">
+        <g transform="translate(354 36)">
+          <rect width="42" height="42" fill="#fff" stroke="#111" stroke-width="2"/>
+          <text x="21" y="27">c1</text>
+        </g>
+        <g transform="translate(410 36)">
+          <rect width="42" height="42" fill="#111" stroke="#111" stroke-width="2"/>
+          <text x="21" y="27" fill="#fff">c4</text>
+        </g>
+        <g transform="translate(354 138)">
+          <rect width="42" height="42" fill="#fff" stroke="#111" stroke-width="2"/>
+          <text x="21" y="27">c5</text>
+        </g>
+        <g transform="translate(410 138)">
+          <rect width="42" height="42" fill="#111" stroke="#111" stroke-width="2"/>
+          <text x="21" y="27" fill="#fff">c2</text>
+        </g>
+        <g transform="translate(354 240)">
+          <rect width="42" height="42" fill="#fff" stroke="#111" stroke-width="2"/>
+          <text x="21" y="27">c3</text>
+        </g>
+      </g>
+      <circle cx="354" cy="159" r="54" fill="none" stroke="#c43838" stroke-width="4" stroke-dasharray="10 8"/>
+    </g>
+
+    <g transform="translate(34 348)" class="mono">
+      <rect width="622" height="36" fill="#111"/>
+      <text x="22" y="24" font-size="16" fill="#fff" letter-spacing="3">MURMUR · GIT · NETLIFY · HUMAN OBSERVER</text>
+      <circle cx="594" cy="18" r="7" fill="#3a9d3a"/>
+    </g>
+  </g>
+</svg>

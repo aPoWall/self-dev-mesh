@@ -524,13 +524,14 @@ footer .actions a.primary{background:var(--ink);color:#fff}
     </div>
   </section>
 
-  <!-- ── ARTIFACT LIBRARY · 3:1 covers codex generated · click to open ── -->
+  <!-- ── ARTIFACT LIBRARY · collapsed by default · click to expand ── -->
   <section class="fig-section full">
-    <div class="fig-head">
-      <div class="fig-num"><b>ARTIFACT LIBRARY</b> · 3:1 plashki codex generated · click to open full-size</div>
-      <div class="fig-meta">12 artifacts · sales covers + mesh-avatar series + robot series + event poster</div>
-    </div>
-    <div class="artifact-grid">
+    <details class="lib-details">
+      <summary class="fig-head" style="cursor:pointer;list-style:none">
+        <div class="fig-num"><b>ARTIFACT LIBRARY</b> · 12 plashki · ▸ click to expand</div>
+        <div class="fig-meta">sales covers + mesh-avatar fig.01-05 + robot fig.01-05 + event poster</div>
+      </summary>
+    <div class="artifact-grid" style="margin-top:14px">
       <a class="art-card" href="assets/deep-self-dev-ai-selling-cover-3x1.png" target="_blank">
         <img src="assets/deep-self-dev-ai-selling-cover-3x1.png" alt="deep self-dev sales cover" loading="lazy">
         <div class="art-meta"><b>★ SELLING COVER</b> · deep-self-dev-ai · post #1</div>
@@ -580,12 +581,13 @@ footer .actions a.primary{background:var(--ink);color:#fff}
         <div class="art-meta"><b>ROBOT FIG.04</b> · mesh process · 3:1</div>
       </a>
     </div>
+    </details>
   </section>
 
-  <!-- ── ARTICLE BODY · collapsible · secondary after graph (per alex 15:31) ── -->
+  <!-- ── ARTICLE BODY · single-paragraph viewer · selected via timeline or sidepanel ── -->
   <section class="article-body">
     <div class="fig-head">
-      <div class="fig-num"><b>ARTICLE BODY</b> · two voices · <span id="ab-count">0</span> blocks · collapsed by default · click each to expand</div>
+      <div class="fig-num"><b>TEXT VIEWER</b> · <span id="ab-count">0</span> versions in mesh · select via timeline or right-side panel</div>
       <div class="fig-meta">
         <button type="button" class="ab-expand-all" id="ab-expand-all">expand all ▾</button>
         <span id="ab-meta">— waiting for paragraphs —</span>
@@ -1115,6 +1117,7 @@ const CYCLE_TO_STEP_KEY = {1:'seed', 2:'counter-voice', 3:'melancholic', 4:'meta
 const STEP_KEY_TO_CYCLE = {seed:1, 'counter-voice':2, melancholic:3, 'meta-sidecar':4, 'channel-post':5};
 
 let SELECTED_STEP = null;
+let SELECTED_CYCLE = null;  // which paragraph version is shown in TEXT VIEWER (default: latest)
 function renderEvolution(data){
   // primary target: horizontal evo-timeline at top of mesh view
   const list = document.getElementById('evo-steps');

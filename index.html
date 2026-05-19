@@ -84,19 +84,43 @@ body{min-height:100vh;display:flex;flex-direction:column}
 #view-dashboard .dashboard-toolbar a{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
 #view-dashboard .dashboard-toolbar .reload{font-family:inherit;border:1px solid var(--ink);background:#fff;color:var(--ink);padding:4px 12px;cursor:pointer;font-size:10px;letter-spacing:0.14em;text-transform:lowercase}
 
-/* paragraphs view = real-time list of generated paragraph files */
-#view-paragraphs{grid-template-columns:1fr;padding:24px 28px}
-.paragraphs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:14px;margin-top:14px}
-.paragraph-card{border:1px solid var(--ink);padding:18px 22px;background:#fff;display:flex;flex-direction:column;gap:8px;min-height:180px}
-.paragraph-card.shaper{background:#fff}
-.paragraph-card.ivanov{background:#000;color:#fff}
-.paragraph-card .pc-head{display:flex;justify-content:space-between;align-items:baseline;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;padding-bottom:6px;border-bottom:1px solid currentColor}
-.paragraph-card .pc-cycle{font-weight:600}
-.paragraph-card .pc-regime{opacity:0.65}
-.paragraph-card .pc-time{opacity:0.5;font-size:9.5px}
-.paragraph-card .pc-body{font-size:13px;line-height:1.6;letter-spacing:-0.005em;flex:1}
-.paragraph-card .pc-meta{display:flex;gap:14px;font-size:9.5px;letter-spacing:0.06em;opacity:0.6;border-top:1px dashed currentColor;padding-top:6px}
+/* paragraphs view · markdown-editor style w/ inline diff + margin comments */
+#view-paragraphs{grid-template-columns:1fr;padding:24px 28px;max-width:1200px;margin:0 auto;width:100%}
+.paragraphs-grid{display:flex;flex-direction:column;gap:28px;margin-top:14px}
+.paragraph-card{display:grid;grid-template-columns:1fr 280px;gap:24px;border-top:1px solid var(--ink);padding-top:24px;background:#fff}
+.paragraph-card:first-child{border-top:0;padding-top:0}
+.pc-main{display:flex;flex-direction:column;gap:14px;min-width:0}
+.pc-head{display:flex;justify-content:space-between;align-items:baseline;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted)}
+.pc-head .pc-author{display:flex;align-items:center;gap:10px}
+.pc-head .pc-author img{width:24px;height:24px;border-radius:50%;object-fit:cover;border:1px solid var(--ink)}
+.pc-head .pc-author b{color:var(--ink);font-weight:600;letter-spacing:0.12em}
+.pc-head .pc-cycle{font-weight:600;color:var(--ink)}
+.pc-head .pc-regime{opacity:0.65}
+.pc-head .pc-time{opacity:0.5;font-size:9.5px}
+.pc-body{font-family:Georgia,"Times New Roman",serif;font-size:16.5px;line-height:1.7;color:var(--ink);letter-spacing:-0.005em}
+.pc-body p{margin:0 0 14px}
+.pc-body p:last-child{margin-bottom:0}
+.pc-body ins{background:#dff5d4;text-decoration:none;padding:0 2px}
+.pc-body del{background:#f9d4d4;text-decoration:line-through;opacity:0.7;padding:0 2px}
+.pc-revisions{display:flex;flex-direction:column;gap:6px;margin-top:8px;font-size:11px;letter-spacing:0.08em;color:var(--muted)}
+.pc-rev-row{display:inline-flex;align-items:center;gap:8px;text-transform:uppercase;font-size:10px;letter-spacing:0.14em}
+.pc-rev-row .pc-rev-dot{width:7px;height:7px;border-radius:50%;background:var(--ink);display:inline-block}
+.pc-rev-row.shaper .pc-rev-dot{background:#000}
+.pc-rev-row.ivanov .pc-rev-dot{background:#c43838}
+.pc-comments{display:flex;flex-direction:column;gap:10px;padding-left:14px;border-left:2px solid #ececec}
+.pc-comment{background:#fffbe6;border:1px solid #f0e6a0;padding:10px 13px;font-size:12px;line-height:1.5;position:relative;border-radius:0}
+.pc-comment.ivanov{background:#000;color:#fff;border-color:#000}
+.pc-comment.shaper{background:#fffbe6}
+.pc-comment .pc-c-author{font-size:9.5px;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:4px;opacity:0.7;font-weight:600}
+.pc-comment .pc-c-body{font-family:Georgia,serif;font-size:13px;line-height:1.45}
+.pc-comment .pc-c-target{font-size:9.5px;letter-spacing:0.06em;color:#888;font-style:italic;margin-top:4px;border-top:1px dashed currentColor;padding-top:4px;opacity:0.6}
+.pc-comments-empty{font-size:10px;color:var(--muted);font-style:italic;padding:8px 0}
 .paragraphs-empty{color:var(--muted);font-style:italic;text-align:center;padding:60px 0;border:1px dashed #ddd}
+.paragraphs-toolbar{display:flex;gap:14px;align-items:center;font-size:11px;color:var(--muted);letter-spacing:0.06em;border-bottom:1px solid var(--soft);padding-bottom:12px;margin-bottom:24px}
+.paragraphs-toolbar .badge{border:1px solid var(--ink);padding:3px 10px;font-size:10px;letter-spacing:0.14em;text-transform:uppercase}
+@media (max-width:900px){
+  .paragraph-card{grid-template-columns:1fr}
+}
 
 footer{display:grid;grid-template-columns:auto 1fr auto;gap:24px;align-items:center;
   border-top:1px solid var(--ink);padding:16px 28px;color:var(--muted);font-size:11px;letter-spacing:0.04em}
@@ -341,27 +365,32 @@ async function loadParagraphs(){
   }catch(e){console.warn('paragraphs not available yet',e);}
 }
 
+function escHtml(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function bodyHtml(b){return escHtml(b).replace(/\[ins\](.*?)\[\/ins\]/gs,'<ins>$1</ins>').replace(/\[del\](.*?)\[\/del\]/gs,'<del>$1</del>').replace(/\n\n/g,'</p><p>').replace(/\n/g,'<br>');}
+function authorAvatar(a){return (a||'').toLowerCase().includes('ivanov')?'ivanov-avatar.jpg':'alex-avatar.png';}
 function renderParagraphs(data){
-  const grid = document.getElementById('paragraphs-grid');
-  if(!data.paragraphs || !data.paragraphs.length){
-    grid.innerHTML = '<div class="paragraphs-empty">— ждёт первого paragraph\'а из murmur loop —</div>';
-    return;
-  }
-  const sorted = [...data.paragraphs].sort((a,b)=> (b.cycle||0) - (a.cycle||0));
-  grid.innerHTML = sorted.map(p=>{
-    const cls = (p.author||'').toLowerCase().includes('ivanov') ? 'ivanov' : 'shaper';
-    return `<article class="paragraph-card ${cls}">
-      <div class="pc-head">
-        <span><span class="pc-cycle">cycle ${p.cycle||'?'}</span> <span class="pc-regime">· ${p.regime||'?'}</span></span>
-        <span class="pc-time">${p.time||''}</span>
-      </div>
-      <div class="pc-body">${(p.body||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n\n/g,'</p><p>').replace(/\n/g,'<br>')}</div>
-      <div class="pc-meta">
-        <span>${p.author||'?'}</span>
-        <span>· ${(p.body||'').length} chars</span>
-      </div>
-    </article>`;
-  }).join('');
+  const grid=document.getElementById('paragraphs-grid');
+  if(!data.paragraphs||!data.paragraphs.length){grid.innerHTML='<div class="paragraphs-empty">— ждёт первого paragraph\'а из mesh —</div>';return;}
+  const sorted=[...data.paragraphs].sort((a,b)=>(a.cycle||0)-(b.cycle||0));
+  grid.innerHTML='<div class="paragraphs-toolbar"><span class="badge">document</span><span>'+sorted.length+' paragraphs · 2 voices · inline edits + margin comments</span></div>'+
+    sorted.map(p=>{
+      const cls=(p.author||'').toLowerCase().includes('ivanov')?'ivanov':'shaper';
+      const revs=(p.revisions||[]).map(r=>`<span class="pc-rev-row ${(r.by||'').toLowerCase().includes('ivanov')?'ivanov':'shaper'}"><span class="pc-rev-dot"></span>revised by ${escHtml(r.by)} · ${escHtml(r.ts||'')}</span>`).join('');
+      const comments=(p.comments||[]).map(c=>`<div class="pc-comment ${(c.by||'').toLowerCase().includes('ivanov')?'ivanov':'shaper'}"><div class="pc-c-author">${escHtml(c.by||'?')}</div><div class="pc-c-body">${escHtml(c.body||'')}</div>${c.target?'<div class="pc-c-target">→ '+escHtml(c.target)+'</div>':''}</div>`).join('');
+      return `<article class="paragraph-card">
+        <div class="pc-main">
+          <div class="pc-head">
+            <span class="pc-author"><img src="${authorAvatar(p.author)}" alt=""><b>${escHtml(p.author||'?')}</b></span>
+            <span><span class="pc-cycle">cycle ${p.cycle||'?'}</span> <span class="pc-regime">· ${escHtml(p.regime||'?')}</span> · <span class="pc-time">${escHtml(p.time||'')}</span> · ${(p.body||'').length}c</span>
+          </div>
+          <div class="pc-body"><p>${bodyHtml(p.body||'')}</p></div>
+          ${revs?'<div class="pc-revisions">'+revs+'</div>':''}
+        </div>
+        <aside class="pc-comments">
+          ${comments||'<div class="pc-comments-empty">no comments yet · waiting for cross-voice review</div>'}
+        </aside>
+      </article>`;
+    }).join('');
 }
 
 function updateCounters(data){
